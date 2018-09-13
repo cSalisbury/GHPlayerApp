@@ -1,5 +1,11 @@
 package util;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 
@@ -11,6 +17,30 @@ import model.Movement;
 public class TestLoadAndSave {
 
 	public static void main(final String[] args) {
+		String cards = null;
+		try {
+			File file = new File("docs/test");
+			file.createNewFile();
+			cards = new String(Files.readAllBytes(Paths.get("docs/characterCards/Brute Cards.json")));
+		} catch (Exception e) {
+			System.out.println("Exception while parsing JSON: " + e);
+		}
+		System.out.println("Cards.length: " + cards.length());
+
+		ObjectMapper om = new ObjectMapper();
+		List<CharacterCard> cardList = null;
+		try {
+			cardList = om.readValue(cards, new TypeReference<List<CharacterCard>>() {
+			});
+		} catch (Exception e) {
+			System.out.println("Error while mapping: " + e);
+		}
+
+		System.out.println("cardList" + cardList);
+
+	}
+
+	public static void mainOld(final String[] args) {
 		CharacterCard card = new CharacterCard();
 		Attack top = new Attack();
 		top.setRange(3);

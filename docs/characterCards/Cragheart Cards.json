@@ -1,636 +1,636 @@
 [
 {
-	name:"Opposing Strike",
-	id:116,
-	level:1,
-	initiative:46,
-	top:{
-		attack:{
-			power:3,
-			aoe:[1,4]
+	"name":"Opposing Strike",
+	"id":116,
+	"level":1,
+	"initiative":46,
+	"top":{
+		"attack":{
+			"power":3,
+			"aoe":[1,4]
 		},
-		experience:1
+		"experience":1
 	},
-	bottom:{
-		defense:{
-			retaliate:2,
-			remainTime:6,
-			experience:[1,3,5]
+	"bottom":{
+		"persist"{
+			"retaliate":2,
+			"remainTime":6,
+			"persistExperience":[1,3,5]
 		},
-		text: "Gain 2 retaliate for the next 6 melee attacks targeting you",
-		remove:true
+		"text": "Gain 2 retaliate for the next 6 melee attacks targeting you",
+		"remove":true
 	}
 },
 {
-	name:"Crushing Grasp",
-	id:117,
-	level:1,
-	initiative:35,
-	top:{
-		attack:{
-			power:3,
-			condition:["immobilize"]
+	"name":"Crushing Grasp",
+	"id":117,
+	"level":1,
+	"initiative":35,
+	"top":{
+		"attack":{
+			"power":3,
+			"condition":["immobilize"]
 		},
-		element:"earth"
+		"element":["earth"]
 	},
-	bottom:{
-		loot:{
-			range:1
+	"bottom":{
+		"loot":{
+			"range":1
 		}
 	}
 },
 {
-	name:"Avalanche",
-	id:118,
-	level:1,
-	initiative:75,
-	top:{
-		attack:{
-			power:4,
-			aoe:[1,2]
+	"name":"Avalanche",
+	"id":118,
+	"level":1,
+	"initiative":75,
+	"top":{
+		"attack":{
+			"power":4,
+			"aoe":[1,2]
 		},
-		experience:1,
-		text:"Spend Earth to add 1 power and gain 1 xp",
-		remove:true
+		"experience":1,
+		"text":"Spend Earth to add 1 power and gain 1 xp",
+		"remove":true
 	},
-	bottom:{
-		element:["earth"],
-		text:"Create two single-hex obstacles in empty hexes adjacent to you"
+	"bottom":{
+		"element":["earth"],
+		"text":"Create two single-hex obstacles in empty hexes adjacent to you"
 	}
 },
 {
-	name:"Rumbling Advanced",
-	id:119,
-	level:1,
-	initiative:29,
-	top:{
-		defense:{
-			heal:4,
-			range:2
+	"name":"Rumbling Advanced",
+	"id":119,
+	"level":1,
+	"initiative":29,
+	"top":{
+		"persist"{
+			"heal":4,
+			"range":2
 		},
-		element:"earth"
+		"element":["earth"]
 	},
-	bottom:{
-		movement:{
-			range:2
+	"bottom":{
+		"movement":{
+			"range":2
 		},
-		element:["earth"],
-		text:"All adjacent allies and enemies suffer 1 damage"
+		"element":["earth"],
+		"text":"All adjacent allies and enemies suffer 1 damage"
 	}
 },
 {
-	name:"Massive Boulder",
-	id:120,
-	level:1,
-	initiative:87,
-	top:{
-		attack:{
-			power:3,
-			range:3
+	"name":"Massive Boulder",
+	"id":120,
+	"level":1,
+	"initiative":87,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":3
 		},
-		text:"All allies and enemies adjacent to the target suffer 1 damage",
-		element:"earth"
+		"text":"All allies and enemies adjacent to the target suffer 1 damage",
+		"element":["earth"]
 	},
-	bottom:{
-		movement:{
-			range:4
+	"bottom":{
+		"movement":{
+			"range":4
 		}
 	}
 },
 {
-	name:"Backup Ammunition",
-	id:121,
-	level:1,
-	initiative:77,
-	top:{
-		defense:{
-			remainTime:4,
-			experience:[0,1,2,3]
-		}
-		text:"Add 1 target to your next four ranged Attack actions",
-		remove:true
+	"name":"Backup Ammunition",
+	"id":121,
+	"level":1,
+	"initiative":77,
+	"top":{
+		"persist"{
+			"remainTime":4,
+			"persistExperience":[0,1,2,3]
+		},
+		"text":"Add 1 target to your next four ranged Attack actions",
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			range:3
-		}
-	}
-},
-{
-	name:"Rock Tunnel",
-	id:122,
-	level:1,
-	initiative:41,
-	top:{
-		experience:1,
-		text:"Destroy one adjacent obstacle"
-	},
-	bottom:{
-		movement:{
-			range:5,
-			jump:true
-		},
-		experience:1,
-		text:"Move and immobilize all enemies moved through"
-	}
-},
-{
-	name:"Unstable Upheaval",
-	id:123,
-	level:1,
-	initiative:13,
-	top:{
-		attack:{
-			power:3
-			aoe:[1,2,3,4,5,6]
-		},
-		experience:1,
-		text:"Target all adjacent enemies. Spend Earth to target all enemies up to two hexes away instead and gain 1 xp",
-		element:"fire"
-		remove:true
-	},
-	bottom:{
-		defense:{
-			shield:2
-		},
-		experience:2,
-		text:"Shield self and allies 2, all allies suffer 1 damage"
-	}
-},
-{
-	name:"Crater",
-	id:124,
-	level:1,
-	initiative:61,
-	top:{
-		attack:{
-			power:3,
-			range:3
-		},
-		experience:-1,
-		text:"Spend Earth to add Push 2 and gain 1 xp"
-	},
-	bottom:{
-		movement:{
-			range:4,
-			jump:true
-		},
-		experience:1,
-		text:"All adjacent allies and enemies suffer 1 damage, move 4, then all adjacent allies and enemies suffer 1 damage. Spend Earth to make inflict 2 damage instead, and gain 1 xp",
-		remove:true
-	}
-},
-{
-	name:"Dirt Tornado",
-	id:125,
-	level:1,
-	initiative:82,
-	top:{
-		attack:{
-			power:1,
-			range:2,
-			aoe:[0,1,2,3,4,5,6]
-		},
-		experience:-1,
-		text:"Target a hexagon of hexes within 2 hexes of you. Muddle all allies and enemies in the targeted area. Spend Earth to add 1 power and gain 1 xp.",
-		element:"fire"
-		remove:true
-	},
-	bottom:{
-		movement:{
-			range:3
+	"bottom":{
+		"movement":{
+			"range":3
 		}
 	}
 },
 {
-	name:"Earthen Clod",
-	id:126,
-	level:1,
-	initiative:38,
-	top:{
-		attack:{
-			power:2,
-			range:5
-		},
-		experience:-1,
-		text:"Spend Earth to add immobilize and gain 1 xp"
+	"name":"Rock Tunnel",
+	"id":122,
+	"level":1,
+	"initiative":41,
+	"top":{
+		"experience":1,
+		"text":"Destroy one adjacent obstacle"
 	},
-	bottom:{
-		defense:{
-			heal:2,
-			range:3
+	"bottom":{
+		"movement":{
+			"range":5,
+			"jump":true
+		},
+		"experience":1,
+		"text":"Move and immobilize all enemies moved through"
+	}
+},
+{
+	"name":"Unstable Upheaval",
+	"id":123,
+	"level":1,
+	"initiative":13,
+	"top":{
+		"attack":{
+			"power":3,
+			"aoe":[1,2,3,4,5,6]
+		},
+		"experience":1,
+		"text":"Target all adjacent enemies. Spend Earth to target all enemies up to two hexes away instead and gain 1 xp",
+		"element":["fire"],
+		"remove":true
+	},
+	"bottom":{
+		"persist"{
+			"shield":2
+		},
+		"experience":2,
+		"text":"Shield self and allies 2, all allies suffer 1 damage"
+	}
+},
+{
+	"name":"Crater",
+	"id":124,
+	"level":1,
+	"initiative":61,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":3
+		},
+		"experience":-1,
+		"text":"Spend Earth to add Push 2 and gain 1 xp"
+	},
+	"bottom":{
+		"movement":{
+			"range":4,
+			"jump":true
+		},
+		"experience":1,
+		"text":"All adjacent allies and enemies suffer 1 damage, move 4, then all adjacent allies and enemies suffer 1 damage. Spend Earth to make inflict 2 damage instead, and gain 1 xp",
+		"remove":true
+	}
+},
+{
+	"name":"Dirt Tornado",
+	"id":125,
+	"level":1,
+	"initiative":82,
+	"top":{
+		"attack":{
+			"power":1,
+			"range":2,
+			"aoe":[0,1,2,3,4,5,6]
+		},
+		"experience":-1,
+		"text":"Target a hexagon of hexes within 2 hexes of you. Muddle all allies and enemies in the targeted area. Spend Earth to add 1 power and gain 1 xp.",
+		"element":["fire"],
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":3
 		}
 	}
 },
 {
-	name:"Heaving Swing",
-	id:127,
-	level:0,
-	initiative:57,
-	top:{
-		attack:{
-			power:3,
-			push:1
+	"name":"Earthen Clod",
+	"id":126,
+	"level":1,
+	"initiative":38,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":5
 		},
-		experience:-1,
-		text:"You may push the target into hexes containing obstacle, which destroys the obstacle, deals 2 damage to the to the target, and you gain 1xp"
+		"experience":-1,
+		"text":"Spend Earth to add immobilize and gain 1 xp"
 	},
-	bottom:{
-		text:"Add 1 power to all your ranged attacks this round"
-	}
-},
-{
-	name:"Forceful Storm",
-	id:128,
-	level:0,
-	initiative:53,
-	top:{
-		attack:{
-			power:3,
-			range:3,
-			condition:["disarm"],
-			aoe:[1,8,9]
-		},
-		experience:-1,
-		text:"Target a triangle of hexes within 3 hexes of you. Gain 1 xp for each enemy targeted",
-		element:"air",
-		remove:true
-	},
-	bottom:{
-		text:"Add 2 power to all your melee attacks this round"
-	}
-},
-{
-	name:"Nature's Lift",
-	id:129,
-	level:0,
-	initiative:64,
-	top:{
-		defense:{
-			power:2,
-			range:3,
-			targets:2
-		}
-	},
-	bottom:{
-		defense:{
-			remainTime:6,
-			experience:[1,3,5]
-		},
-		text:"On your next 6 ranged Attacks: spend Air to add 2 range",
-		remove:true
-	}
-},
-{
-	name:"Explosive Punch",
-	id:130,
-	level:2,
-	initiative:28,
-	top:{
-		attack:{
-			power:4
-		},
-		experience:2,
-		text:"Destroy one adjacent obstacle. Then attack all enemies adjacent to the destroyed obstacle.",
-		element:"earth",
-		remove:true
-	},
-	bottom:{
-		movement:{
-			range:4
+	"bottom":{
+		"persist"{
+			"heal":2,
+			"range":3
 		}
 	}
 },
 {
-	name:"Sentient Growth",
-	id:131,
-	level:2,
-	initiative:78,
-	top:{
-		attack:{
-			power:2,
-			range:3,
-			aoe:[1,8,9]
+	"name":"Heaving Swing",
+	"id":127,
+	"level":0,
+	"initiative":57,
+	"top":{
+		"attack":{
+			"power":3,
+			"push":1
 		},
-		defense:{
-			heal:2
+		"experience":-1,
+		"text":"You may push the target into hexes containing obstacle, which destroys the obstacle, deals 2 damage to the to the target, and you gain 1xp"
+	},
+	"bottom":{
+		"text":"Add 1 power to all your ranged attacks this round"
+	}
+},
+{
+	"name":"Forceful Storm",
+	"id":128,
+	"level":0,
+	"initiative":53,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":3,
+			"condition":["disarm"],
+			"aoe":[1,8,9]
+		},
+		"experience":-1,
+		"text":"Target a triangle of hexes within 3 hexes of you. Gain 1 xp for each enemy targeted",
+		"element":["air"],
+		"remove":true
+	},
+	"bottom":{
+		"text":"Add 2 power to all your melee attacks this round"
+	}
+},
+{
+	"name":"Nature's Lift",
+	"id":129,
+	"level":0,
+	"initiative":64,
+	"top":{
+		"persist"{
+			"power":2,
+			"range":3,
+			"targets":2
 		}
-		text:"Target a triangle of hexes within 3 hexes of you. Attack all enemies in the targeted area and then heal all allies in the targeted area."
 	},
-	bottom:{
-		movement:{
-			range:2
+	"bottom":{
+		"persist"{
+			"remainTime":6,
+			"persistExperience":[1,3,5]
 		},
-		defense:{
-			heal:1,
-			aoe:[1,2,3,4,5,6]
-		},
-		attack:{
-			power:1,
-			aoe:[1,2,3,4,5,6]
-		},
-		text:"Move 2, then heal all adjacent allies, then attack all adjacent enemies"
+		"text":"On your next 6 ranged Attacks: spend Air to add 2 range",
+		"remove":true
 	}
 },
 {
-	name:"Clear the Way",
-	id:132,
-	level:3,
-	initiative:43,
-	top:{
-		attack:{
-			power:2
+	"name":"Explosive Punch",
+	"id":130,
+	"level":2,
+	"initiative":28,
+	"top":{
+		"attack":{
+			"power":4
 		},
-		experience:1,
-		text:"Move one adjacent single-hex obstacle to an empty hex within Range 4, then target all enemies adjacent to the moved obstacle. Spend Earth to add 1 power and gain 1 xp."
+		"experience":2,
+		"text":"Destroy one adjacent obstacle. Then attack all enemies adjacent to the destroyed obstacle.",
+		"element":["earth"],
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			range:5,
-			jump:true
-		},
-		experience:2,
-		text:"Destroy all obstacles and disarm all traps moved through",
-		remove:true
-	}
-},
-{
-	name:"Blunt Force",
-	id:133,
-	level:3,
-	initiative:21,
-	top:{
-		attack:{
-			power:4
-		},
-		experience:1,
-		text:"Spend Earth to add 4 power and gain 2 xp",
-		remove:true
-	},
-	bottom:{
-		movement:{
-			range:2
-		},
-		defense:{
-			retaliate:1
-		},
-		experience:1
-	}
-},
-{
-	name:"Rock Slide",
-	id:134,
-	level:4,
-	initiative:81,
-	top:{
-		experience:1,
-		text:"Create three single-hex obstacles in empty hexes within Range 4. All allies and enemies adjacnet to one or more of these obstacles suffer 2 damage.",
-		element:["earth"]
-	},
-	bottom:{
-		movement:{
-			range:6
-		},
-		text:"The movement must be in a straight line"
-	}
-},
-{
-	name:"Kinetic Assault",
-	id:135,
-	level:4,
-	initiative:19,
-	top:{
-		attack:{
-			power:4
-		},
-		movement:{
-			range:1
-		}
-		text:"Move 1, then Attack 4"
-	},
-	bottom:{
-		defense:{
-			retaliate:3,
-			range:3
-		},
-		experience:2,
-		remove:true
-	}
-},
-{
-	name:"Petrify",
-	id:136,
-	level:5,
-	initiative:47,
-	top:{
-		experience:2,
-		text:"Kill one normal enemy within Range 4. Create one single-hex obstacle in the hex in which the enemy died.",
-		element:"earth",
-		remove:true
-	},
-	bottom:{
-		movement:{
-			range:3
-		},
-		attack:{
-			condition:["immobilize"],
-			aoe:{1,2,3,4,5,6]
+	"bottom":{
+		"movement":{
+			"range":4
 		}
 	}
 },
 {
-	name:"Stone Pummel",
-	id:137,
-	level:5,
-	initiative:32,
-	top:{
-		attack:{
-			power:3,
-			condition:["muddle"],
-			aoe:[1,2,4,5]
+	"name":"Sentient Growth",
+	"id":131,
+	"level":2,
+	"initiative":78,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":3,
+			"aoe":[1,8,9]
 		},
-		experience:1,
-		text:"Gain 1 xp for each enemy targeted"
+		"persist"{
+			"heal":2
+		},
+		"text":"Target a triangle of hexes within 3 hexes of you. Attack all enemies in the targeted area and then heal all allies in the targeted area."
 	},
-	bottom:{
-		defense:{
-			remainTime:4,
-			experience:[0,1,2,3]
+	"bottom":{
+		"movement":{
+			"range":2
 		},
-		text:"On your next four melee attacks when possible, destroy an adjacent obstacle to add 3 power",
-		remove:true
+		"persist"{
+			"heal":1,
+			"aoe":[1,2,3,4,5,6]
+		},
+		"attack":{
+			"power":1,
+			"aoe":[1,2,3,4,5,6]
+		},
+		"text":"Move 2, then heal all adjacent allies, then attack all adjacent enemies"
 	}
 },
 {
-	name:"Dig Pit",
-	id:138,
-	level:6,
-	initiative:78,
-	top:{
-		trap:{
-			power:2,
-			condition:["stun"]
+	"name":"Clear the Way",
+	"id":132,
+	"level":3,
+	"initiative":43,
+	"top":{
+		"attack":{
+			"power":2
 		},
-		attack:{
-			condition:["muddle"],
-			aoe:[1,2,3,4,5,6]
-		},
-		text:"Gain 1 xp for each enemy targeted"
+		"experience":1,
+		"text":"Move one adjacent single-hex obstacle to an empty hex within Range 4, then target all enemies adjacent to the moved obstacle. Spend Earth to add 1 power and gain 1 xp."
 	},
-	bottom:{
-		movement:{
-			range:2
+	"bottom":{
+		"movement":{
+			"range":5,
+			"jump":true
 		},
-		defense:{
-			condition:["invisible"]
+		"experience":2,
+		"text":"Destroy all obstacles and disarm all traps moved through",
+		"remove":true
+	}
+},
+{
+	"name":"Blunt Force",
+	"id":133,
+	"level":3,
+	"initiative":21,
+	"top":{
+		"attack":{
+			"power":4
+		},
+		"experience":1,
+		"text":"Spend Earth to add 4 power and gain 2 xp",
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":2
+		},
+		"persist"{
+			"retaliate":1
+		},
+		"experience":1
+	}
+},
+{
+	"name":"Rock Slide",
+	"id":134,
+	"level":4,
+	"initiative":81,
+	"top":{
+		"experience":1,
+		"text":"Create three single-hex obstacles in empty hexes within Range 4. All allies and enemies adjacnet to one or more of these obstacles suffer 2 damage.",
+		"element":["earth"]
+	},
+	"bottom":{
+		"movement":{
+			"range":6
+		},
+		"text":"The movement must be in a straight line"
+	}
+},
+{
+	"name":"Kinetic Assault",
+	"id":135,
+	"level":4,
+	"initiative":19,
+	"top":{
+		"attack":{
+			"power":4
+		},
+		"movement":{
+			"range":1
+		},
+		"text":"Move 1, then Attack 4"
+	},
+	"bottom":{
+		"persist"{
+			"retaliate":3,
+			"range":3
+		},
+		"experience":2,
+		"remove":true
+	}
+},
+{
+	"name":"Petrify",
+	"id":136,
+	"level":5,
+	"initiative":47,
+	"top":{
+		"experience":2,
+		"text":"Kill one normal enemy within Range 4. Create one single-hex obstacle in the hex in which the enemy died.",
+		"element":["earth"],
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":3
+		},
+		"attack":{
+			"condition":["immobilize"],
+			"aoe":[1,2,3,4,5,6]
 		}
 	}
 },
 {
-	name:"Cataclysm",
-	id:139,
-	level:6,
-	initiative:26,
-	top:{
-		attack:{
-			power:4,
-			condition:["immobilize"]
-			aoe:[1,2,3,9,10,11]
+	"name":"Stone Pummel",
+	"id":137,
+	"level":5,
+	"initiative":32,
+	"top":{
+		"attack":{
+			"power":3,
+			"condition":["muddle"],
+			"aoe":[1,2,4,5]
 		},
-		experience:-1,
-		text:"Immobilize all allies and enemies in the targeted area. Spend Earth to add 2 power, and gain 2 xp.",
-		remove:true
+		"experience":1,
+		"text":"Gain 1 xp for each enemy targeted"
 	},
-	bottom:{
-		movement:{
-			range:3
+	"bottom":{
+		"persist"{
+			"remainTime":4,
+			"persistExperience":[0,1,2,3]
 		},
-		text:"Spend Earth to add 3 movement"
+		"text":"On your next four melee attacks when possible, destroy an adjacent obstacle to add 3 power",
+		"remove":true
 	}
 },
 {
-	name:"Meteor"
-	id:140,
-	level:7,
-	initiative:23,
-	top:{
-		attack:{
-			power:4,
-			condition:["immobilize"]
+	"name":"Dig Pit",
+	"id":138,
+	"level":6,
+	"initiative":78,
+	"top":{
+		"trap":{
+			"power":2,
+			"condition":["stun"]
 		},
-		experience:2,
-		text:"Create one three-hex triangluar obstacle in empty hexas within Range 3. Target all enemies adjacent to the obstacles.",
-		element:"earth"
-		remove:true
+		"attack":{
+			"condition":["muddle"],
+			"aoe":[1,2,3,4,5,6]
+		},
+		"text":"Gain 1 xp for each enemy targeted"
 	},
-	bottom:{
-		movement:{
-			range:4,
-			jump:true
+	"bottom":{
+		"movement":{
+			"range":2
+		},
+		"persist"{
+			"condition":["invisible"]
 		}
 	}
 },
 {
-	name:"Brutal Momentum"
-	id:141,
-	level:7,
-	initiative:52,
-	top:{
-		attack:{
-			power:3,
-			push:2
+	"name":"Cataclysm",
+	"id":139,
+	"level":6,
+	"initiative":26,
+	"top":{
+		"attack":{
+			"power":4,
+			"condition":["immobilize"],
+			"aoe":[1,2,3,9,10,11]
 		},
-		text:"For each hex you cannot push the target because of a wall or obstacle, the target suggers 2 damage and you gain 1 xp.",
+		"experience":-1,
+		"text":"Immobilize all allies and enemies in the targeted area. Spend Earth to add 2 power, and gain 2 xp.",
+		"remove":true
 	},
-	bottom:{
-		text:"Add 1 power to all your ranged attacks this round. Spend Earth to add 2 power instead and gain 1 xp."
+	"bottom":{
+		"movement":{
+			"range":3
+		},
+		"text":"Spend Earth to add 3 movement"
 	}
 },
 {
-	name:"Rocky End"
-	id:142,
-	level:8,
-	initiative:37,
-	top:{
-		experience:2,
-		text:"Destroy all obstacles within Range 2. Spend Earth to use Range 3 and gain 1 xp. Then attack with power equal to twice the number of hexes the destroyed obstacles occupied.",
-		remove:true
-	},
-	bottom:{
-		movement:{
-			range:6
+	"name":"Meteor",
+	"id":140,
+	"level":7,
+	"initiative":23,
+	"top":{
+		"attack":{
+			"power":4,
+			"condition":["immobilize"]
 		},
-		text:"The movement must end in a hex adjacent to an obstacle."
-	}
-},
-{
-	name:"Lumbering Bash"
-	id:143,
-	level:8,
-	initiative:85,
-	top:{
-		movement:{
-			range:2
+		"experience":2,
+		"text":"Create one three-hex triangluar obstacle in empty hexas within Range 3. Target all enemies adjacent to the obstacles.",
+		"element":["earth"],
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":4,
+			"jump":true
 		}
-		attack:{
-			power:5
-		},
-		experience:1,
-		element:"earth"
-	},
-	bottom:{
-		defense:{
-			remainTime:5,
-			experience:[0,2,4]
-		},
-		remove:true
 	}
 },
 {
-	name:"Blind Destruction"
-	id:144,
-	level:9,
-	initiative:74,
-	top:{
-		attack:{
-			power:4,
-			range:4
+	"name":"Brutal Momentum",
+	"id":141,
+	"level":7,
+	"initiative":52,
+	"top":{
+		"attack":{
+			"power":3,
+			"push":2
 		},
-		text:"All allies and enemies adjacent to the target suffer damage equal to the damage the target suffered"
+		"text":"For each hex you cannot push the target because of a wall or obstacle, the target suggers 2 damage and you gain 1 xp."
 	},
-	bottom:{
-		movement:{
-			range:4
-		},
-		element:["earth"],
-		text:"All allies and enemies adjacent to any hexes you enter during the movement suffer 2 damage."
+	"bottom":{
+		"text":"Add 1 power to all your ranged attacks this round. Spend Earth to add 2 power instead and gain 1 xp."
 	}
 },
 {
-	name:"Pulverize"
-	id:145,
-	level:9,
-	initiative:31,
-	top:{
-		attack:{
-			power:3,
-			push:2,
-			aoe:[1,2,3,4,5,6]
-		},
-		text:"You may push the targets into hexes containing obstacles. In each case, the obstacle is destroyed, the target suffers 2 damage, and you gain 1 xp.",
-		remove:true
+	"name":"Rocky End",
+	"id":142,
+	"level":8,
+	"initiative":37,
+	"top":{
+		"experience":2,
+		"text":"Destroy all obstacles within Range 2. Spend Earth to use Range 3 and gain 1 xp. Then attack with power equal to twice the number of hexes the destroyed obstacles occupied.",
+		"remove":true
 	},
-	bottom:{
-		attack:{
-			power:2,
-			aoe:[1,2,3,4,5,6]
+	"bottom":{
+		"movement":{
+			"range":6
 		},
-		movement:{
-			range:5,
-			jump:true
+		"text":"The movement must end in a hex adjacent to an obstacle."
+	}
+},
+{
+	"name":"Lumbering Bash",
+	"id":143,
+	"level":8,
+	"initiative":85,
+	"top":{
+		"movement":{
+			"range":2
 		},
-		experience:2,
-		text:"Attack 2 all adjacent enemies, move 5 jump, then attack 3 all adjacent enemies"
+		"attack":{
+			"power":5
+		},
+		"experience":1,
+		"element":["earth"]
+	},
+	"bottom":{
+		"persist"{
+			"remainTime":5,
+			"persistExperience":[0,2,4]
+		},
+		"remove":true
+	}
+},
+{
+	"name":"Blind Destruction",
+	"id":144,
+	"level":9,
+	"initiative":74,
+	"top":{
+		"attack":{
+			"power":4,
+			"range":4
+		},
+		"text":"All allies and enemies adjacent to the target suffer damage equal to the damage the target suffered"
+	},
+	"bottom":{
+		"movement":{
+			"range":4
+		},
+		"element":["earth"],
+		"text":"All allies and enemies adjacent to any hexes you enter during the movement suffer 2 damage."
+	}
+},
+{
+	"name":"Pulverize",
+	"id":145,
+	"level":9,
+	"initiative":31,
+	"top":{
+		"attack":{
+			"power":3,
+			"push":2,
+			"aoe":[1,2,3,4,5,6]
+		},
+		"text":"You may push the targets into hexes containing obstacles. In each case, the obstacle is destroyed, the target suffers 2 damage, and you gain 1 xp.",
+		"remove":true
+	},
+	"bottom":{
+		"attack":{
+			"power":2,
+			"aoe":[1,2,3,4,5,6]
+		},
+		"movement":{
+			"range":5,
+			"jump":true
+		},
+		"experience":2,
+		"text":"Attack 2 all adjacent enemies, move 5 jump, then attack 3 all adjacent enemies"
 	}
 }
 ]

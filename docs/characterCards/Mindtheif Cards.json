@@ -1,602 +1,602 @@
 [
 {
-	name:"Submissive Affliction",
-	id:146,
-	level:1,
-	initiative:48,
-	top:{
-		attack:{
-			power:2
+	"name":"Submissive Affliction",
+	"id":146,
+	"level":1,
+	"initiative":48,
+	"top":{
+		"attack":{
+			"power":2
 		},
-		experience:1,
-		text:"Add 1 power for each negative condition on the target"
+		"experience":1,
+		"text":"Add 1 power for each negative condition on the target"
 	},
-	bottom:{
-		text:"Force one enemy within Range 5 to perform Attack 2, range +0 targeting another enemy with your controlling the action"
+	"bottom":{
+		"text":"Force one enemy within Range 5 to perform Attack 2, range +0 targeting another enemy with your controlling the action"
 	}
 },
 {
-	name:"Into the Night",
-	id:147,
-	level:1,
-	initiative:14,
-	top:{
-		loot:{
-			range:1
+	"name":"Into the Night",
+	"id":147,
+	"level":1,
+	"initiative":14,
+	"top":{
+		"loot":{
+			"range":1
 		},
-		element:"dark"
+		"element":["dark"]
 	},
-	bottom:{
-		defense:{
-			condition
+	"bottom":{
+		"persist"{
+			"condition":["invisible"]
 		}
 	}
 },
 {
-	name:"Fearsome Blade",
-	id:148,
-	level:1,
-	initiative:27,
-	top:{
-		attack:{
-			power:2,
-			push:3
+	"name":"Fearsome Blade",
+	"id":148,
+	"level":1,
+	"initiative":27,
+	"top":{
+		"attack":{
+			"power":2,
+			"push":3
 		},
-		experience:1
+		"experience":1
 	},
-	bottom:{
-		movement:{
-			range:4
+	"bottom":{
+		"movement":{
+			"range":4
 		},
-		attack:{
-			power:2
+		"attack":{
+			"power":2
 		},
-		experience:2,
-		remove:true
+		"experience":2,
+		"remove":true
 	}
 },
 {
-	name:"Feedback Loop",
-	id:149,
-	level:1,
-	initiative:79,
-	top:{
-		attack:{
-			power:1
+	"name":"Feedback Loop",
+	"id":149,
+	"level":1,
+	"initiative":79,
+	"top":{
+		"attack":{
+			"power":1
 		},
-		experience:1,
-		remainTime:99,
-		text:"Augment: on your melee attacks: Gain shield 1 for the rest of the round"
+		"experience":1,
+		"remain":true,
+		"text":"Augment: on your melee attacks: Gain shield 1 for the rest of the round"
 	},
-	bottom:{
-		movement:{
-			range:4,
-			jump:true
-		}
-		text:"If you end your movement in the same hex you started in, Muddle all enemies you moved through"
+	"bottom":{
+		"movement":{
+			"range":4,
+			"jump":true
+		},
+		"text":"If you end your movement in the same hex you started in, Muddle all enemies you moved through"
 	}
 },
 {
-	name:"Gnawing Horde",
-	id:150,
-	level:1,
-	initiative:82,
-	top:{
-		summon:{
-			health:6,
-			maxHealth:6,
-			speed:1,
-			power:2,
-			text:"Attacks deal poison"
+	"name":"Gnawing Horde",
+	"id":150,
+	"level":1,
+	"initiative":82,
+	"top":{
+		"summon":{
+			"health":6,
+			"maxHealth":6,
+			"speed":1,
+			"power":2,
+			"text":"Attacks deal poison"
 		},
-		experience:2,
-		reaminTime:99
-		text:"Additionaly target all enemies on the path to the primary target. Gain 1 xp for each enemy targeted",
-		remove:true
+		"experience":2,
+		"remainTime":99,
+		"text":"Additionaly target all enemies on the path to the primary target. Gain 1 xp for each enemy targeted",
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			range:4
-		}
-	}
-},
-{
-	name:"The Mind's Weakness",
-	id:151,
-	level:1,
-	initiative:75,
-	top:{
-		attack:{
-			power:1
-		},
-		experience:1,
-		remainTime:99,
-		text:"Augment: on your melee attacks: Add 2 power",
-	},
-	bottom:{
-		attack:{
-			power:1,
-			condition:["wound"]
+	"bottom":{
+		"movement":{
+			"range":4
 		}
 	}
 },
 {
-	name:"Parasitic Influence",
-	id:152,
-	level:1,
-	initiative:71,
-	top:{
-		attack:{
-			power:1
+	"name":"The Mind's Weakness",
+	"id":151,
+	"level":1,
+	"initiative":75,
+	"top":{
+		"attack":{
+			"power":1
 		},
-		experience:1,
-		text:"Augment: on your melee attacks: Heal 2 self"
+		"experience":1,
+		"remain":true,
+		"text":"Augment: on your melee attacks: Add 2 power"
 	},
-	bottom:{
-		text:"Force one enemy within Range 4 to perform move 1 with you controlling the action"
-	}
-},
-{
-	name:"Scurry",
-	id:153,
-	level:1,
-	initiative:20,
-	top:{
-		attack:{
-			power:1
-		},
-		movement:{
-			range:3
-		}
-		text:"Move 3 then Attack 1"
-	},
-	bottom:{
-		loot:{
-			range:2
-		},
-		experience:1,
-		remove:true
-	}
-},
-{
-	name:"Perverse Edge",
-	id:154,
-	level:1,
-	initiative:8,
-	top:{
-		attack:{
-			power:3
-		},
-		experience:-1,
-		text:"Add 2 power and gain 1 xp for each negative conidtion on the target.",
-		remove:true
-	},
-	bottom:{
-		attack:{
-			power:1,
-			range:2,
-			condition:["stun"]
-		},
-		element:"cold",
-		experience:1
-	}
-},
-{
-	name:"Empathetic Assault",
-	id:155,
-	level:1,
-	initiative:11,
-	top:{
-		attack:{
-			power:3,
-			range:5,
-			condition:["disarm"]
-		},
-		experience:2,
-		element:"cold",
-		remove:true
-	},
-	bottom:{
-		movement:{
-			range:2
-		},
-		defense:{
-			heal:2
+	"bottom":{
+		"attack":{
+			"power":1,
+			"condition":["wound"]
 		}
 	}
 },
 {
-	name:"Withering Claw",
-	id:156,
-	level:0,
-	initiative:77,
-	top:{
-		attack:{
-			power:1
+	"name":"Parasitic Influence",
+	"id":152,
+	"level":1,
+	"initiative":71,
+	"top":{
+		"attack":{
+			"power":1
 		},
-		experience:1,
-		text:"Augment: On your melee attacks: Add Mulddle and Poison",
+		"experience":1,
+		"text":"Augment: on your melee attacks: Heal 2 self"
 	},
-	bottom:{
-		attack:{
-			condition:["immobilize"]
+	"bottom":{
+		"text":"Force one enemy within Range 4 to perform move 1 with you controlling the action"
+	}
+},
+{
+	"name":"Scurry",
+	"id":153,
+	"level":1,
+	"initiative":20,
+	"top":{
+		"attack":{
+			"power":1
 		},
-		movement:{
-			range:3
+		"movement":{
+			"range":3
+		},
+		"text":"Move 3 then Attack 1"
+	},
+	"bottom":{
+		"loot":{
+			"range":2
+		},
+		"experience":1,
+		"remove":true
+	}
+},
+{
+	"name":"Perverse Edge",
+	"id":154,
+	"level":1,
+	"initiative":8,
+	"top":{
+		"attack":{
+			"power":3
+		},
+		"experience":-1,
+		"text":"Add 2 power and gain 1 xp for each negative conidtion on the target.",
+		"remove":true
+	},
+	"bottom":{
+		"attack":{
+			"power":1,
+			"range":2,
+			"condition":["stun"]
+		},
+		"element":["cold"],
+		"experience":1
+	}
+},
+{
+	"name":"Empathetic Assault",
+	"id":155,
+	"level":1,
+	"initiative":11,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":5,
+			"condition":["disarm"]
+		},
+		"experience":2,
+		"element":["cold"],
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":2
+		},
+		"persist"{
+			"heal":2
 		}
 	}
 },
 {
-	name:"Possession",
-	id:157,
-	level:0,
-	initiative:51,
-	top:{
-		experience:2,
-		text:"One adjacent ally may perform Attack 6",
-		remove:true
-	},
-	bottom:{
-		text:"One ally within Range 3 may perform Move 4"
-	}
-},
-{
-	name:"Frigid Apparition",
-	id:158,
-	level:0,
-	initiative:29,
-	top:{
-		attack:{
-			power:3
+	"name":"Withering Claw",
+	"id":156,
+	"level":0,
+	"initiative":77,
+	"top":{
+		"attack":{
+			"power":1
 		},
-		experience:-1,
-		text:"Spend Cold to add Stun and gain 1 xp"
+		"experience":1,
+		"text":"Augment: On your melee attacks: Add Mulddle and Poison"
 	},
-	bottom:{
-		movement:{
-			range:4
+	"bottom":{
+		"attack":{
+			"condition":["immobilize"]
 		},
-		attack:{
-			condition:["stun"],
-			experience:1,
-			remove:1
+		"movement":{
+			"range":3
 		}
 	}
 },
 {
-	name:"Wretched Creature",
-	id:159,
-	level:2,
-	initiative:84,
-	top:{
-		summon:{
-			health:4,
-			maxHealth:4,
-			power:3,
-			speed:3
-		},
-		experience:2,
-		remainTime:99,
-		remove:true
+	"name":"Possession",
+	"id":157,
+	"level":0,
+	"initiative":51,
+	"top":{
+		"experience":2,
+		"text":"One adjacent ally may perform Attack 6",
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			range:3
-		},
-		text:"Spend Dark to curse one adjacent enemy"
+	"bottom":{
+		"text":"One ally within Range 3 may perform Move 4"
 	}
 },
 {
-	name:"Hostile Takeover",
-	id:160,
-	level:2,
-	initiative:9,
-	top:{
-		attack:{
-			power:2,
-			range:4,
-			condition:["immobilize"]
+	"name":"Frigid Apparition",
+	"id":158,
+	"level":0,
+	"initiative":29,
+	"top":{
+		"attack":{
+			"power":3
 		},
-		experience:1,
-		element:"cold"
+		"experience":-1,
+		"text":"Spend Cold to add Stun and gain 1 xp"
 	},
-	bottom:{
-		text:"Force one normal or elite enemy within Range 3 to perform its turn this round as if its allies were enemies and its enemies were allies.
-		experience:2,
-		remainTime:99,
-		remove:true
-	}
-},
-{
-	name:"Brain Leech",
-	id:161,
-	level:3,
-	initiative:16,
-	top:{
-		attack:{
-			power:4,
-			range:4
+	"bottom":{
+		"movement":{
+			"range":4
 		},
-		defense:{
-			heal:4
-		}
-		experience:2,
-		element:"dark",
-		remove:true
-	},
-	bottom:{
-		attack:{
-			power:1
-		},
-		defense:{
-			condition:["strengthen"]
+		"attack":{
+			"condition":["stun"],
+			"experience":1,
+			"remove":1
 		}
 	}
 },
 {
-	name:"Silent Scream",
-	id:162,
-	level:3,
-	initiative:73,
-	top:{
-		attack:{
-			power:2
+	"name":"Wretched Creature",
+	"id":159,
+	"level":2,
+	"initiative":84,
+	"top":{
+		"summon":{
+			"health":4,
+			"maxHealth":4,
+			"power":3,
+			"speed":3
 		},
-		experience:1,
-		text:"Augment: On your melee attack: Heal 2 with range 2",
-		reaminTime:99
+		"experience":2,
+		"remain":true,
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			range:3
+	"bottom":{
+		"movement":{
+			"range":3
 		},
-		attack:{
-			push:2,
-			aoe:[1,2,3,4,5,6]
-		},
-		text:"Spend Cold to add 1 Push and gain 1 xp"
+		"text":"Spend Dark to curse one adjacent enemy"
 	}
 },
 {
-	name:"Pilfer",
-	id:163,
-	level:4,
-	initiative:68,
-	top:{
-		loot:{
-			range:1
+	"name":"Hostile Takeover",
+	"id":160,
+	"level":2,
+	"initiative":9,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":4,
+			"condition":["immobilize"]
 		},
-		text:"Gain one additional money token from the suppply for each adjacent enemy"
+		"experience":1,
+		"element":["cold"]
 	},
-	bottom:{
-		attack:{
-			power:2
+	"bottom":{
+		"text":"Force one normal or elite enemy within Range 3 to perform its turn this round as if its allies were enemies and its enemies were allies",
+		"experience":2,
+		"remain":true,
+		"remove":true
+	}
+},
+{
+	"name":"Brain Leech",
+	"id":161,
+	"level":3,
+	"initiative":16,
+	"top":{
+		"attack":{
+			"power":4,
+			"range":4
+		},
+		"persist"{
+			"heal":4
+		},
+		"experience":2,
+		"element":["dark"],
+		"remove":true
+	},
+	"bottom":{
+		"attack":{
+			"power":1
+		},
+		"persist"{
+			"condition":["strengthen"]
 		}
-		movement:{
-			range:3
-		},
-		experience:2,
-		remove:true
 	}
 },
 {
-	name:"Cranium Overload",
-	id:164,
-	level:4,
-	initiative:5,
-	top:{
-		experience:-1,
-		text:"Kill one normal enemy within Range 4, then attack 2 all enemies adjacent to the killed target. Gain 1 xp for each enemy targeted",
-		remove:true
+	"name":"Silent Scream",
+	"id":162,
+	"level":3,
+	"initiative":73,
+	"top":{
+		"attack":{
+			"power":2
+		},
+		"experience":1,
+		"text":"Augment: On your melee attacks: Heal 2 with range 2",
+		"remainTime":99
 	},
-	bottom:{
-		movement:{
-			range:5
+	"bottom":{
+		"movement":{
+			"range":3
+		},
+		"attack":{
+			"push":2,
+			"aoe":[1,2,3,4,5,6]
+		},
+		"text":"Spend Cold to add 1 Push and gain 1 xp"
+	}
+},
+{
+	"name":"Pilfer",
+	"id":163,
+	"level":4,
+	"initiative":68,
+	"top":{
+		"loot":{
+			"range":1
+		},
+		"text":"Gain one additional money token from the suppply for each adjacent enemy"
+	},
+	"bottom":{
+		"attack":{
+			"power":2
+		},
+		"movement":{
+			"range":3
+		},
+		"experience":2,
+		"remove":true
+	}
+},
+{
+	"name":"Cranium Overload",
+	"id":164,
+	"level":4,
+	"initiative":5,
+	"top":{
+		"experience":-1,
+		"text":"Kill one normal enemy within Range 4, then attack 2 all enemies adjacent to the killed target. Gain 1 xp for each enemy targeted",
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":5
 		}
 	}
 },
 {
-	name:"Mass Hysteria",
-	id:165,
-	level:1,
-	initiative:12,
-	top:{
-		attack:{
-			power:1,
-			range:4,
-			target:4,
-			condition:["muddle"]
+	"name":"Mass Hysteria",
+	"id":165,
+	"level":1,
+	"initiative":12,
+	"top":{
+		"attack":{
+			"power":1,
+			"range":4,
+			"targets":4,
+			"condition":["muddle"]
 		},
-		experience:1,
-		element:"cold"
+		"experience":1,
+		"element":["cold"]
 	},
-	bottom:{
-		text:"You may have two Augments active at once",
-		remainTime:99,
-		remove:true
+	"bottom":{
+		"text":"You may have two Augments active at once",
+		"remain":true,
+		"remove":true
 	}
 },
 {
-	name:"Frozen Mind",
-	id:166,
-	level:5,
-	initiative:81,
-	top:{
-		attack:{
-			power:2
+	"name":"Frozen Mind",
+	"id":166,
+	"level":5,
+	"initiative":81,
+	"top":{
+		"attack":{
+			"power":2
 		},
-		experience:1,
-		text:"Augment: On your melee attacks: Spend Cold to add Stun"
+		"experience":1,
+		"text":"Augment: On your melee attacks: Spend Cold to add Stun"
 	},
-	bottom:{
-		text:"Force one enemy within Range 5 to perform Move 2"
+	"bottom":{
+		"text":"Force one enemy within Range 5 to perform Move 2"
 	}
 },
 {
-	name:"Corrupting Embrace",
-	id:167,
-	level:6,
-	initiative:39,
-	top:{
-		attack:{
-			power:1,
-			condition:["poison", "muddle"]
+	"name":"Corrupting Embrace",
+	"id":167,
+	"level":6,
+	"initiative":39,
+	"top":{
+		"attack":{
+			"power":1,
+			"condition":["poison", "muddle"]
 		},
-		text:"Attack 1 with Poison, then Attack 1 with Muddle"
+		"text":"Attack 1 with Poison, then Attack 1 with Muddle"
 	},
-	bottom:{
-		movement:{
-			range:4,
-			jump:true
+	"bottom":{
+		"movement":{
+			"range":4,
+			"jump":true
 		},
-		attack:{
-			condition:["poison"]
+		"attack":{
+			"condition":["poison"]
 		},
-		element:["dark"],
-		text:"Target all enemies moved through"
+		"element":["dark"],
+		"text":"Target all enemies moved through"
 	}
 },
 {
-	name:"Dark Frenzy",
-	id:168,
-	level:6,
-	initiative:10,
-	top:{
-		attack:{
-			power:2
+	"name":"Dark Frenzy",
+	"id":168,
+	"level":6,
+	"initiative":10,
+	"top":{
+		"attack":{
+			"power":2
 		},
-		text:"Spend cold to add 2 power and gain 1 xp. Spend Dark to add 2 power and gain 1 xp."
+		"text":"Spend cold to add 2 power and gain 1 xp. Spend Dark to add 2 power and gain 1 xp."
 	},
-	bottom:{
-		movement:{
-			range:3
+	"bottom":{
+		"movement":{
+			"range":3
 		},
-		attack:{
-			power:3,
-			range:3
+		"attack":{
+			"power":3,
+			"range":3
 		},
-		element:["cold"],
-		experience:1
+		"element":["cold"],
+		"experience":1
 	}
 },
 {
-	name:"Vicious Blood",
-	id:169,
-	level:7,
-	initiative:83,
-	top:{
-		attack:{
-			power:2
+	"name":"Vicious Blood",
+	"id":169,
+	"level":7,
+	"initiative":83,
+	"top":{
+		"attack":{
+			"power":2
 		},
-		experience:1,
-		text:"Augment: On your melee attacks: Gain 2 Retaliate"
+		"experience":1,
+		"text":"Augment: On your melee attacks: Gain 2 Retaliate"
 	},
-	bottom:{
-		movement:{
-			range:2
+	"bottom":{
+		"movement":{
+			"range":2
 		},
-		attack:{
-			power:2
+		"attack":{
+			"power":2
 		},
-		text:"Move 2 then Attack 2"
+		"text":"Move 2 then Attack 2"
 	}
 },
 {
-	name:"Psychic Projection",
-	id:170,
-	level:7,
-	initiative:92,
-	top:{
-		defense:{
-			heal:5,
-			sheild:1,
-			condition:["stun"]
+	"name":"Psychic Projection",
+	"id":170,
+	"level":7,
+	"initiative":92,
+	"top":{
+		"persist"{
+			"heal":5,
+			"shield":1,
+			"condition":["stun"]
 		}
 	},
-	bottom:{
-		text:"All your ranged attacks gain the effects of your Augments this round",
-		remove:true
+	"bottom":{
+		"text":"All your ranged attacks gain the effects of your Augments this round",
+		"remove":true
 	}
 },
 {
-	name:"Shared Nightmare",
-	id:171,
-	level:8,
-	initiative:7,
-	top:{
-		attack:{
-			power:3,
-			range:4,
-			target:2
+	"name":"Shared Nightmare",
+	"id":171,
+	"level":8,
+	"initiative":7,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":4,
+			"targets":2
 		},
-		experience:1,
-		text:"Spend Dark to add Poison and Curse",
-		element:"cold"
+		"experience":1,
+		"text":"Spend Dark to add Poison and Curse",
+		"element":["cold"]
 	},
-	bottom:{
-		movement:{
-			range:5
+	"bottom":{
+		"movement":{
+			"range":5
 		},
-		text:"Spend Cold to gain Sheild 1 and gain 1 xp"
+		"text":"Spend Cold to gain Sheild 1 and gain 1 xp"
 	}
 },
 {
-	name:"Domination",
-	id:172,
-	level:8,
-	initiative:13,
-	top:{
-		experience:1,
-		text:"One adjacent ally may perform Attack 4. This attack gains the effects of your Augments."
+	"name":"Domination",
+	"id":172,
+	"level":8,
+	"initiative":13,
+	"top":{
+		"experience":1,
+		"text":"One adjacent ally may perform Attack 4. This attack gains the effects of your Augments."
 	},
-	bottom:{
-		text:"Force one normal or elite enemy within Range 5 to perform its turn this round as though its allies were enemies and its enemies were allies, with you controlling its actions.",
-		experence:2,
-		remove:true
+	"bottom":{
+		"text":"Force one normal or elite enemy within Range 5 to perform its turn this round as though its allies were enemies and its enemies were allies, with you controlling its actions.",
+		"experience":2,
+		"remove":true
 	}
 },
 {
-	name:"Many as One",
-	id:146,
-	level:9,
-	initiative:91,
-	top:{
-		summon:{
-			health:9,
-			maxHealth:9,
-			speed:2,
-			text:"Attack power is half the current health (rounded up)"
+	"name":"Many as One",
+	"id":146,
+	"level":9,
+	"initiative":91,
+	"top":{
+		"summon":{
+			"health":9,
+			"maxHealth":9,
+			"speed":2,
+			"text":"Attack power is half the current health (rounded up)"
 		},
-		experience:2,
-		remove:true
+		"experience":2,
+		"remove":true
 	},
-	bottom:{
-		experence:2,
-		text:"All allies within Range 2 add Power equal to the number of allies within Range 2 of you to their attacks this round",
-		remove:true
+	"bottom":{
+		"experience":2,
+		"text":"All allies within Range 2 add Power equal to the number of allies within Range 2 of you to their attacks this round",
+		"remove":true
 	}
 },
 {
-	name:"Phantasmal Killer",
-	id:174,
-	level:9,
-	initiative:67,
-	top:{
-		attack:{
-			power:2
+	"name":"Phantasmal Killer",
+	"id":174,
+	"level":9,
+	"initiative":67,
+	"top":{
+		"attack":{
+			"power":2
 		},
-		experience:1,
-		text:"Augment: On your melee attacks: Spend Dark to kill one normal target instead"
+		"experience":1,
+		"text":"Augment: On your melee attacks: Spend Dark to kill one normal target instead"
 	},
-	bottom:{
-		movement:{
-			range:2
+	"bottom":{
+		"movement":{
+			"range":2
 		},
-		loot:{
-			1
+		"loot":{
+			"range":1
 		},
-		defense:{
-			condition:["invisible"]
+		"persist"{
+			"condition":["invisible"]
 		}
 	}
 }

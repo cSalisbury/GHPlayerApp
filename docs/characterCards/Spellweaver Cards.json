@@ -1,583 +1,583 @@
 [
 {
-	name:"Fire Orbs"
-	id:61,
-	level:1,
-	initiative:69,
-	top:{
-		attack:{
-			power:3,
-			range:3,
-			targets:3
+	"name":"Fire Orbs",
+	"id":61,
+	"level":1,
+	"initiative":69,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":3,
+			"targets":3
 		},
-		experience:-1,
-		text:"Gain 1 xp for each enemy targeted",
-		element:"fire",
-		remove:true
+		"experience":-1,
+		"text":"Gain 1 xp for each enemy targeted",
+		"element":["fire"],
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			range:3
+	"bottom":{
+		"movement":{
+			"range":3
 		}
 	}
 },
 {
-	name:"Impaling Eruption",
-	id:62,
-	level:1,
-	initiative:70,
-	top:{
-		attack:{
-			power:3,
-			range:4
+	"name":"Impaling Eruption",
+	"id":62,
+	"level":1,
+	"initiative":70,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":4
 		},
-		experience:-1,
-		text:"Additionaly target all enemies on the path to the primary target. Gain 1 xp for each enemy targeted",
-		element:"earth",
-		remove:true
+		"experience":-1,
+		"text":"Additionaly target all enemies on the path to the primary target. Gain 1 xp for each enemy targeted",
+		"element":["earth"],
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			range:4
+	"bottom":{
+		"movement":{
+			"range":4
 		}
 	}
 },
 {
-	name:"Reviving Ether",
-	id:63,
-	level:1,
-	initiative:80,
-	top:{
-		text:"Recover all your lost cards",
-		element:"dark",
-		remove:true,
-		recoverable:false
+	"name":"Reviving Ether",
+	"id":63,
+	"level":1,
+	"initiative":80,
+	"top":{
+		"text":"Recover all your lost cards",
+		"element":["dark"],
+		"remove":true,
+		"unrecoverable":true
 	},
-	bottom:{
-		movement:{
-			range:4,
-			jump:true
+	"bottom":{
+		"movement":{
+			"range":4,
+			"jump":true
 		}
 	}
 },
 {
-	name:"Freezing Nova",
-	id:64,
-	level:1,
-	initiative:21,
-	top:{
-		attack:{
-			power:2,
-			aoe:[1,2,3,4,5,6],
-			condition:["immobilize"]
+	"name":"Freezing Nova",
+	"id":64,
+	"level":1,
+	"initiative":21,
+	"top":{
+		"attack":{
+			"power":2,
+			"aoe":[1,2,3,4,5,6],
+			"condition":["immobilize"]
 		},
-		text:"Spend cold to add 1 power"
+		"text":"Spend cold to add 1 power"
 	},
-	bottom:{
-		defense:{
-			heal:4,
-			range:4
+	"bottom":{
+		"persist"{
+			"heal":4,
+			"range":4
 		},
-		element:"light",
-		remove:true
+		"element":["light"],
+		"remove":true
 	}
 },
 {
-	name:"Mana Bolt",
-	id:65,
-	level:1,
-	initiative:7,
-	top:{
-		attack:{
-			power:2,
-			range:3,
+	"name":"Mana Bolt",
+	"id":65,
+	"level":1,
+	"initiative":7,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":3
 		},
-		experience:-1,
-		text:"Spend any element to add one power and gain 1 xp",
-		remove:true
+		"experience":-1,
+		"text":"Spend any element to add one power and gain 1 xp",
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			heal:3,
-			range:1
+	"bottom":{
+		"movement":{
+			"heal":3,
+			"range":1
 		}
 	}
 },
 {
-	name:"Frost Armor",
-	id:66,
-	level:1,
-	initiative:20,
-	top:{
-		attack:{
-			power:2,
-			range:3
+	"name":"Frost Armor",
+	"id":66,
+	"level":1,
+	"initiative":20,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":3
 		},
-		experience:-1,
-		text:"Spend any element to add 1 power and gain 1 xp",
-		remove:true
+		"experience":-1,
+		"text":"Spend any element to add 1 power and gain 1 xp",
+		"remove":true
 	},
-	bottom:{
-		defense:{
-			shield:99,
-			remainTime:2,
-			experience:[0,1]
+	"bottom":{
+		"persist"{
+			"shield":99,
+			"remainTime":2,
+			"persistExperience":[0,1]
 		},
-		remove:true
+		"remove":true
 	}
 },
 {
-	name:"Flame Strike",
-	id:36,
-	level:1,
-	initiative:36,
-	top:{
-		attack:{
-			power:3,
-			range:2
+	"name":"Flame Strike",
+	"id":36,
+	"level":1,
+	"initiative":36,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":2
 		},
-		text:"Spend fire to inflict a wound",
+		"text":"Spend fire to inflict a wound"
 	},
-	bottom:{
-		attack:{
-			power:2,
-			range:2
+	"bottom":{
+		"attack":{
+			"power":2,
+			"range":2
 		}
 	}
 },
 {
-	name:"Ride the Wind",
-	id:68,
-	level:1,
-	initiative:83,
-	top:{
-		loot:{
-			range:1
+	"name":"Ride the Wind",
+	"id":68,
+	"level":1,
+	"initiative":83,
+	"top":{
+		"loot":{
+			"range":1
 		}
 	},
-	bottom:{
-		movement:{
-			range:8,
-			jump:true
+	"bottom":{
+		"movement":{
+			"range":8,
+			"jump":true
 		},
-		element:"air",
-		remove:true
+		"element":["air"],
+		"remove":true
 	}
 },
 {
-	name:"Crackling Air",
-	id:69,
-	level:0,
-	initiative:25,
-	top:{
-		defense:{
-			remainTime:4,
-			experience:[1,3]
+	"name":"Crackling Air",
+	"id":69,
+	"level":0,
+	"initiative":25,
+	"top":{
+		"persist"{
+			"remainTime":4,
+			"persistExperience":[1,3]
 		},
-		experience:-1,
-		text:"Add 1 power to your next four attacks, spend Air to add 2 power instead",
-		remove:true
+		"experience":-1,
+		"text":"Add 1 power to your next four attacks, spend Air to add 2 power instead",
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			range:3
+	"bottom":{
+		"movement":{
+			"range":3
 		},
-		remainTime:-1,
-		text:"Spend Fire to add retaliate 2 and keep card in play."
+		"remainTime":-1,
+		"text":"Spend Fire to add retaliate 2 and keep card in play."
 	}
 },
 {
-	name:"Hardened Spikes",
-	id:70,
-	level:0,
-	initiative:26,
-	top:{
-		defense:{
-			retaliate:2
+	"name":"Hardened Spikes",
+	"id":70,
+	"level":0,
+	"initiative":26,
+	"top":{
+		"persist"{
+			"retaliate":2
+		},
+		"experience":2,
+		"text":"Affect self and all adjacent allies. Spend Earth to add 1 retaliate.",
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":3
+		},
+		"remainTime":-1,
+		"text":"Spend Cold to add shield 2 and keep card in play"
+	}
+},
+{
+	"name":"Aid form the Either",
+	"id":71,
+	"level":0,
+	"initiative":91,
+	"top":{
+		"persist"{
+			"heal":3,
+			"range":3
 		}
-		experience:2,
-		text:"Affect self and all adjacent allies. Spend Earth to add 1 relatliate.",
-		remove:true
 	},
-	bottom:{
-		movement:{
-			range:3
+	"bottom":{
+		"summon":{
+			"health":2,
+			"maxHealth":2,
+			"speed":2,
+			"power":3,
+			"range":2
 		},
-		remainTime:-1,
-		text:"Spend Cold to add sheild 2 and keep card in play
+		"remain":true,
+		"experience":2,
+		"remove":true
 	}
 },
 {
-	name:"Aid form the Either",
-	id:71,
-	level:0,
-	initiative:91,
-	top:{
-		defense:{
-			heal:3,
-			range:3
-		}
+	"name":"Flashing Burst",
+	"id":72,
+	"level":2,
+	"initiative":26,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":3
+		},
+		"element":["light"]
 	},
-	bottom:{
-		summon:{
-			health:2,
-			maxHealth:2,
-			speed:2,
-			power:3,
-			range:2
-		},
-		remainTime:99,
-		experience:2,
-		remove:true
-	}
-},
-{
-	name:"Flashing Burst",
-	id:72,
-	level:2,
-	initiative:26,
-	top:{
-		attack:{
-			power:3,
-			range:3
-		},
-		element:"light"
-	},
-	bottom:{
-		movement:{
-			range:4
-		}
-	}
-},
-{
-	name:"Icy Blast",
-	id:73,
-	level:2,
-	initiative:66,
-	top:{
-		attack:{
-			power:2,
-			range:3,
-			condition:["muddle"],
-			aoe:[0,1,2,3,4,5,6]
-		},
-		element:"cold"
-		experience:2,
-		text:"Target a hexagon of hexes within 3 hexes of you.",
-		remove:true
-	},
-	bottom:{
-		defense:{
-			heal:6,
-			range:2
-		},
-		remove:true
-	}
-},
-{
-	name:"Cold Fire",
-	id:74,
-	level:3,
-	initiative:67,
-	top:{
-		attack:{
-			power:1,
-			range:3,
-			aoe:[1,8,9]
-		},
-		text:"Target a triangle of hexes within 3 hexes of you. Spend Fire to add 2 power, spend Cold to add Stun"
-	},
-	bottom:{
-		loot:{
-			range:2
-		},
-		remove:true
-	}
-},
-{
-	name:"Elemental Aid",
-	id:75,
-	level:3,
-	initiative:84,
-	top:{
-		defense:{
-			heal:3,
-			range:2
-		},
-		experience:-1,
-		text:"Spend earth to add 2 heal and gain 1 xp"
-	},
-	bottom:{
-		defense:{
-			sheild:2
-		},
-		remainTime:99,
-		text:"Shield any one ally. Spend Air to Shield all allies instead.",
-	}
-},
-{
-	name:"Spirit of Doom",
-	id:76,
-	level:4,
-	initiative:81,
-	top:{
-		attack:{
-			range:4,
-			condition:["curse"]
-		},
-		experience:-1,
-		text:"Spend Dark to kill one normal target instead and gain 1 xp",
-		remove:true
-	},
-	bottom:{
-		experience:1,
-		text:"Heal any one ally for half of their maximum hit point value (rounded down). Spend light to heal the ally for their total maximum hit point value",
-		remove:true
-	}
-},
-{
-	name:"Forked Beam",
-	id:77,
-	level:4,
-	initiative:20,
-	top:{
-		attack:{
-			power:2,
-			range:3,
-			targets:2
-		},
-		experience:1
-	},
-	bottom:{
-		movement:{
-			range:4
+	"bottom":{
+		"movement":{
+			"range":4
 		}
 	}
 },
 {
-	name:"Chromatic Explosion",
-	id:78,
-	level:5,
-	initiative:71,
-	top:{
-		attack:{
-			power:3,
-			range:3,
-			aoe:[1,8,9]
+	"name":"Icy Blast",
+	"id":73,
+	"level":2,
+	"initiative":66,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":3,
+			"condition":["muddle"],
+			"aoe":[0,1,2,3,4,5,6]
 		},
-		element:["air","cold","fire","earth","light","dark"],
-		experience:2,
-		text:"Target a triangle of hexes within 3 hexes of you",
-		remove:true
+		"element":["cold"],
+		"experience":2,
+		"text":"Target a hexagon of hexes within 3 hexes of you.",
+		"remove":true
 	},
-	bottom:{
-		movement:{
-			range:5
+	"bottom":{
+		"persist"{
+			"heal":6,
+			"range":2
+		},
+		"remove":true
+	}
+},
+{
+	"name":"Cold Fire",
+	"id":74,
+	"level":3,
+	"initiative":67,
+	"top":{
+		"attack":{
+			"power":1,
+			"range":3,
+			"aoe":[1,8,9]
+		},
+		"text":"Target a triangle of hexes within 3 hexes of you. Spend Fire to add 2 power, spend Cold to add Stun"
+	},
+	"bottom":{
+		"loot":{
+			"range":2
+		},
+		"remove":true
+	}
+},
+{
+	"name":"Elemental Aid",
+	"id":75,
+	"level":3,
+	"initiative":84,
+	"top":{
+		"persist"{
+			"heal":3,
+			"range":2
+		},
+		"experience":-1,
+		"text":"Spend earth to add 2 heal and gain 1 xp"
+	},
+	"bottom":{
+		"persist"{
+			"shield":2
+		},
+		"remain":true,
+		"text":"Shield any one ally. Spend Air to Shield all allies instead."
+	}
+},
+{
+	"name":"Spirit of Doom",
+	"id":76,
+	"level":4,
+	"initiative":81,
+	"top":{
+		"attack":{
+			"range":4,
+			"condition":["curse"]
+		},
+		"experience":-1,
+		"text":"Spend Dark to kill one normal target instead and gain 1 xp",
+		"remove":true
+	},
+	"bottom":{
+		"experience":1,
+		"text":"Heal any one ally for half of their maximum hit point value (rounded down). Spend light to heal the ally for their total maximum hit point value",
+		"remove":true
+	}
+},
+{
+	"name":"Forked Beam",
+	"id":77,
+	"level":4,
+	"initiative":20,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":3,
+			"targets":2
+		},
+		"experience":1
+	},
+	"bottom":{
+		"movement":{
+			"range":4
 		}
 	}
 },
 {
-	name:"Engulfed in Flames",
-	id:79,
-	level:5,
-	initiative:44,
-	top:{
-		attack:{
-			power:4,
-			range:3
+	"name":"Chromatic Explosion",
+	"id":78,
+	"level":5,
+	"initiative":71,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":3,
+			"aoe":[1,8,9]
 		},
-		element:["fire"]
+		"element":["air","cold","fire","earth","light","dark"],
+		"experience":2,
+		"text":"Target a triangle of hexes within 3 hexes of you",
+		"remove":true
 	},
-	bottom:{
-		defense:{
-			retaliate:3,
-			reaminTime:5,
-			experience:[0,2,4]
-		},
-		text:"Gain three retaliate on the next 5 melee attacks targeting you"
-		remove:true
-	}
-},
-{
-	name:"FlankingStrike",
-	id:80,
-	level:6,
-	initiative:96,
-	top:{
-		attack:{
-			power:4,
-			range:3,
-			condition:["immobilize"]
-		},
-		experience:-1,
-		text:"Spend light to make all enemies adjacent to the target suffer 2 damage and gain 1 xp"
-	},
-	bottom:{
-		summon:{
-			health:2,
-			maxHealth:2,
-			speed:3,
-			power:2,
-			range:3,
-			text:"Attacks add Fire. On death attack all adjacent enemies with power 3."
-		},
-		experience:2,
-		remainTime:99,
-		remove:true
-	}
-},
-{
-	name:"Frozen Night",
-	id:81,
-	level:6,
-	initiative:46,
-	top:{
-		attack:{
-			power:4,
-			aoe:[1,2,8,9,10]
-		},
-		experience:-1,
-		text:"Gain one xp for each enemy targeted",
-		element:["cold"],
-		remove:true
-	},
-	bottom:{
-		movement:{
-			range:2
-		},
-		text:"Spend dark to add 2 movement, add Invisibility, and gain 1 xp"
-	}
-},
-{
-	name:"Twin Restoration",
-	id:82,
-	level:7,
-	initiative:75,
-	top:{
-		text:"Recover up to 2 of your lost cards",
-		remove:true,
-		recoverable:false
-	},
-	bottom:{
-		defense:{
-			heal:3,
-			range:3,
-			targets:2
+	"bottom":{
+		"movement":{
+			"range":5
 		}
 	}
 },
 {
-	name:"Stone Fists",
-	id:83,
-	level:7,
-	initiative:62,
-	top:{
-		attack:{
-			power:6,
-			push:2,
-			condition:["immobilize"]
+	"name":"Engulfed in Flames",
+	"id":79,
+	"level":5,
+	"initiative":44,
+	"top":{
+		"attack":{
+			"power":4,
+			"range":3
 		},
-		experience:2,
-		text:"Spend Earth to add an extra target and gain 1 xp",
-		remove:true
+		"element":["fire"]
 	},
-	bottom:{
-		movement:{
-			range:3
+	"bottom":{
+		"persist"{
+			"retaliate":3,
+			"remainTime":5,
+			"persistExperience":[0,2,4]
 		},
-		defense:{
-			shield:1
-		},
-		text:"Spend Earth to add 1 movement, add 1 shield, and gain 1 xp"
+		"text":"Gain three retaliate on the next 5 melee attacks targeting you",
+		"remove":true
 	}
 },
 {
-	name:"Zephyr Wings",
-	id:84,
-	level:8,
-	initiative:85,
-	top:{
-		loot:{
-			range:2
+	"name":"FlankingStrike",
+	"id":80,
+	"level":6,
+	"initiative":96,
+	"top":{
+		"attack":{
+			"power":4,
+			"range":3,
+			"condition":["immobilize"]
 		},
-		experience:-1,
-		text:"Spend cold to change range to 3 instead and gain 1 xp. You may not loot more than four money tokens or treaure tiles with this action."
+		"experience":-1,
+		"text":"Spend light to make all enemies adjacent to the target suffer 2 damage and gain 1 xp"
 	},
-	bottom:{
-		movement:{
-			range:8,
-			jump:true
+	"bottom":{
+		"summon":{
+			"health":2,
+			"maxHealth":2,
+			"speed":3,
+			"power":2,
+			"range":3,
+			"text":"Attacks add Fire. On death attack all adjacent enemies with power 3."
 		},
-		experience:-1,
-		text:"Spend Air to add 3 movement and gain 1 xp",
-		remove:true
+		"experience":2,
+		"remain":true,
+		"remove":true
 	}
 },
 {
-	name:"Cold Front",
-	id:85,
-	level:8,
-	initiative:61,
-	top:{
-		attack:{
-			power:5,
-			range 2,
-			aoe:[14,4,0,1,8]
+	"name":"Frozen Night",
+	"id":81,
+	"level":6,
+	"initiative":46,
+	"top":{
+		"attack":{
+			"power":4,
+			"aoe":[1,2,8,9,10]
 		},
-		experience:2,
-		element:["cold"]
-		text:"Target a straight line of 5 hexes within 2 hexes of you",
-		remove:true
+		"experience":-1,
+		"text":"Gain one xp for each enemy targeted",
+		"element":["cold"],
+		"remove":true
 	},
-	bottom:{
-		defense:{
-			sheild:99,
-			retaliate:3,
-			range:3,
-			remainTime:3,
-			experience:[0,1,2]
+	"bottom":{
+		"movement":{
+			"range":2
 		},
-		text:"Suffer no damage and gain retaliate 3 with range 3 for the next attacks targeting you that deal damage",
-		remove:2
+		"text":"Spend dark to add 2 movement, add Invisibility, and gain 1 xp"
 	}
 },
 {
-	name:"Black Hole",
-	id:86,
-	level:9,
-	initiative:41,
-	top:{
-		attack:{
-			power:4,
-			range:3,
-			aoe:[1,8,9]
-		},
-		experience:-1,
-		text:"Target a triangle of hexes within 3 hexes of you and gain 1 xp for each enemy targeted. Spend Dark to kill all normal enemies in the targeted area",
-		remove:true
+	"name":"Twin Restoration",
+	"id":82,
+	"level":7,
+	"initiative":75,
+	"top":{
+		"text":"Recover up to 2 of your lost cards",
+		"remove":true,
+		"unrecoverable":true
 	},
-	bottom:{
-		text:"Choose a hex within range 4. Target all enemies within range 4 of that hex and pull them towards it with Pull 2."
+	"bottom":{
+		"persist"{
+			"heal":3,
+			"range":3,
+			"targets":2
+		}
 	}
 },
 {
-	name:"Inferno",
-	id:87,
-	level:9,
-	initiative:19,
-	top:{
-		attack:{
-			power:3,
+	"name":"Stone Fists",
+	"id":83,
+	"level":7,
+	"initiative":62,
+	"top":{
+		"attack":{
+			"power":6,
+			"push":2,
+			"condition":["immobilize"]
 		},
-		experience:-1,
-		text:"Target all enemies in the same room as you. All allies in the smae room as you suffer 2 damage. Spend Fire to add 1 power and gain one xp.",
+		"experience":2,
+		"text":"Spend Earth to add an extra target and gain 1 xp",
+		"remove":true
 	},
-	bottom:{
-		defense:{
-			retaliate:2,
-			range:3
+	"bottom":{
+		"movement":{
+			"range":3
 		},
-		text:"Affect self and all allies"
+		"persist"{
+			"shield":1
+		},
+		"text":"Spend Earth to add 1 movement, add 1 shield, and gain 1 xp"
+	}
+},
+{
+	"name":"Zephyr Wings",
+	"id":84,
+	"level":8,
+	"initiative":85,
+	"top":{
+		"loot":{
+			"range":2
+		},
+		"experience":-1,
+		"text":"Spend cold to change range to 3 instead and gain 1 xp. You may not loot more than four money tokens or treaure tiles with this action."
+	},
+	"bottom":{
+		"movement":{
+			"range":8,
+			"jump":true
+		},
+		"experience":-1,
+		"text":"Spend Air to add 3 movement and gain 1 xp",
+		"remove":true
+	}
+},
+{
+	"name":"Cold Front",
+	"id":85,
+	"level":8,
+	"initiative":61,
+	"top":{
+		"attack":{
+			"power":5,
+			"range":2,
+			"aoe":[14,4,0,1,8]
+		},
+		"experience":2,
+		"element":["cold"],
+		"text":"Target a straight line of 5 hexes within 2 hexes of you",
+		"remove":true
+	},
+	"bottom":{
+		"persist"{
+			"shield":99,
+			"retaliate":3,
+			"range":3,
+			"remainTime":3,
+			"persistExperience":[0,1,2]
+		},
+		"text":"Suffer no damage and gain retaliate 3 with range 3 for the next attacks targeting you that deal damage",
+		"remove":2
+	}
+},
+{
+	"name":"Black Hole",
+	"id":86,
+	"level":9,
+	"initiative":41,
+	"top":{
+		"attack":{
+			"power":4,
+			"range":3,
+			"aoe":[1,8,9]
+		},
+		"experience":-1,
+		"text":"Target a triangle of hexes within 3 hexes of you and gain 1 xp for each enemy targeted. Spend Dark to kill all normal enemies in the targeted area",
+		"remove":true
+	},
+	"bottom":{
+		"text":"Choose a hex within range 4. Target all enemies within range 4 of that hex and pull them towards it with Pull 2."
+	}
+},
+{
+	"name":"Inferno",
+	"id":87,
+	"level":9,
+	"initiative":19,
+	"top":{
+		"attack":{
+			"power":3
+		},
+		"experience":-1,
+		"text":"Target all enemies in the same room as you. All allies in the smae room as you suffer 2 damage. Spend Fire to add 1 power and gain one xp."
+	},
+	"bottom":{
+		"persist"{
+			"retaliate":2,
+			"range":3
+		},
+		"text":"Affect self and all allies"
 	}
 }
 ]

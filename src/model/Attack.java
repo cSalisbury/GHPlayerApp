@@ -1,24 +1,25 @@
 package model;
 
 public class Attack extends BaseAction {
-	private int strength;
+	private int power;
 	private int range;
 	private int targets;
 	private int pierce;
-	// private ?? pattern;
-	private boolean aoe;
-	private boolean remain;
+	private int push;
+	private int pull;
+	private int[] aoe;
+	private String[] condition;
 
 	public Attack() {
 
 	}
 
-	public int getStrength() {
-		return strength;
+	public int getPower() {
+		return power;
 	}
 
-	public void setStrength(final int strength) {
-		this.strength = strength;
+	public void setPower(final int power) {
+		this.power = power;
 	}
 
 	public int getRange() {
@@ -45,26 +46,42 @@ public class Attack extends BaseAction {
 		this.pierce = pierce;
 	}
 
-	public boolean isAoe() {
+	public int getPush() {
+		return push;
+	}
+
+	public void setPush(final int push) {
+		this.push = push;
+	}
+
+	public int getPull() {
+		return pull;
+	}
+
+	public void setPull(final int pull) {
+		this.pull = pull;
+	}
+
+	public int[] getAoe() {
 		return aoe;
 	}
 
-	public void setAoe(final boolean aoe) {
+	public void setAoe(final int[] aoe) {
 		this.aoe = aoe;
 	}
 
-	public boolean isRemain() {
-		return remain;
+	public String[] getCondition() {
+		return condition;
 	}
 
-	public void setRemain(final boolean remain) {
-		this.remain = remain;
+	public void setCondition(final String[] condition) {
+		this.condition = condition;
 	}
 
 	@Override
 	public String toString() {
-		return "Attack [strength: " + this.strength + ",  range: " + this.range + ", targets: " + this.targets
-				+ ", pierce: " + this.pierce + ", experience: " + this.getExperience() + ", is aoe: " + this.aoe
-				+ ", is remain: " + this.remain + ", is destroy: " + this.isDestroy() + "]";
+		return "Attack [power: " + this.power + ",  range: " + this.range + ", targets: " + this.targets + ", pierce: "
+				+ this.pierce + ", is aoe: " + this.aoe + ", condition: " + condition + ", experience: "
+				+ this.getExperience() + "]";
 	}
 }

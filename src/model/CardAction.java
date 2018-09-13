@@ -6,7 +6,11 @@ public class CardAction {
 	private Loot loot;
 	private Persist persist;
 	// private Summon summon;
+	// private Trap trap
 	private String text;
+	private boolean remain;
+	private boolean remove;
+	private boolean unrecoverable;
 
 	public CardAction() {
 
@@ -52,9 +56,34 @@ public class CardAction {
 		this.text = text;
 	}
 
+	public boolean isRemain() {
+		return remain;
+	}
+
+	public void setRemain(final boolean remain) {
+		this.remain = remain;
+	}
+
+	public boolean isRemove() {
+		return remove;
+	}
+
+	public void setRemove(final boolean remove) {
+		this.remove = remove;
+	}
+
+	public boolean isUnrecoverable() {
+		return unrecoverable;
+	}
+
+	public void setUnrecoverable(final boolean unrecoverable) {
+		this.unrecoverable = unrecoverable;
+	}
+
 	@Override
 	public String toString() {
 		return "CardAction [attack: " + this.attack + ",  movement: " + this.movement + ", loot: " + this.loot
-				+ ", persist: " + this.persist + ", text: " + this.text + "]";
+				+ ", persist: " + this.persist + ", text: " + this.text + ", remain: " + remain + ", remove: " + remove
+				+ ", unrecoverable: " + unrecoverable + "]";
 	}
 }

@@ -17,7 +17,6 @@ public class Loot extends BaseAction {
 
 	@Override
 	public String toString() {
-		return "Loot [range: " + this.range + ", experience: " + this.getExperience() + ", is destroy: "
-				+ this.isDestroy() + "]";
+		return "Loot [range: " + this.range + ", experience: " + this.getExperience() + "]";
 	}
 }

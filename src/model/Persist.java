@@ -1,24 +1,25 @@
 package model;
 
-import java.util.Map;
-
 public class Persist extends BaseAction {
-	private int lifetime;
+	private int remainTime;
 	private String trigger;
-	private int armor;
-	private String buff;
-	private Map<Integer, Integer> persistExperience;
+	private int sheild;
+	private int retaliate;
+	private int heal;
+	private int range;
+	private String[] condition;
+	private int[] persistExperience;
 
 	public Persist() {
 
 	}
 
-	public int getLifetime() {
-		return lifetime;
+	public int getRemainTime() {
+		return remainTime;
 	}
 
-	public void setLifetime(final int lifetime) {
-		this.lifetime = lifetime;
+	public void setRemainTime(final int remainTime) {
+		this.remainTime = remainTime;
 	}
 
 	public String getTrigger() {
@@ -30,33 +31,58 @@ public class Persist extends BaseAction {
 	}
 
 	public int getInitiative() {
-		return armor;
+		return sheild;
 	}
 
-	public void setInitiative(final int armor) {
-		this.armor = armor;
+	public void setInitiative(final int sheild) {
+		this.sheild = sheild;
 	}
 
-	public String getBuff() {
-		return buff;
+	public int getRetaliate() {
+		return retaliate;
 	}
 
-	public void setBuff(final String buff) {
-		this.buff = buff;
+	public void setRetaliate(final int retaliate) {
+		this.retaliate = retaliate;
 	}
 
-	public Map<Integer, Integer> getPersistExperience() {
+	public int getHeal() {
+		return heal;
+	}
+
+	public void setHeal(final int heal) {
+		this.heal = heal;
+	}
+
+	public int getRange() {
+		return range;
+	}
+
+	public void setRange(final int range) {
+		this.range = range;
+	}
+
+	public String[] getCondition() {
+		return condition;
+	}
+
+	public void setCondition(final String[] condition) {
+		this.condition = condition;
+	}
+
+	public int[] getPersistExperience() {
 		return persistExperience;
 	}
 
-	public void setExperience(final Map<Integer, Integer> persistExperience) {
+	public void setExperience(final int[] persistExperience) {
 		this.persistExperience = persistExperience;
 	}
 
 	@Override
 	public String toString() {
-		return "Persist [lifetime: " + this.lifetime + ",  trigger: " + this.trigger + ", armor: " + this.armor
-				+ ", buff: " + this.buff + ", experience: " + this.persistExperience + ", is destroy: "
-				+ this.isDestroy() + "]";
+		return "Persist [remainTime: " + this.remainTime + ",  trigger: " + this.trigger + ", sheild: " + this.sheild
+				+ ", retaliate: " + this.retaliate + ", heal: " + this.heal + ", range: " + this.range + ", condition: "
+				+ this.condition + ", persistExperience: " + this.persistExperience + ", experience: "
+				+ this.getExperience() + "]";
 	}
 }

@@ -2,11 +2,11 @@ package model;
 
 public class CharacterCard {
 	private String name;
+	private int id;
 	private int level;
 	private int initiative;
-	private CardAction topAction;
-	private CardAction bottomAction;
-	private int id;
+	private CardAction top;
+	private CardAction bottom;
 
 	public CharacterCard() {
 
@@ -18,6 +18,14 @@ public class CharacterCard {
 
 	public void setName(final String name) {
 		this.name = name;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(final int id) {
+		this.id = id;
 	}
 
 	public int getLevel() {
@@ -36,33 +44,25 @@ public class CharacterCard {
 		this.initiative = initiative;
 	}
 
-	public CardAction getTopAction() {
-		return topAction;
+	public CardAction getTop() {
+		return top;
 	}
 
-	public void setTopAction(final CardAction topAction) {
-		this.topAction = topAction;
+	public void setTop(final CardAction top) {
+		this.top = top;
 	}
 
-	public CardAction getBottomAction() {
-		return bottomAction;
+	public CardAction getBottom() {
+		return bottom;
 	}
 
-	public void setBottomAction(final CardAction bottomAction) {
-		this.bottomAction = bottomAction;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(final int id) {
-		this.id = id;
+	public void setBottom(final CardAction bottom) {
+		this.bottom = bottom;
 	}
 
 	@Override
 	public String toString() {
-		return "CharacterCard [name: " + this.name + ",  level: " + this.level + ", initiative: " + this.initiative
-				+ ", topAction: " + this.topAction + ", bottomAction: " + this.bottomAction + ", id: " + this.id + "]";
+		return "CharacterCard [name: " + this.name + ", id: " + this.id + ",  level: " + this.level + ", initiative: "
+				+ this.initiative + ", top: " + this.top + ", bottom: " + this.bottom + "]";
 	}
 }
