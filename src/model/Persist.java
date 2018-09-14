@@ -3,10 +3,12 @@ package model;
 public class Persist extends BaseAction {
 	private int remainTime;
 	private String trigger;
-	private int sheild;
+	private int shield;
 	private int retaliate;
 	private int heal;
 	private int range;
+	private int targets;
+	private int[] aoe;
 	private String[] condition;
 	private int[] persistExperience;
 
@@ -30,12 +32,12 @@ public class Persist extends BaseAction {
 		this.trigger = trigger;
 	}
 
-	public int getInitiative() {
-		return sheild;
+	public int getShield() {
+		return shield;
 	}
 
-	public void setInitiative(final int sheild) {
-		this.sheild = sheild;
+	public void setShield(final int shield) {
+		this.shield = shield;
 	}
 
 	public int getRetaliate() {
@@ -62,6 +64,22 @@ public class Persist extends BaseAction {
 		this.range = range;
 	}
 
+	public int getTargets() {
+		return targets;
+	}
+
+	public void setTargets(final int targets) {
+		this.targets = targets;
+	}
+
+	public int[] getAoe() {
+		return aoe;
+	}
+
+	public void setAoe(final int[] aoe) {
+		this.aoe = aoe;
+	}
+
 	public String[] getCondition() {
 		return condition;
 	}
@@ -80,9 +98,9 @@ public class Persist extends BaseAction {
 
 	@Override
 	public String toString() {
-		return "Persist [remainTime: " + this.remainTime + ",  trigger: " + this.trigger + ", sheild: " + this.sheild
-				+ ", retaliate: " + this.retaliate + ", heal: " + this.heal + ", range: " + this.range + ", condition: "
-				+ this.condition + ", persistExperience: " + this.persistExperience + ", experience: "
-				+ this.getExperience() + "]";
+		return "Persist [remainTime: " + this.remainTime + ",  trigger: " + this.trigger + ", shield: " + this.shield
+				+ ", retaliate: " + this.retaliate + ", heal: " + this.heal + ", range: " + this.range + ", targets: "
+				+ this.targets + ", is aoe: " + this.aoe + ", condition: " + this.condition + ", persistExperience: "
+				+ this.persistExperience + "]";
 	}
 }

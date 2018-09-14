@@ -35,7 +35,6 @@ public class Movement extends BaseAction {
 
 	@Override
 	public String toString() {
-		return "Movement [range: " + this.range + ", experience: " + this.getExperience() + ", is jump: " + this.jump
-				+ ", is fly: " + this.fly + ", is destroy: " + this.isDestroy() + "]";
+		return "Movement [range: " + this.range + ", is jump: " + this.jump + ", is fly: " + this.fly + "]";
 	}
 }

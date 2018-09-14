@@ -5,9 +5,11 @@ public class CardAction {
 	private Movement movement;
 	private Loot loot;
 	private Persist persist;
-	// private Summon summon;
-	// private Trap trap
+	private Summon summon;
+	private Trap trap;
+	private int experience;
 	private String text;
+	private String[] element;
 	private boolean remain;
 	private boolean remove;
 	private boolean unrecoverable;
@@ -32,11 +34,11 @@ public class CardAction {
 		this.movement = movement;
 	}
 
-	public Loot getInitiative() {
+	public Loot getLoot() {
 		return loot;
 	}
 
-	public void setInitiative(final Loot loot) {
+	public void setLoot(final Loot loot) {
 		this.loot = loot;
 	}
 
@@ -48,6 +50,22 @@ public class CardAction {
 		this.persist = persist;
 	}
 
+	public Summon getSummon() {
+		return summon;
+	}
+
+	public void setSummon(final Summon summon) {
+		this.summon = summon;
+	}
+
+	public Trap getTrap() {
+		return trap;
+	}
+
+	public void setTrap(final Trap trap) {
+		this.trap = trap;
+	}
+
 	public String getText() {
 		return text;
 	}
@@ -56,8 +74,31 @@ public class CardAction {
 		this.text = text;
 	}
 
+	public int getExperience() {
+		return experience;
+	}
+
+	public void setExperience(final int experience) {
+		this.experience = experience;
+	}
+
+	public String[] getElement() {
+		return element;
+	}
+
+	public void setElement(final String[] element) {
+		this.element = element;
+	}
+
 	public boolean isRemain() {
-		return remain;
+		boolean tempRemain = remain;
+		if (!tempRemain) {
+			if (this.persist != null && this.persist.getRemainTime() != 0) {
+				tempRemain = true;
+			}
+		}
+
+		return tempRemain;
 	}
 
 	public void setRemain(final boolean remain) {
@@ -83,7 +124,8 @@ public class CardAction {
 	@Override
 	public String toString() {
 		return "CardAction [attack: " + this.attack + ",  movement: " + this.movement + ", loot: " + this.loot
-				+ ", persist: " + this.persist + ", text: " + this.text + ", remain: " + remain + ", remove: " + remove
+				+ ", persist: " + this.persist + ", summon: " + this.summon + ", trap: " + this.trap + ", element: "
+				+ this.element + ", text: " + this.text + ", remain: " + remain + ", remove: " + remove
 				+ ", unrecoverable: " + unrecoverable + "]";
 	}
 }

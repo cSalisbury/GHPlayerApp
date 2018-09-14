@@ -21,7 +21,7 @@ public class TestLoadAndSave {
 		try {
 			File file = new File("docs/test");
 			file.createNewFile();
-			cards = new String(Files.readAllBytes(Paths.get("docs/characterCards/Brute Cards.json")));
+			cards = new String(Files.readAllBytes(Paths.get("docs/decks/Tinkerer Deck.json")));
 		} catch (Exception e) {
 			System.out.println("Exception while parsing JSON: " + e);
 		}
@@ -45,19 +45,19 @@ public class TestLoadAndSave {
 		Attack top = new Attack();
 		top.setRange(3);
 		top.setPierce(1);
-		top.setStrength(3);
+		top.setPower(3);
 		CardAction caTop = new CardAction();
 		caTop.setAttack(top);
-		card.setTopAction(caTop);
+		card.setTop(caTop);
 
 		Movement bottom = new Movement();
 		bottom.setFly(true);
-		bottom.setDestroy(true);
 		bottom.setRange(5);
-		bottom.setExperience(1);
 		CardAction caBottom = new CardAction();
 		caBottom.setMovement(bottom);
-		card.setBottomAction(caBottom);
+		caBottom.setRemove(true);
+		caBottom.setExperience(1);
+		card.setBottom(caBottom);
 
 		System.out.println("Testing Writing");
 		String json = "";

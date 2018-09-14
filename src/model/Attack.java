@@ -81,7 +81,6 @@ public class Attack extends BaseAction {
 	@Override
 	public String toString() {
 		return "Attack [power: " + this.power + ",  range: " + this.range + ", targets: " + this.targets + ", pierce: "
-				+ this.pierce + ", is aoe: " + this.aoe + ", condition: " + condition + ", experience: "
-				+ this.getExperience() + "]";
+				+ this.pierce + ", is aoe: " + this.aoe + ", condition: " + condition + "]";
 	}
 }

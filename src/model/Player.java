@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -8,6 +9,7 @@ public class Player {
 	private int numRetired;
 	private List<CharacterCard> deck;
 	private List<CharacterCard> hand;
+	private List<CharacterCard> persist;
 	private List<CharacterCard> discard;
 	private List<CharacterCard> removed;
 	// TODO: Should these be under Character? Maybe just conditions?
@@ -51,11 +53,21 @@ public class Player {
 	}
 
 	public List<CharacterCard> getHand() {
+		if (hand == null) {
+			hand = new ArrayList<CharacterCard>();
+		}
 		return hand;
 	}
 
-	public void setHand(final List<CharacterCard> hand) {
-		this.hand = hand;
+	public List<CharacterCard> getPersist() {
+		if (persist == null) {
+			persist = new ArrayList<CharacterCard>();
+		}
+		return persist;
+	}
+
+	public void setPersist(final List<CharacterCard> persist) {
+		this.persist = persist;
 	}
 
 	public List<CharacterCard> getDiscard() {
@@ -77,7 +89,7 @@ public class Player {
 	@Override
 	public String toString() {
 		return "Player [name: " + this.name + ",  character: " + this.character + ",  numRetired: " + this.numRetired
-				+ ",  deck: " + this.deck + ",  hand: " + this.hand + ",  discard: " + this.discard + ",  removed: "
-				+ this.removed + "]";
+				+ ",  deck: " + this.deck + ",  hand: " + this.hand + ",  persist: " + this.persist + ",  discard: "
+				+ this.discard + ",  removed: " + this.removed + "]";
 	}
 }
