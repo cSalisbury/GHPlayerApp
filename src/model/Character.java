@@ -71,11 +71,15 @@ public class Character {
 	}
 
 	public void increaseHealth() {
-		this.health++;
+		if (this.health < this.maxHealth) {
+			this.health++;
+		}
 	}
 
 	public void decreaseHealth() {
-		this.health--;
+		if (this.health > 0) {
+			this.health--;
+		}
 	}
 
 	public int getMaxHealth() {
@@ -103,7 +107,9 @@ public class Character {
 	}
 
 	public void increaseExperience() {
-		this.experience++;
+		if (this.experience > 0) {
+			this.experience++;
+		}
 	}
 
 	public void decreaseExperience() {
