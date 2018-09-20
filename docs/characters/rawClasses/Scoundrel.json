@@ -1,0 +1,10 @@
+{
+	"name":"Sample Name",
+	"className":"Scoundrel",
+	"handSize":9,
+	"level":1,
+	"healthPerLevel":[8,9,11,12,14,15,17,18,20],
+	"totalExperience":0,
+	"totalGold":0,
+	"notes":0
+}

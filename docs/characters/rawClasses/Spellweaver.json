@@ -1,0 +1,10 @@
+{
+	"name":"Sample Name",
+	"className":"Spellweaver",
+	"handSize":12,
+	"level":1,
+	"healthPerLevel":[6,7,8,9,10,11,12,13,14],
+	"totalExperience":0,
+	"totalGold":0,
+	"notes":0
+}

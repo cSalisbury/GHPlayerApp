@@ -1,0 +1,542 @@
+[
+{
+	"name":"Single Out",
+	"id":88,
+	"level":1,
+	"initiative":86,
+	"top":{
+		"attack":{
+			"power":3
+		},
+		"experience":-1,
+		"text":"Add 2 power and gain 1 xp when the target is adjacent to any of your allies",
+		"remove":true
+	},
+	"bottom":{
+		"persist":{
+			"remainTime":4,
+			"persistExperience":[1,3]
+		},
+		"text":"On your next four attacks targeting enemies adjacent to none of their allies, add 2 power",
+		"remain":true,
+		"remove":true
+	}
+},
+{
+	"name":"Flanking Strike",
+	"id":89,
+	"level":1,
+	"initiative":4,
+	"top":{
+		"attack":{
+			"power":3
+		},
+		"experience":-1,
+		"text":"Add two power and gain one xp when the target is adjacent to any of your allies",
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":5
+		}
+	}
+},
+{
+	"name":"Smoke Bomb",
+	"id":90,
+	"level":1,
+	"initiative":12,
+	"top":{
+		"persist":{
+			"condition":["invisible"]
+		},
+		"experience":-1,
+		"text":"On your next attack while invisible, double the value of the attack and gain 2xp",
+		"element":["dark"],
+		"remain":true,
+		"remove":true
+	},
+	"bottom":{
+		"attack":{
+			"range":3,
+			"pull":2
+		}
+	}
+},
+{
+	"name":"Backstab",
+	"id":91,
+	"level":1,
+	"initiative":6,
+	"top":{
+		"attack":{
+			"power":3
+		},
+		"experience":-1,
+		"text":"Add 2 power and gain 1 xp when the target is adjacent to any of your allies. Add 2 power and gain 1xp when the target is adjacent to none of its allies.",
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":6
+		}
+	}
+},
+{
+	"name":"Thief's Knack",
+	"id":92,
+	"level":1,
+	"initiative":23,
+	"top":{
+		"experience":2,
+		"text":"Disarm one adjacent trap"
+	},
+	"bottom":{
+		"attack":{
+			"power":3
+		},
+		"experience":1
+	}
+},
+{
+	"name":"Venom Shiv",
+	"id":93,
+	"level":1,
+	"initiative":60,
+	"top":{
+		"attack":{
+			"power":3,
+			"condition":["poison"]
+		},
+		"experience":1
+	},
+	"bottom":{
+		"movement":{
+			"range":5
+		}
+	}
+},
+{
+	"name":"Throwing Knives",
+	"id":94,
+	"level":1,
+	"initiative":10,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":3,
+			"targets":2
+		},
+		"experience":1
+	},
+	"bottom":{
+		"loot":{
+			"range":2
+		},
+		"remove":true
+	}
+},
+{
+	"name":"Quick Hands",
+	"id":95,
+	"level":1,
+	"initiative":64,
+	"top":{
+		"attack":{
+			"power":2
+		},
+		"movement":{
+			"range":2
+		},
+		"text":"Move 2 then attack 2"
+	},
+	"bottom":{
+		"loot":{
+			"range":1
+		}
+	}
+},
+{
+	"name":"Special Mixture",
+	"id":96,
+	"level":1,
+	"initiative":33,
+	"top":{
+		"persist":{
+			"heal":3
+		}
+	},
+	"bottom":{
+		"movement":{
+			"range":3
+		},
+		"attack":{
+			"condition":["poison"]
+		},
+		"text":"Move 3 then poison one adjacent enemy"
+	}
+},
+{
+	"name":"Sinister Opportunity",
+	"id":97,
+	"level":0,
+	"initiative":93,
+	"top":{
+		"attack":{
+			"power":3
+		},
+		"experience":-1,
+		"text":"Add one power for each of your allies adjacent to the target. If you spend Dark add two power and gain 1 xp."
+	},
+	"bottom":{
+		"movement":{
+			"range":3
+		},
+		"text":"Move 3 then force an adjacent enemy to move 1 that ends adjacent to you"
+	}
+},
+{
+	"name":"Trickster's Reversal",
+	"id":98,
+	"level":0,
+	"initiative":9,
+	"top":{
+		"attack":{
+			"power":2
+		},
+		"experience":2,
+		"text":"Add X power where X is double the shield value of the target",
+		"remove":true
+	},
+	"bottom":{
+		"text":"The next time you suffer this round, suffer no damage instead"
+	}
+},
+{
+	"name":"Swift Bow",
+	"id":36,
+	"level":0,
+	"initiative":36,
+	"top":{
+		"attack":{
+			"power":3,
+			"range":4
+		}
+	},
+	"bottom":{
+		"movement":{
+			"range":2
+		},
+		"text":"Loot every hex you enter with this action"
+	}
+},
+{
+	"name":"Open Wound",
+	"id":100,
+	"level":2,
+	"initiative":11,
+	"top":{
+		"attack":{
+			"power":4
+		},
+		"text":"Add wound and gain 1xp when the target is adjacent to any of your allies"
+	},
+	"bottom":{
+		"movement":{
+			"range":5
+		}
+	}
+},
+{
+	"name":"Flintlock",
+	"id":101,
+	"level":2,
+	"initiative":90,
+	"top":{
+		"loot":{
+			"range":1
+		}
+	},
+	"bottom":{
+		"attack":{
+			"power":5,
+			"range":4
+		},
+		"experience":2,
+		"remove":true
+	}
+},
+{
+	"name":"Hidden Daggers",
+	"id":102,
+	"level":3,
+	"initiative":85,
+	"top":{
+		"attack":{
+			"power":4,
+			"range":3,
+			"targets":2
+		},
+		"experience":2,
+		"remove":true
+	},
+	"bottom":{
+		"persist":{
+			"condition":["invisible"]
+		}
+	}
+},
+{
+	"name":"Duelist's Advance",
+	"id":103,
+	"level":3,
+	"initiative":16,
+	"top":{
+		"attack":{
+			"power":3
+		},
+		"movement":{
+			"range":3
+		},
+		"text":"Move 3 then attack 3"
+	},
+	"bottom":{
+		"text": "Add 2 power to all your attacks this round targeting enemies adjacent to none of their allies"
+	}
+},
+{
+	"name":"Flurry of Blades",
+	"id":104,
+	"level":4,
+	"initiative":3,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":3,
+			"targets":3
+		},
+		"experience":1
+	},
+	"bottom":{
+		"movement":{
+			"range":4
+		},
+		"text":"Gain advantage on all your attacks this round"
+	}
+},
+{
+	"name":"Gruesome Advantage",
+	"id":105,
+	"level":4,
+	"initiative":62,
+	"top":{
+		"attack":{
+			"power":3
+		},
+		"experience":-1,
+		"text":"Add 3 power and gain 1 xp when the target is adjacent to any of your allies. Add 3 power and gain 1 xp when the target is adjacent to none of its allies.",
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":7
+		}
+	}
+},
+{
+	"name":"Cull the Weak",
+	"id":106,
+	"level":5,
+	"initiative":16,
+	"top":{
+		"attack":{
+			"power":4
+		},
+		"experience":-1,
+		"text":"Add 2 power and gain 1xp when the target is adjacent to any of your allies"
+	},
+	"bottom":{
+		"persist":{
+			"remainTime":6,
+			"persistExperience":[1,3,5]
+		},
+		"text":"Add 2 power to your next six attacks targeting enemies with Disarm, Immobilize, or Stun.",
+		"remove":true
+	}
+},
+{
+	"name":"Visage of the Inevitable",
+	"id":107,
+	"level":5,
+	"initiative":88,
+	"top":{
+		"experience":1,
+		"text":"Kill one adjacent normal enemy that is adjacent to none of its allies and is also adjacent to any of your allies"
+	},
+	"bottom":{
+		"movement":{
+			"range":2
+		},
+		"attack":{
+			"condition":["poison"],
+			"aoe":[1,2,3,4,5,6]
+		},
+		"text":"Move 2, then poison all adjacent enemies"
+	}
+},
+{
+	"name":"Crippling Poison",
+	"id":108,
+	"level":6,
+	"initiative":30,
+	"top":{
+		"remain":true,
+		"text":"Add 2 power to all your attacks targeting enemies with Poison",
+		"remove":true
+	},
+	"bottom":{
+		"attack":{
+			"power":2,
+			"condition":["poison", "immobilize"]
+		},
+		"experience":1
+	}
+},
+{
+	"name":"Burning Oil",
+	"id":109,
+	"level":6,
+	"initiative":95,
+	"top":{
+		"attack":{
+			"power":4,
+			"range":3,
+			"condition":["wound"]
+		},
+		"experience":1,
+		"element":["fire"]
+	},
+	"bottom":{
+		"loot":{
+			"range":2
+		},
+		"experience":1
+	}
+},
+{
+	"name":"Stick to the Shadows",
+	"id":110,
+	"level":7,
+	"initiative":26,
+	"top":{
+		"attack":{
+			"power":4
+		},
+		"text":"If spend Dark add 4 power and gain 2 xp when the target is adjacent to any of your allies"
+	},
+	"bottom":{
+		"movement":{
+			"range":2
+		},
+		"persist":{
+			"condition":["invisible"]
+		}
+	}
+},
+{
+	"name":"Spring the Trap",
+	"id":111,
+	"level":7,
+	"initiative":13,
+	"top":{
+		"experience":2,
+		"text":"Disarm one adjacent trap. Target one enemy within Range 3 to suffer the effects of the disarmed trap."
+	},
+	"bottom":{
+		"experience":2,
+		"text":"Double the value of the attack of your next attack targeting an enemy adjacent to none of its allies and also adjacent to any of your allies",
+		"remain":true,
+		"remove":true
+	}
+},
+{
+	"name":"Stiletto Storm",
+	"id":112,
+	"level":8,
+	"initiative":80,
+	"top":{
+		"attack":{
+			"power":2,
+			"range":3,
+			"targets":4
+		},
+		"experience":1
+	},
+	"bottom":{
+		"movement":{
+			"range":4
+		},
+		"persist":{
+			"retaliate":1
+		}
+	}
+},
+{
+	"name":"Pain's End",
+	"id":113,
+	"level":8,
+	"initiative":38,
+	"top":{
+		"persist":{
+			"heal":8
+		},
+		"experience":2,
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":3
+		},
+		"text":"Kill one adjacent enemy whose has 3 or less health"
+	}
+},
+{
+	"name":"Long Con",
+	"id":114,
+	"level":9,
+	"initiative":2,
+	"top":{
+		"attack":{
+			"power":4,
+			"condition":["disarm"],
+			"aoe":[1,2,3,4,5,6]
+		}
+	},
+	"bottom":{
+		"text":"Take control of one adjacent normal or elite enemy this round. The enemy acts as if its allies were enemies and its enemies were allies.",
+		"experience":2,
+		"remove":true
+	}
+},
+{
+	"name":"Watch it Burn",
+	"id":115,
+	"level":9,
+	"initiative":98,
+	"top":{
+		"experience":2,
+		"remain":true,
+		"text":"Add poison and wound to all your attacks",
+		"remove":true
+	},
+	"bottom":{
+		"movement":{
+			"range":5
+		},
+		"attack":{
+			"condition":["wound"],
+			"aoe":[1,2,3,4,5,6]
+		}
+	}
+}
+]

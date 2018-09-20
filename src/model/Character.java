@@ -107,13 +107,13 @@ public class Character {
 	}
 
 	public void increaseExperience() {
-		if (this.experience > 0) {
-			this.experience++;
-		}
+		this.experience++;
 	}
 
 	public void decreaseExperience() {
-		this.experience--;
+		if (this.experience > 0) {
+			this.experience--;
+		}
 	}
 
 	public int getTotalExperience() {
