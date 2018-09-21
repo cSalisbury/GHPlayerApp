@@ -2,8 +2,11 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -12,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import model.Attack;
@@ -23,6 +27,7 @@ import model.Persist;
 import model.Player;
 import model.Summon;
 import model.Trap;
+import service.Game;
 import service.LoadService;
 
 public class Mat {
@@ -36,7 +41,15 @@ public class Mat {
 		new Mat();
 	}
 
-	final JFrame outsideFrame = new JFrame();
+	final JFrame deckFrame = new JFrame();
+	final JScrollPane deckScrollPane = new JScrollPane();
+	final JPanel deckPanel = new JPanel();
+	final JPanel handPickerPanel = new JPanel();
+	final JTextArea handTextField = new JTextArea("1,2,3,4,5,6,7,8,9");
+	final JButton handPickerBut = new JButton("Select Hand");
+
+	final JFrame playingFrame = new JFrame();
+	final JButton viewDeckBut = new JButton("Choose Hand");
 	final JPanel charPanel = new JPanel();
 	final JPanel healthPanel = new JPanel();
 	final JLabel healthTitleLbl = new JLabel("Health:");
@@ -57,17 +70,34 @@ public class Mat {
 
 	final LoadService loadService = new LoadService();
 
+	Game game = new Game();
 	Player player = new Player();
 
 	public Mat() {
+		deckFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		deckFrame.setTitle("Gloomhaven Player App");
+		deckFrame.setSize(1400, 900);
+		deckFrame.setLocationRelativeTo(null);
+		deckFrame.setVisible(false);
+		deckFrame.add(deckScrollPane, BorderLayout.NORTH);
+		deckScrollPane.setSize(500, 500);
+		deckFrame.add(handPickerPanel, BorderLayout.SOUTH);
 
-		outsideFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		outsideFrame.setTitle("Gloomhaven Player App");
-		outsideFrame.setSize(1400, 900);
-		outsideFrame.setLocationRelativeTo(null);
-		outsideFrame.add(charPanel, BorderLayout.NORTH);
-		outsideFrame.add(cardsPanel, BorderLayout.SOUTH);
-		outsideFrame.setVisible(true);
+		// deckScrollPane.add(deckPanel);
+		handPickerPanel.add(new JLabel("Chosen Cards (separated by commas): "));
+		handPickerPanel.add(handTextField);
+		handPickerPanel.add(handPickerBut);
+
+		playingFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		playingFrame.setTitle("Gloomhaven Player App");
+		playingFrame.setSize(1400, 900);
+		playingFrame.setLocationRelativeTo(null);
+		JPanel topPanel = new JPanel();
+		topPanel.add(charPanel);
+		topPanel.add(viewDeckBut);
+		playingFrame.add(topPanel, BorderLayout.NORTH);
+		playingFrame.add(cardsPanel, BorderLayout.SOUTH);
+		playingFrame.setVisible(true);
 
 		cardsPanel.add(handPanel, BorderLayout.SOUTH);
 		cardsPanel.add(discardPanel, BorderLayout.EAST);
@@ -113,6 +143,34 @@ public class Mat {
 				refresh();
 			}
 		});
+		viewDeckBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				deckFrame.setVisible(true);
+				playingFrame.setVisible(false);
+				refresh();
+			}
+		});
+		handPickerBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				deckFrame.setVisible(false);
+				playingFrame.setVisible(true);
+				String handCards = handTextField.getText();
+
+				System.out.println("handCards: " + handCards);
+				String[] cards = handCards.split(",");
+				List<Integer> cardIds = new ArrayList<Integer>();
+				for (String card : cards) {
+					cardIds.add(Integer.parseInt(card.trim()));
+				}
+				System.out.println("Before Hand: " + player.getHand());
+				game.chooseHand(player, cardIds);
+				System.out.println("AFter Hand: " + player.getHand());
+
+				refresh();
+			}
+		});
 
 		// PLACEHOLDERS
 		handPanel.add(new JLabel("Hand goes here"));
@@ -121,8 +179,8 @@ public class Mat {
 		removedPanel.add(new JLabel("Removed cards go here"));
 
 		loadSession();
-		fakeHand();
 		refresh();
+		// fakeHand();
 
 	}
 
@@ -143,18 +201,31 @@ public class Mat {
 		}
 	}
 
-	// TODO: Add in Card stuff
 	private void refresh() {
-		healthLbl.setText(player.getCharacter().getHealth() + "/" + player.getCharacter().getMaxHealth());
-		experienceLbl.setText(String.valueOf((player.getCharacter().getExperience())));
+		if (playingFrame.isVisible()) {
+			healthLbl.setText(player.getCharacter().getHealth() + "/" + player.getCharacter().getMaxHealth());
+			experienceLbl.setText(String.valueOf((player.getCharacter().getExperience())));
 
-		handPanel.removeAll();
-		if (player.getHand() != null && player.getHand().size() != 0) {
-			for (CharacterCard c : player.getHand()) {
-				handPanel.add(createCardPanel(c));
+			handPanel.removeAll();
+			if (player.getHand() != null && player.getHand().size() != 0) {
+				for (CharacterCard c : player.getHand()) {
+					handPanel.add(createCardPanel(c));
+				}
+			} else {
+				handPanel.add(new JLabel("Empty Hand"));
 			}
 		} else {
-			handPanel.add(new JLabel("Empty Hand"));
+
+			int columns = (int) Math.ceil(player.getDeck().size() / 5);
+			System.out.println("columns: " + columns);
+			deckPanel.removeAll();
+			deckPanel.setLayout(new GridLayout(5, columns));
+			// deckScrollPane.removeAll();
+			for (CharacterCard c : player.getDeck()) {
+				// deckScrollPane.add(createCardPanel(c));
+				deckPanel.add(createCardPanel(c));
+			}
+			deckScrollPane.setViewportView(deckPanel);
 		}
 	}
 

@@ -62,6 +62,7 @@ public class Game {
 	}
 
 	public void chooseHand(final Player p, final List<Integer> cardIds) {
+		p.getHand().clear();
 		for (CharacterCard c : p.getDeck()) {
 			for (Integer cardId : cardIds) {
 				if (c.getId() == cardId) {
