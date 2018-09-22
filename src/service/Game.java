@@ -34,7 +34,8 @@ public class Game {
 		}
 	}
 
-	public void playCards(final Player p, final List<Integer> cardIds) {
+	public int playCards(final Player p, final List<Integer> cardIds) {
+		int initiative = -1;
 		Iterator<CharacterCard> i = p.getHand().iterator();
 		while (i.hasNext()) {
 			CharacterCard c = i.next();
@@ -46,6 +47,7 @@ public class Game {
 				} else {
 					p.getDiscard().add(c);
 				}
+				initiative = c.getInitiative();
 				i.remove();
 			}
 			if (c.getId() == cardIds.get(1)) {
@@ -59,6 +61,7 @@ public class Game {
 				i.remove();
 			}
 		}
+		return initiative;
 	}
 
 	public void chooseHand(final Player p, final List<Integer> cardIds) {

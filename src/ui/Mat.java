@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,8 +13,10 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -30,12 +33,18 @@ import model.Trap;
 import service.Game;
 import service.LoadService;
 
+//TODO:
+// Have cards be sorted in hand/discard/removed
+// Get Resting to work properly (it takes the wrong cards?)
+// Get recovery to work properly (it only takes the first card?)
+
 public class Mat {
 
 	// Manually set for now, create UI for them later
-	String playerFileName = "Sample Player.json";
-	String characterFileName = "rawClasses/Brute.json";
-	String deckFileName = "Brute Deck.json";
+	final String playerFileName = "Sample Player.json";
+	final String characterFileName = "rawClasses/Brute.json";
+	final String deckFileName = "Brute Deck.json";
+	final boolean mock = true;
 
 	public static void main(final String[] args) {
 		new Mat();
@@ -45,12 +54,21 @@ public class Mat {
 	final JScrollPane deckScrollPane = new JScrollPane();
 	final JPanel deckPanel = new JPanel();
 	final JPanel handPickerPanel = new JPanel();
+	final JButton loadDeckBut = new JButton("Load Deck");
+	final JLabel handTextTitleLbl = new JLabel("Chosen Cards (separated by commas): ");
 	final JTextArea handTextField = new JTextArea("1,2,3,4,5,6,7,8,9");
 	final JButton handPickerBut = new JButton("Select Hand");
 
 	final JFrame playingFrame = new JFrame();
 	final JButton viewDeckBut = new JButton("Choose Hand");
 	final JPanel charPanel = new JPanel();
+
+	final JPanel playerInfoPanel = new JPanel();
+	final JLabel playerNameTitleLbl = new JLabel("Player:");
+	final JLabel playerNameLbl = new JLabel("[name]");
+	final JLabel characterNameTitleLbl = new JLabel("Character:");
+	final JLabel characterNameLbl = new JLabel("[name]");
+
 	final JPanel healthPanel = new JPanel();
 	final JLabel healthTitleLbl = new JLabel("Health:");
 	final JLabel healthLbl = new JLabel("X/X");
@@ -61,30 +79,53 @@ public class Mat {
 	final JLabel experienceLbl = new JLabel("X");
 	final JButton upExperienceBut = new JButton("^");
 	final JButton downExperienceBut = new JButton("v");
+	final JPanel initiativePanel = new JPanel();
+	final JLabel initiativeTitleLbl = new JLabel("Current Round's Initiative:");
+	final JLabel initiativeLbl = new JLabel("-");
 
 	final JPanel cardsPanel = new JPanel();
+	final JScrollPane handScrollPane = new JScrollPane();
 	final JPanel handPanel = new JPanel();
+	final JScrollPane discardScrollPane = new JScrollPane();
 	final JPanel discardPanel = new JPanel();
+	final JScrollPane persistScrollPane = new JScrollPane();
 	final JPanel persistPanel = new JPanel();
+	final JScrollPane removedScrollPane = new JScrollPane();
 	final JPanel removedPanel = new JPanel();
 
-	final LoadService loadService = new LoadService();
+	final JPanel controlsPanel = new JPanel();
+	final JLabel playTitleLbl = new JLabel("Play two cards: ");
+	final JLabel playTopLbl = new JLabel("Top:");
+	final JTextArea playTopField = new JTextArea("1");
+	final JLabel playBotLbl = new JLabel("Bottom:");
+	final JTextArea playBotField = new JTextArea("2");
+	final JButton playBut = new JButton("Play");
+	final JButton shortRestBut = new JButton("Short Rest");
+	final JButton longRestBut = new JButton("Long Rest");
 
-	Game game = new Game();
+	final JLabel manualTitleLbl = new JLabel("Manual Movement: ");
+	final JTextArea manualCardsField = new JTextArea("1,2");
+	final JButton pToDBut = new JButton("P->D");
+	final JButton rToHBut = new JButton("R->H");
+
+	final LoadService loadService = new LoadService();
+	final JFileChooser fc = new JFileChooser();
+	final Game game = new Game();
 	Player player = new Player();
 
 	public Mat() {
 		deckFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		deckFrame.setTitle("Gloomhaven Player App");
-		deckFrame.setSize(1400, 900);
+		deckFrame.setSize(1400, 800);
 		deckFrame.setLocationRelativeTo(null);
 		deckFrame.setVisible(false);
 		deckFrame.add(deckScrollPane, BorderLayout.NORTH);
-		deckScrollPane.setSize(500, 500);
+		Dimension d = new Dimension(1300, 730);
+		deckScrollPane.setPreferredSize(d);
 		deckFrame.add(handPickerPanel, BorderLayout.SOUTH);
 
-		// deckScrollPane.add(deckPanel);
-		handPickerPanel.add(new JLabel("Chosen Cards (separated by commas): "));
+		handPickerPanel.add(loadDeckBut);
+		handPickerPanel.add(handTextTitleLbl);
 		handPickerPanel.add(handTextField);
 		handPickerPanel.add(handPickerBut);
 
@@ -95,15 +136,70 @@ public class Mat {
 		JPanel topPanel = new JPanel();
 		topPanel.add(charPanel);
 		topPanel.add(viewDeckBut);
-		playingFrame.add(topPanel, BorderLayout.NORTH);
-		playingFrame.add(cardsPanel, BorderLayout.SOUTH);
+		topPanel.add(initiativePanel);
+
+		playingFrame.setLayout(new BoxLayout(playingFrame.getContentPane(), BoxLayout.Y_AXIS));
+		playingFrame.add(topPanel);
+		playingFrame.add(cardsPanel);
 		playingFrame.setVisible(true);
 
-		cardsPanel.add(handPanel, BorderLayout.SOUTH);
-		cardsPanel.add(discardPanel, BorderLayout.EAST);
-		cardsPanel.add(persistPanel, BorderLayout.NORTH);
-		cardsPanel.add(removedPanel, BorderLayout.WEST);
+		cardsPanel.setLayout(new BoxLayout(cardsPanel, BoxLayout.Y_AXIS));
+		JPanel p1 = new JPanel();
+		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+		p1.add(Box.createHorizontalGlue());
+		p1.add(persistScrollPane);
+		persistScrollPane.setPreferredSize(new Dimension(1000, 300));
+		persistScrollPane.setViewportView(persistPanel);
+		p1.add(Box.createHorizontalGlue());
+		JPanel p2 = new JPanel();
+		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
 
+		p2.add(removedScrollPane);
+		removedScrollPane.setPreferredSize(new Dimension(200, 300));
+		removedScrollPane.setViewportView(removedPanel);
+
+		p2.add(handScrollPane);
+		handScrollPane.setPreferredSize(new Dimension(1000, 300));
+		handScrollPane.setViewportView(handPanel);
+
+		p2.add(discardScrollPane);
+		discardScrollPane.setPreferredSize(new Dimension(200, 300));
+		discardScrollPane.setViewportView(discardPanel);
+
+		cardsPanel.add(p1);
+		cardsPanel.add(p2);
+		cardsPanel.add(controlsPanel);
+		controlsPanel.add(playTitleLbl);
+		controlsPanel.add(playTopLbl);
+		controlsPanel.add(playTopField);
+		controlsPanel.add(playBotLbl);
+		controlsPanel.add(playBotField);
+		controlsPanel.add(playBut);
+		controlsPanel.add(shortRestBut);
+		controlsPanel.add(longRestBut);
+		controlsPanel.add(manualTitleLbl);
+		controlsPanel.add(manualCardsField);
+		controlsPanel.add(pToDBut);
+		controlsPanel.add(rToHBut);
+
+		JPanel topCharPanel = new JPanel();
+		JPanel botCharPanel = new JPanel();
+		charPanel.setLayout(new BoxLayout(charPanel, BoxLayout.Y_AXIS));
+		charPanel.add(topCharPanel);
+		charPanel.add(botCharPanel);
+
+		topCharPanel.setLayout(new BoxLayout(topCharPanel, BoxLayout.X_AXIS));
+		topCharPanel.add(playerInfoPanel);
+		topCharPanel.add(playerNameTitleLbl);
+		topCharPanel.add(playerNameLbl);
+		topCharPanel.add(Box.createHorizontalGlue());
+		topCharPanel.add(characterNameTitleLbl);
+		topCharPanel.add(characterNameLbl);
+
+		botCharPanel.setLayout(new BoxLayout(botCharPanel, BoxLayout.X_AXIS));
+		botCharPanel.add(healthPanel);
+		botCharPanel.add(experiencePanel);
+		botCharPanel.add(initiativePanel);
 		healthPanel.add(healthTitleLbl);
 		healthPanel.add(healthLbl);
 		healthPanel.add(upHealthBut);
@@ -112,69 +208,85 @@ public class Mat {
 		experiencePanel.add(experienceLbl);
 		experiencePanel.add(upExperienceBut);
 		experiencePanel.add(downExperienceBut);
-		charPanel.add(healthPanel, BorderLayout.NORTH);
-		charPanel.add(experiencePanel, BorderLayout.SOUTH);
+		initiativePanel.add(initiativeTitleLbl);
+		initiativePanel.add(initiativeLbl);
 
 		upHealthBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
-				increaseHealth();
-				refresh();
+				upHealthButtonAction();
 			}
 		});
 		downHealthBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
-				decreaseHealth();
-				refresh();
+				downHealthButtonAction();
 			}
 		});
 		upExperienceBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
-				increaseExperience();
-				refresh();
+				upExperienceButtonAction();
 			}
 		});
 		downExperienceBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
-				decreaseExperience();
-				refresh();
+				downExperienceButtonAction();
 			}
 		});
 		viewDeckBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
-				deckFrame.setVisible(true);
-				playingFrame.setVisible(false);
-				refresh();
+				viewDeckButtonAction();
 			}
 		});
 		handPickerBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
-				deckFrame.setVisible(false);
-				playingFrame.setVisible(true);
-				String handCards = handTextField.getText();
-
-				System.out.println("handCards: " + handCards);
-				String[] cards = handCards.split(",");
-				List<Integer> cardIds = new ArrayList<Integer>();
-				for (String card : cards) {
-					cardIds.add(Integer.parseInt(card.trim()));
-				}
-				System.out.println("Before Hand: " + player.getHand());
-				game.chooseHand(player, cardIds);
-				System.out.println("AFter Hand: " + player.getHand());
-
-				refresh();
+				handPickerButtonAction();
+			}
+		});
+		loadDeckBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				loadDeckButtonAction();
+			}
+		});
+		playBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				playButtonAction();
+			}
+		});
+		shortRestBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				shortRestButtonAction();
+			}
+		});
+		longRestBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				longRestButtonAction();
+			}
+		});
+		pToDBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				pToDButtonAction();
+			}
+		});
+		rToHBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				rToHtButtonAction();
 			}
 		});
 
 		// PLACEHOLDERS
 		handPanel.add(new JLabel("Hand goes here"));
-		discardPanel.add(new JLabel("Discard goes here"));
+		discardPanel.add(new JLabel("Discard cards goes here"));
 		persistPanel.add(new JLabel("Persist cards go here"));
 		removedPanel.add(new JLabel("Removed cards go here"));
 
@@ -184,20 +296,152 @@ public class Mat {
 
 	}
 
-	private void fakeHand() {
-		for (int i = 0; i < 5; i++) {
-			player.getHand().add(player.getDeck().get(i));
+	private void upHealthButtonAction() {
+		player.getCharacter().increaseHealth();
+		refresh();
+	}
+
+	private void downHealthButtonAction() {
+		player.getCharacter().decreaseHealth();
+		refresh();
+	}
+
+	private void upExperienceButtonAction() {
+		player.getCharacter().increaseExperience();
+		refresh();
+	}
+
+	private void downExperienceButtonAction() {
+		player.getCharacter().decreaseExperience();
+		refresh();
+	}
+
+	private void viewDeckButtonAction() {
+		deckFrame.setVisible(true);
+		playingFrame.setVisible(false);
+		refresh();
+	}
+
+	private void handPickerButtonAction() {
+		deckFrame.setVisible(false);
+		playingFrame.setVisible(true);
+		String handCards = handTextField.getText();
+
+		String[] cards = handCards.split(",");
+		List<Integer> cardIds = new ArrayList<Integer>();
+		for (String card : cards) {
+			cardIds.add(Integer.parseInt(card.trim()));
 		}
+		game.chooseHand(player, cardIds);
+		refresh();
+	}
+
+	private void loadDeckButtonAction() {
+		int returnVal = fc.showOpenDialog(deckFrame);
+
+		if (returnVal == JFileChooser.APPROVE_OPTION) {
+			String deckFileName = fc.getSelectedFile().getName();
+			// This is where a real application would open the file.
+			System.out.println("Opening: " + deckFileName + ".");
+			player.setDeck(loadService.loadDeck(deckFileName));
+		} else {
+			System.out.println("Open command cancelled by user.");
+		}
+		refresh();
+	}
+
+	private void playButtonAction() {
+		String topCard = playTopField.getText();
+		String botCard = playBotField.getText();
+
+		List<Integer> cardIds = new ArrayList<Integer>();
+		cardIds.add((Integer.parseInt(topCard.trim())));
+		cardIds.add((Integer.parseInt(botCard.trim())));
+
+		int initiative = game.playCards(player, cardIds);
+
+		initiativeLbl.setText(Integer.toString(initiative));
+		refresh();
+	}
+
+	private void shortRestButtonAction() {
+		if (player.getDiscard().size() == 0) {
+			JOptionPane.showMessageDialog(playingFrame,
+					"There must be at least one card in the discard before resting");
+			return;
+		}
+
+		game.shuffle(player, -1);
+		refresh();
+	}
+
+	private void longRestButtonAction() {
+		if (player.getDiscard().size() == 0) {
+			JOptionPane.showMessageDialog(playingFrame,
+					"There must be at least one card in the discard before resting");
+			return;
+		}
+
+		List<Integer> ids = new ArrayList<Integer>();
+		for (CharacterCard c : player.getDiscard()) {
+			ids.add(c.getId());
+		}
+		int cardId = (int) JOptionPane.showInputDialog(playingFrame, "Choose a card to lose in the Long Rest",
+				"Long Rest", JOptionPane.PLAIN_MESSAGE, null, ids.toArray(), ids.get(0));
+
+		game.shuffle(player, cardId);
+		refresh();
+	}
+
+	private void pToDButtonAction() {
+		String manualCards = manualCardsField.getText();
+
+		String[] cards = manualCards.split(",");
+		List<Integer> cardIds = new ArrayList<Integer>();
+		for (String card : cards) {
+			cardIds.add(Integer.parseInt(card.trim()));
+		}
+		game.unPersistCards(player, cardIds);
+		refresh();
+	}
+
+	private void rToHtButtonAction() {
+		String manualCards = manualCardsField.getText();
+
+		String[] cards = manualCards.split(",");
+		List<Integer> cardIds = new ArrayList<Integer>();
+		for (String card : cards) {
+			cardIds.add(Integer.parseInt(card.trim()));
+		}
+		game.recoverCards(player, cardIds);
+		refresh();
 	}
 
 	private void loadSession() {
-		player = loadService.loadPlayer(playerFileName);
+		String pFileName = playerFileName;
+		if (mock) {
+			pFileName = playerFileName;
+		} else {
+			int returnVal = fc.showOpenDialog(deckFrame);
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				pFileName = fc.getSelectedFile().getName();
+				System.out.println("Opening: " + deckFileName + ".");
+			} else {
+				System.out.println("Open command cancelled by user.");
+			}
+		}
+		player = loadService.loadPlayer(pFileName);
 		if (player.getCharacter() == null) {
 			player.setCharacter(loadService.loadCharacter(characterFileName));
 		}
 		player.getCharacter().refreshCharacter();
-		if (player.getDeck() == null || player.getDeck().isEmpty()) {
-			player.setDeck(loadService.loadDeck(deckFileName));
+		playerNameLbl.setText(player.getName());
+		characterNameLbl.setText(player.getCharacter().getName());
+		if (mock) {
+			if (player.getDeck() == null || player.getDeck().isEmpty()) {
+				player.setDeck(loadService.loadDeck(deckFileName));
+			}
 		}
 	}
 
@@ -206,43 +450,36 @@ public class Mat {
 			healthLbl.setText(player.getCharacter().getHealth() + "/" + player.getCharacter().getMaxHealth());
 			experienceLbl.setText(String.valueOf((player.getCharacter().getExperience())));
 
-			handPanel.removeAll();
-			if (player.getHand() != null && player.getHand().size() != 0) {
-				for (CharacterCard c : player.getHand()) {
-					handPanel.add(createCardPanel(c));
-				}
-			} else {
-				handPanel.add(new JLabel("Empty Hand"));
-			}
-		} else {
+			populatePanel(handPanel, player.getHand());
+			populatePanel(discardPanel, player.getDiscard());
+			populatePanel(removedPanel, player.getRemoved());
+			populatePanel(persistPanel, player.getPersist());
+			/*
+			 * handPanel.removeAll(); if (player.getHand() != null &&
+			 * player.getHand().size() != 0) { for (CharacterCard c :
+			 * player.getHand()) { handPanel.add(createCardPanel(c)); } } else {
+			 * handPanel.add(new JLabel("Empty Hand")); }
+			 */
 
-			int columns = (int) Math.ceil(player.getDeck().size() / 5);
-			System.out.println("columns: " + columns);
+		} else {
 			deckPanel.removeAll();
-			deckPanel.setLayout(new GridLayout(5, columns));
-			// deckScrollPane.removeAll();
+			deckPanel.setLayout(new GridLayout(0, 5));
 			for (CharacterCard c : player.getDeck()) {
-				// deckScrollPane.add(createCardPanel(c));
 				deckPanel.add(createCardPanel(c));
 			}
 			deckScrollPane.setViewportView(deckPanel);
 		}
 	}
 
-	private void increaseHealth() {
-		player.getCharacter().increaseHealth();
-	}
-
-	private void decreaseHealth() {
-		player.getCharacter().decreaseHealth();
-	}
-
-	private void increaseExperience() {
-		player.getCharacter().increaseExperience();
-	}
-
-	private void decreaseExperience() {
-		player.getCharacter().decreaseExperience();
+	private void populatePanel(final JPanel panel, final List<CharacterCard> cards) {
+		panel.removeAll();
+		if (cards != null && cards.size() != 0) {
+			for (CharacterCard c : cards) {
+				panel.add(createCardPanel(c));
+			}
+		} else {
+			panel.add(new JLabel("Empty"));
+		}
 	}
 
 	private JPanel createCardPanel(final CharacterCard c) {
@@ -296,7 +533,7 @@ public class Mat {
 			tArea.setText(ca.getText());
 			JPanel temp = new JPanel();
 			temp.add(tArea);
-			cardActionPanel.add(addToCenter(temp));
+			cardActionPanel.add(temp);
 		}
 
 		return cardActionPanel;

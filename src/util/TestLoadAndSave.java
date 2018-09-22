@@ -25,7 +25,6 @@ public class TestLoadAndSave {
 		} catch (Exception e) {
 			System.out.println("Exception while parsing JSON: " + e);
 		}
-		System.out.println("Cards.length: " + cards.length());
 
 		ObjectMapper om = new ObjectMapper();
 		List<CharacterCard> cardList = null;
@@ -35,8 +34,6 @@ public class TestLoadAndSave {
 		} catch (Exception e) {
 			System.out.println("Error while mapping: " + e);
 		}
-
-		System.out.println("cardList" + cardList);
 
 	}
 

@@ -24,7 +24,6 @@ public class LoadService {
 		} catch (Exception e) {
 			System.out.println("Exception while parsing JSON: " + e);
 		}
-		System.out.println("playerString.length: " + playerString.length());
 
 		ObjectMapper om = new ObjectMapper();
 		Player player = null;
@@ -44,7 +43,6 @@ public class LoadService {
 		} catch (Exception e) {
 			System.out.println("Exception while parsing JSON: " + e);
 		}
-		System.out.println("characterString.length: " + characterString.length());
 
 		ObjectMapper om = new ObjectMapper();
 		Character character = null;
@@ -64,7 +62,6 @@ public class LoadService {
 		} catch (Exception e) {
 			System.out.println("Exception while parsing JSON: " + e);
 		}
-		System.out.println("characterString.length: " + deckString.length());
 
 		ObjectMapper om = new ObjectMapper();
 		List<CharacterCard> deck = null;

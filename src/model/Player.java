@@ -71,6 +71,9 @@ public class Player {
 	}
 
 	public List<CharacterCard> getDiscard() {
+		if (discard == null) {
+			discard = new ArrayList<CharacterCard>();
+		}
 		return discard;
 	}
 
@@ -79,6 +82,9 @@ public class Player {
 	}
 
 	public List<CharacterCard> getRemoved() {
+		if (removed == null) {
+			removed = new ArrayList<CharacterCard>();
+		}
 		return removed;
 	}
 
