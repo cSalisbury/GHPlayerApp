@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Player {
@@ -90,6 +91,37 @@ public class Player {
 
 	public void setRemoved(final List<CharacterCard> removed) {
 		this.removed = removed;
+	}
+
+	public void sort() {
+		sortHand();
+		sortPersist();
+		sortDiscard();
+		sortRemoved();
+	}
+
+	private void sortHand() {
+		Collections.sort(hand, (c1, c2) -> {
+			return c1.getId() - c2.getId();
+		});
+	}
+
+	private void sortPersist() {
+		Collections.sort(persist, (c1, c2) -> {
+			return c1.getId() - c2.getId();
+		});
+	}
+
+	private void sortDiscard() {
+		Collections.sort(discard, (c1, c2) -> {
+			return c1.getId() - c2.getId();
+		});
+	}
+
+	private void sortRemoved() {
+		Collections.sort(removed, (c1, c2) -> {
+			return c1.getId() - c2.getId();
+		});
 	}
 
 	@Override

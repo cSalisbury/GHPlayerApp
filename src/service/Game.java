@@ -21,6 +21,7 @@ public class Game {
 				i.remove();
 			}
 		}
+		p.sort();
 	}
 
 	public void recoverCards(final Player p, final List<Integer> cardIds) {
@@ -32,10 +33,36 @@ public class Game {
 				i.remove();
 			}
 		}
+		p.sort();
 	}
 
-	public int playCards(final Player p, final List<Integer> cardIds) {
-		int initiative = -1;
+	public void discardCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getHand().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getDiscard().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	public void manualRecoverCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getDiscard().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getHand().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	// playValue = [initiative, experience]
+	public int[] playCards(final Player p, final List<Integer> cardIds) {
+		int[] playValues = { -1, 0 };
 		Iterator<CharacterCard> i = p.getHand().iterator();
 		while (i.hasNext()) {
 			CharacterCard c = i.next();
@@ -47,7 +74,8 @@ public class Game {
 				} else {
 					p.getDiscard().add(c);
 				}
-				initiative = c.getInitiative();
+				playValues[0] = c.getInitiative();
+				playValues[1] += c.getTop().getExperience();
 				i.remove();
 			}
 			if (c.getId() == cardIds.get(1)) {
@@ -58,10 +86,12 @@ public class Game {
 				} else {
 					p.getDiscard().add(c);
 				}
+				playValues[1] += c.getBottom().getExperience();
 				i.remove();
 			}
 		}
-		return initiative;
+		p.sort();
+		return playValues;
 	}
 
 	public void chooseHand(final Player p, final List<Integer> cardIds) {
@@ -73,16 +103,19 @@ public class Game {
 				}
 			}
 		}
+		p.getDiscard().clear();
+		p.getPersist().clear();
+		p.getRemoved().clear();
 	}
 
 	// TODO: Not a lot of error checking, should be in layer above
-	public void shuffle(final Player p, final int removeId) {
+	public int shuffle(final Player p, final int removeId) {
 		int removeIndex = 0;
 		if (removeId == -1) {
 			removeIndex = (int) Math.floor(Math.random() * p.getDiscard().size());
 		} else {
-			for (int i = 0; i < p.getHand().size(); i++) {
-				if (p.getHand().get(i).getId() == removeId) {
+			for (int i = 0; i < p.getDiscard().size(); i++) {
+				if (p.getDiscard().get(i).getId() == removeId) {
 					removeIndex = i;
 					break;
 				}
@@ -92,6 +125,9 @@ public class Game {
 		p.getHand().addAll(p.getDiscard());
 		p.getDiscard().clear();
 		p.getRemoved().add(removed);
+		p.sort();
+
+		return removed.getId();
 	}
 
 	public void blockHitHand(final Player p, final int removeId) {
@@ -104,6 +140,7 @@ public class Game {
 		}
 		CharacterCard removed = p.getHand().remove(removeIndex);
 		p.getRemoved().add(removed);
+		p.sort();
 	}
 
 	public void blockHitDiscard(final Player p, final List<Integer> removeIds) {
@@ -120,5 +157,23 @@ public class Game {
 			p.getHand().remove(removeCard);
 			p.getRemoved().add(removeCard);
 		}
+		p.sort();
+	}
+
+	public boolean checkCardsIn(final List<CharacterCard> cards, final List<Integer> cardIds) {
+		boolean inAll = true;
+		for (Integer cId : cardIds) {
+			boolean in = false;
+			for (CharacterCard c : cards) {
+				if (c.getId() == cId) {
+					in = true;
+				}
+			}
+			if (!in) {
+				inAll = false;
+				break;
+			}
+		}
+		return inAll;
 	}
 }

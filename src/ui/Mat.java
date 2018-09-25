@@ -34,7 +34,6 @@ import service.Game;
 import service.LoadService;
 
 //TODO:
-// Have cards be sorted in hand/discard/removed
 // Get Resting to work properly (it takes the wrong cards?)
 // Get recovery to work properly (it only takes the first card?)
 
@@ -55,6 +54,7 @@ public class Mat {
 	final JPanel deckPanel = new JPanel();
 	final JPanel handPickerPanel = new JPanel();
 	final JButton loadDeckBut = new JButton("Load Deck");
+	final JLabel handSizeTitleLbl = new JLabel("Chosen Class ? has a hand size of ? cards");
 	final JLabel handTextTitleLbl = new JLabel("Chosen Cards (separated by commas): ");
 	final JTextArea handTextField = new JTextArea("1,2,3,4,5,6,7,8,9");
 	final JButton handPickerBut = new JButton("Select Hand");
@@ -107,6 +107,8 @@ public class Mat {
 	final JTextArea manualCardsField = new JTextArea("1,2");
 	final JButton pToDBut = new JButton("P->D");
 	final JButton rToHBut = new JButton("R->H");
+	final JButton hToDBut = new JButton("H->D");
+	final JButton dToHBut = new JButton("D->H");
 
 	final LoadService loadService = new LoadService();
 	final JFileChooser fc = new JFileChooser();
@@ -125,6 +127,7 @@ public class Mat {
 		deckFrame.add(handPickerPanel, BorderLayout.SOUTH);
 
 		handPickerPanel.add(loadDeckBut);
+		handPickerPanel.add(handSizeTitleLbl);
 		handPickerPanel.add(handTextTitleLbl);
 		handPickerPanel.add(handTextField);
 		handPickerPanel.add(handPickerBut);
@@ -134,9 +137,40 @@ public class Mat {
 		playingFrame.setSize(1400, 900);
 		playingFrame.setLocationRelativeTo(null);
 		JPanel topPanel = new JPanel();
+		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 		topPanel.add(charPanel);
 		topPanel.add(viewDeckBut);
 		topPanel.add(initiativePanel);
+
+		JPanel topCharPanel = new JPanel();
+		JPanel botCharPanel = new JPanel();
+		charPanel.setLayout(new BoxLayout(charPanel, BoxLayout.Y_AXIS));
+		charPanel.add(topCharPanel);
+		charPanel.add(botCharPanel);
+
+		topCharPanel.setLayout(new BoxLayout(topCharPanel, BoxLayout.X_AXIS));
+		topCharPanel.add(playerInfoPanel);
+		topCharPanel.add(playerNameTitleLbl);
+		topCharPanel.add(playerNameLbl);
+		topCharPanel.add(Box.createHorizontalGlue());
+		topCharPanel.add(characterNameTitleLbl);
+		topCharPanel.add(characterNameLbl);
+
+		botCharPanel.setLayout(new BoxLayout(botCharPanel, BoxLayout.X_AXIS));
+		botCharPanel.add(healthPanel);
+		botCharPanel.add(experiencePanel);
+		botCharPanel.add(initiativePanel);
+		healthPanel.add(healthTitleLbl);
+		healthPanel.add(healthLbl);
+		healthPanel.add(upHealthBut);
+		healthPanel.add(downHealthBut);
+		experiencePanel.add(experienceTitleLbl);
+		experiencePanel.add(experienceLbl);
+		experiencePanel.add(upExperienceBut);
+		experiencePanel.add(downExperienceBut);
+
+		initiativePanel.add(initiativeTitleLbl);
+		initiativePanel.add(initiativeLbl);
 
 		playingFrame.setLayout(new BoxLayout(playingFrame.getContentPane(), BoxLayout.Y_AXIS));
 		playingFrame.add(topPanel);
@@ -181,35 +215,8 @@ public class Mat {
 		controlsPanel.add(manualCardsField);
 		controlsPanel.add(pToDBut);
 		controlsPanel.add(rToHBut);
-
-		JPanel topCharPanel = new JPanel();
-		JPanel botCharPanel = new JPanel();
-		charPanel.setLayout(new BoxLayout(charPanel, BoxLayout.Y_AXIS));
-		charPanel.add(topCharPanel);
-		charPanel.add(botCharPanel);
-
-		topCharPanel.setLayout(new BoxLayout(topCharPanel, BoxLayout.X_AXIS));
-		topCharPanel.add(playerInfoPanel);
-		topCharPanel.add(playerNameTitleLbl);
-		topCharPanel.add(playerNameLbl);
-		topCharPanel.add(Box.createHorizontalGlue());
-		topCharPanel.add(characterNameTitleLbl);
-		topCharPanel.add(characterNameLbl);
-
-		botCharPanel.setLayout(new BoxLayout(botCharPanel, BoxLayout.X_AXIS));
-		botCharPanel.add(healthPanel);
-		botCharPanel.add(experiencePanel);
-		botCharPanel.add(initiativePanel);
-		healthPanel.add(healthTitleLbl);
-		healthPanel.add(healthLbl);
-		healthPanel.add(upHealthBut);
-		healthPanel.add(downHealthBut);
-		experiencePanel.add(experienceTitleLbl);
-		experiencePanel.add(experienceLbl);
-		experiencePanel.add(upExperienceBut);
-		experiencePanel.add(downExperienceBut);
-		initiativePanel.add(initiativeTitleLbl);
-		initiativePanel.add(initiativeLbl);
+		controlsPanel.add(hToDBut);
+		controlsPanel.add(dToHBut);
 
 		upHealthBut.addActionListener(new ActionListener() {
 			@Override
@@ -280,7 +287,19 @@ public class Mat {
 		rToHBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
-				rToHtButtonAction();
+				rToHButtonAction();
+			}
+		});
+		hToDBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				hToDButtonAction();
+			}
+		});
+		dToHBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				dToHButtonAction();
 			}
 		});
 
@@ -317,22 +336,46 @@ public class Mat {
 	}
 
 	private void viewDeckButtonAction() {
+		if (!player.getDiscard().isEmpty() || !player.getPersist().isEmpty() || !player.getRemoved().isEmpty()) {
+			if (JOptionPane.showConfirmDialog(playingFrame,
+					"You will lose your current game state if you choose a new hand. Are you sure?", "Are you sure?",
+					JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+				return;
+			}
+		}
+
 		deckFrame.setVisible(true);
 		playingFrame.setVisible(false);
 		refresh();
 	}
 
 	private void handPickerButtonAction() {
-		deckFrame.setVisible(false);
-		playingFrame.setVisible(true);
 		String handCards = handTextField.getText();
 
 		String[] cards = handCards.split(",");
 		List<Integer> cardIds = new ArrayList<Integer>();
-		for (String card : cards) {
-			cardIds.add(Integer.parseInt(card.trim()));
+		try {
+			for (String card : cards) {
+				cardIds.add(Integer.parseInt(card.trim()));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(playingFrame, "One of the chosen cards: " + cards + " is not a number");
 		}
+
+		if (!game.checkCardsIn(player.getDeck(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the deck");
+			return;
+		}
+		if (player.getCharacter() != null && player.getCharacter().getHandSize() != cardIds.size()) {
+			JOptionPane.showMessageDialog(playingFrame, "Please select " + player.getCharacter().getHandSize()
+					+ " to play as a " + player.getCharacter().getClassName());
+			return;
+		}
+
 		game.chooseHand(player, cardIds);
+		// TODO Add message about cards picked for hand
+		deckFrame.setVisible(false);
+		playingFrame.setVisible(true);
 		refresh();
 	}
 
@@ -355,12 +398,32 @@ public class Mat {
 		String botCard = playBotField.getText();
 
 		List<Integer> cardIds = new ArrayList<Integer>();
-		cardIds.add((Integer.parseInt(topCard.trim())));
-		cardIds.add((Integer.parseInt(botCard.trim())));
+		try {
+			cardIds.add((Integer.parseInt(topCard.trim())));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(playingFrame, "The top card: " + topCard + " is not a number");
+		}
+		try {
+			cardIds.add((Integer.parseInt(botCard.trim())));
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(playingFrame, "The bottom card: " + botCard + " is not a number");
+		}
+		if (!game.checkCardsIn(player.getHand(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those two cards are not in the hand");
+			return;
+		}
 
-		int initiative = game.playCards(player, cardIds);
+		// TODO Add message about cards being played
+		int[] playValues = game.playCards(player, cardIds);
 
-		initiativeLbl.setText(Integer.toString(initiative));
+		initiativeLbl.setText(Integer.toString(playValues[0]));
+		if (playValues[1] != 0) {
+			player.getCharacter().setExperience(player.getCharacter().getExperience() + playValues[1]);
+			// TODO Add message saying gained experience
+			// TODO Another message about any lost cards (would have to increase
+			// what playCards() returns
+		}
+
 		refresh();
 	}
 
@@ -371,7 +434,8 @@ public class Mat {
 			return;
 		}
 
-		game.shuffle(player, -1);
+		int removedId = game.shuffle(player, -1);
+		// TODO Add message about card lost
 		refresh();
 	}
 
@@ -389,32 +453,79 @@ public class Mat {
 		int cardId = (int) JOptionPane.showInputDialog(playingFrame, "Choose a card to lose in the Long Rest",
 				"Long Rest", JOptionPane.PLAIN_MESSAGE, null, ids.toArray(), ids.get(0));
 
-		game.shuffle(player, cardId);
+		System.out.println("Sending in cardId: " + cardId + " to be removed");
+		int removedId = game.shuffle(player, cardId);
+		System.out.println("game reported back that cardId: " + cardId + " was removed");
+		// TODO Add message about card lost
 		refresh();
 	}
 
 	private void pToDButtonAction() {
-		String manualCards = manualCardsField.getText();
+		List<Integer> cardIds = getManualCards();
 
-		String[] cards = manualCards.split(",");
-		List<Integer> cardIds = new ArrayList<Integer>();
-		for (String card : cards) {
-			cardIds.add(Integer.parseInt(card.trim()));
+		if (!game.checkCardsIn(player.getPersist(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the persist field");
+			return;
 		}
+
 		game.unPersistCards(player, cardIds);
+		// TODO Add message about cards moved
 		refresh();
 	}
 
-	private void rToHtButtonAction() {
+	private void rToHButtonAction() {
+		List<Integer> cardIds = getManualCards();
+
+		if (!game.checkCardsIn(player.getRemoved(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the removed pile");
+			return;
+		}
+
+		game.recoverCards(player, cardIds);
+		// TODO Add message about cards moved
+		refresh();
+	}
+
+	private void hToDButtonAction() {
+		List<Integer> cardIds = getManualCards();
+
+		if (!game.checkCardsIn(player.getHand(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the hand");
+			return;
+		}
+
+		game.discardCards(player, cardIds);
+		// TODO Add message about cards moved
+		refresh();
+	}
+
+	private void dToHButtonAction() {
+		List<Integer> cardIds = getManualCards();
+
+		if (!game.checkCardsIn(player.getDiscard(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the discard");
+			return;
+		}
+
+		game.manualRecoverCards(player, cardIds);
+		// TODO Add message about cards moved
+		refresh();
+	}
+
+	private List<Integer> getManualCards() {
 		String manualCards = manualCardsField.getText();
 
 		String[] cards = manualCards.split(",");
 		List<Integer> cardIds = new ArrayList<Integer>();
-		for (String card : cards) {
-			cardIds.add(Integer.parseInt(card.trim()));
+
+		try {
+			for (String card : cards) {
+				cardIds.add(Integer.parseInt(card.trim()));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(playingFrame, "One of the chosen cards: " + cards + " is not a number");
 		}
-		game.recoverCards(player, cardIds);
-		refresh();
+		return cardIds;
 	}
 
 	private void loadSession() {
@@ -454,13 +565,7 @@ public class Mat {
 			populatePanel(discardPanel, player.getDiscard());
 			populatePanel(removedPanel, player.getRemoved());
 			populatePanel(persistPanel, player.getPersist());
-			/*
-			 * handPanel.removeAll(); if (player.getHand() != null &&
-			 * player.getHand().size() != 0) { for (CharacterCard c :
-			 * player.getHand()) { handPanel.add(createCardPanel(c)); } } else {
-			 * handPanel.add(new JLabel("Empty Hand")); }
-			 */
-
+			playingFrame.repaint();
 		} else {
 			deckPanel.removeAll();
 			deckPanel.setLayout(new GridLayout(0, 5));
@@ -468,6 +573,11 @@ public class Mat {
 				deckPanel.add(createCardPanel(c));
 			}
 			deckScrollPane.setViewportView(deckPanel);
+			if (player.getCharacter() != null) {
+				handSizeTitleLbl.setText("Chosen Class " + player.getCharacter().getClassName() + " has a hand size of "
+						+ player.getCharacter().getHandSize() + " cards");
+			}
+			deckFrame.repaint();
 		}
 	}
 
@@ -534,6 +644,16 @@ public class Mat {
 			JPanel temp = new JPanel();
 			temp.add(tArea);
 			cardActionPanel.add(temp);
+		}
+		if (ca.getExperience() != 0) {
+			cardActionPanel.add(addToCenter(new JLabel("Experience: " + ca.getExperience())));
+		}
+		if (ca.isRemove()) {
+			String removeText = "Lose after playing";
+			if (ca.isUnrecoverable()) {
+				removeText += ", is unrecoverable";
+			}
+			cardActionPanel.add(addToCenter(new JLabel(removeText)));
 		}
 
 		return cardActionPanel;
