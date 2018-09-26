@@ -33,17 +33,13 @@ import model.Trap;
 import service.Game;
 import service.LoadService;
 
-//TODO:
-// Get Resting to work properly (it takes the wrong cards?)
-// Get recovery to work properly (it only takes the first card?)
-
 public class Mat {
 
 	// Manually set for now, create UI for them later
 	final String playerFileName = "Sample Player.json";
 	final String characterFileName = "rawClasses/Brute.json";
 	final String deckFileName = "Brute Deck.json";
-	final boolean mock = true;
+	final boolean mock = false;
 
 	public static void main(final String[] args) {
 		new Mat();
@@ -384,11 +380,9 @@ public class Mat {
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			String deckFileName = fc.getSelectedFile().getName();
-			// This is where a real application would open the file.
-			System.out.println("Opening: " + deckFileName + ".");
 			player.setDeck(loadService.loadDeck(deckFileName));
 		} else {
-			System.out.println("Open command cancelled by user.");
+			// System.out.println("Open command cancelled by user.");
 		}
 		refresh();
 	}
@@ -453,9 +447,7 @@ public class Mat {
 		int cardId = (int) JOptionPane.showInputDialog(playingFrame, "Choose a card to lose in the Long Rest",
 				"Long Rest", JOptionPane.PLAIN_MESSAGE, null, ids.toArray(), ids.get(0));
 
-		System.out.println("Sending in cardId: " + cardId + " to be removed");
 		int removedId = game.shuffle(player, cardId);
-		System.out.println("game reported back that cardId: " + cardId + " was removed");
 		// TODO Add message about card lost
 		refresh();
 	}
@@ -533,13 +525,12 @@ public class Mat {
 		if (mock) {
 			pFileName = playerFileName;
 		} else {
-			int returnVal = fc.showOpenDialog(deckFrame);
+			int returnVal = fc.showOpenDialog(playingFrame);
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				pFileName = fc.getSelectedFile().getName();
-				System.out.println("Opening: " + deckFileName + ".");
 			} else {
-				System.out.println("Open command cancelled by user.");
+				// System.out.println("Open command cancelled by user.");
 			}
 		}
 		player = loadService.loadPlayer(pFileName);
