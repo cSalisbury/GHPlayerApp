@@ -1,5 +1,6 @@
 package service;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -17,60 +18,40 @@ public class LoadService {
 
 	}
 
-	public Player loadPlayer(final String fileName) {
+	public Player loadPlayer(final String filePath) throws IOException {
 		String playerString = null;
-		try {
-			playerString = new String(Files.readAllBytes(Paths.get("docs/players/" + fileName)));
-		} catch (Exception e) {
-			System.out.println("Exception while parsing JSON: " + e);
-		}
+
+		// playerString = new
+		// String(Files.readAllBytes(Paths.get("docs/players/" + fileName)));
+		System.out.println("About to use filePath: " + filePath);
+		playerString = new String(Files.readAllBytes(Paths.get(filePath)));
 
 		ObjectMapper om = new ObjectMapper();
 		Player player = null;
-		try {
-			player = om.readValue(playerString, Player.class);
-		} catch (Exception e) {
-			System.out.println("Error while mapping: " + e);
-		}
+		player = om.readValue(playerString, Player.class);
 
 		return player;
 	}
 
-	public Character loadCharacter(final String fileName) {
+	public Character loadCharacter(final String filePath) throws IOException {
 		String characterString = null;
-		try {
-			characterString = new String(Files.readAllBytes(Paths.get("docs/characters/" + fileName)));
-		} catch (Exception e) {
-			System.out.println("Exception while parsing JSON: " + e);
-		}
+		characterString = new String(Files.readAllBytes(Paths.get(filePath)));
 
 		ObjectMapper om = new ObjectMapper();
 		Character character = null;
-		try {
-			character = om.readValue(characterString, Character.class);
-		} catch (Exception e) {
-			System.out.println("Error while mapping: " + e);
-		}
+		character = om.readValue(characterString, Character.class);
 
 		return character;
 	}
 
-	public List<CharacterCard> loadDeck(final String fileName) {
+	public List<CharacterCard> loadDeck(final String filePath) throws IOException {
 		String deckString = null;
-		try {
-			deckString = new String(Files.readAllBytes(Paths.get("docs/decks/" + fileName)));
-		} catch (Exception e) {
-			System.out.println("Exception while parsing JSON: " + e);
-		}
+		deckString = new String(Files.readAllBytes(Paths.get(filePath)));
 
 		ObjectMapper om = new ObjectMapper();
 		List<CharacterCard> deck = null;
-		try {
-			deck = om.readValue(deckString, new TypeReference<List<CharacterCard>>() {
-			});
-		} catch (Exception e) {
-			System.out.println("Error while mapping: " + e);
-		}
+		deck = om.readValue(deckString, new TypeReference<List<CharacterCard>>() {
+		});
 
 		return deck;
 	}

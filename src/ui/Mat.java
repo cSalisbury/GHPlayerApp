@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -376,13 +378,17 @@ public class Mat {
 	}
 
 	private void loadDeckButtonAction() {
-		int returnVal = fc.showOpenDialog(deckFrame);
+		try {
+			int returnVal = fc.showOpenDialog(deckFrame);
 
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
-			String deckFileName = fc.getSelectedFile().getName();
-			player.setDeck(loadService.loadDeck(deckFileName));
-		} else {
-			// System.out.println("Open command cancelled by user.");
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				String deckFilePath = fc.getSelectedFile().getAbsolutePath();
+				player.setDeck(loadService.loadDeck(deckFilePath));
+			} else {
+				// System.out.println("Open command cancelled by user.");
+			}
+		} catch (Exception e) {
+			errorPopup(e);
 		}
 		refresh();
 	}
@@ -521,30 +527,59 @@ public class Mat {
 	}
 
 	private void loadSession() {
-		String pFileName = playerFileName;
-		if (mock) {
-			pFileName = playerFileName;
-		} else {
-			int returnVal = fc.showOpenDialog(playingFrame);
-
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				pFileName = fc.getSelectedFile().getName();
+		try {
+			String pFilePath = "";
+			if (mock) {
+				pFilePath = "docs/players/" + playerFileName;
 			} else {
-				// System.out.println("Open command cancelled by user.");
+				JOptionPane.showMessageDialog(playingFrame, "Please choose a Player file to load");
+				int returnVal = fc.showOpenDialog(playingFrame);
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					fc.getSelectedFile().getName();
+					pFilePath = fc.getSelectedFile().getAbsolutePath();
+				} else {
+					// System.out.println("Open command cancelled by user.");
+				}
 			}
-		}
-		player = loadService.loadPlayer(pFileName);
-		if (player.getCharacter() == null) {
-			player.setCharacter(loadService.loadCharacter(characterFileName));
-		}
-		player.getCharacter().refreshCharacter();
-		playerNameLbl.setText(player.getName());
-		characterNameLbl.setText(player.getCharacter().getName());
-		if (mock) {
-			if (player.getDeck() == null || player.getDeck().isEmpty()) {
-				player.setDeck(loadService.loadDeck(deckFileName));
+			player = loadService.loadPlayer(pFilePath);
+
+			String cFilePath = "";
+			if (player.getCharacter() == null) {
+				if (mock) {
+					cFilePath = "docs/characters/" + characterFileName;
+				} else {
+					JOptionPane.showMessageDialog(playingFrame, "Please choose a Character file to load");
+					int returnVal = fc.showOpenDialog(playingFrame);
+
+					if (returnVal == JFileChooser.APPROVE_OPTION) {
+						fc.getSelectedFile().getName();
+						cFilePath = fc.getSelectedFile().getAbsolutePath();
+					} else {
+						// System.out.println("Open command cancelled by
+						// user.");
+					}
+				}
+				player.setCharacter(loadService.loadCharacter(cFilePath));
 			}
+			player.getCharacter().refreshCharacter();
+			playerNameLbl.setText(player.getName());
+			characterNameLbl.setText(player.getCharacter().getName());
+			if (mock) {
+				if (player.getDeck() == null || player.getDeck().isEmpty()) {
+					player.setDeck(loadService.loadDeck(deckFileName));
+				}
+			}
+		} catch (Exception e) {
+			errorPopup(e);
 		}
+	}
+
+	private void errorPopup(final Exception e) {
+		StringWriter outError = new StringWriter();
+		e.printStackTrace(new PrintWriter(outError));
+		String errorString = outError.toString();
+		JOptionPane.showMessageDialog(playingFrame, "Stack trace: " + errorString);
 	}
 
 	private void refresh() {
@@ -678,7 +713,8 @@ public class Mat {
 			attack.add(addToCenter(new JLabel("Conditions: " + toString(a.getCondition()))));
 		}
 		if (a.getAoe() != null && a.getAoe().length != 0) {
-			attack.add(addToCenter(new JLabel("Aoe: " + toString(a.getAoe()) + " (visual coming soon)")));
+			// visual comming eventually
+			attack.add(addToCenter(new JLabel("Aoe: " + toString(a.getAoe()))));
 		}
 
 		return attack;
