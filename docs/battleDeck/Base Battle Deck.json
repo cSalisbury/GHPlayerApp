@@ -1,0 +1,84 @@
+[
+{
+	"id":313,
+	"modifier":0
+},
+{
+	"id":314,
+	"modifier":0
+},
+{
+	"id":315,
+	"modifier":0
+},
+{
+	"id":316,
+	"modifier":0
+},
+{
+	"id":317,
+	"modifier":0
+},
+{
+	"id":318,
+	"modifier":0
+},
+{
+	"id":319,
+	"modifier":1
+},
+{
+	"id":320,
+	"modifier":1
+},
+{
+	"id":321,
+	"modifier":1
+},
+{
+	"id":322,
+	"modifier":1
+},
+{
+	"id":323,
+	"modifier":1
+},
+{
+	"id":324,
+	"modifier":-1
+},
+{
+	"id":325,
+	"modifier":-1
+},
+{
+	"id":326,
+	"modifier":-1
+},
+{
+	"id":327,
+	"modifier":-1
+},
+{
+	"id":328,
+	"modifier":-1
+},
+{
+	"id":329,
+	"modifier":-2
+},
+{
+	"id":330,
+	"modifier":2
+},
+{
+	"id":331,
+	"multiplier":0,
+	"shuffle":true
+},
+{
+	"id":332,
+	"multiplier":2,
+	"shuffle":true
+}
+]

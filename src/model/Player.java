@@ -13,6 +13,8 @@ public class Player {
 	private List<CharacterCard> persist;
 	private List<CharacterCard> discard;
 	private List<CharacterCard> removed;
+	private List<BattleCard> battleDeck;
+	private List<BattleCard> battleDiscard;
 	// TODO: Should these be under Character? Maybe just conditions?
 	// private List<Item> items;
 	// private List<Condition> conditions;
@@ -93,6 +95,25 @@ public class Player {
 		this.removed = removed;
 	}
 
+	public List<BattleCard> getBattleDeck() {
+		return battleDeck;
+	}
+
+	public void setBattleDeck(final List<BattleCard> battleDeck) {
+		this.battleDeck = battleDeck;
+	}
+
+	public List<BattleCard> getBattleDiscard() {
+		if (battleDiscard == null) {
+			battleDiscard = new ArrayList<BattleCard>();
+		}
+		return battleDiscard;
+	}
+
+	public void setBattleDiscard(final List<BattleCard> battleDiscard) {
+		this.battleDiscard = battleDiscard;
+	}
+
 	public void sort() {
 		sortHand();
 		sortPersist();
@@ -127,7 +148,8 @@ public class Player {
 	@Override
 	public String toString() {
 		return "Player [name: " + this.name + ",  character: " + this.character + ",  numRetired: " + this.numRetired
-				+ ",  deck: " + this.deck + ",  hand: " + this.hand + ",  persist: " + this.persist + ",  discard: "
+				+ ",  deck: " + this.deck + ", battledeck: " + this.battleDeck + ", battlediscard: "
+				+ this.battleDiscard + ",  hand: " + this.hand + ",  persist: " + this.persist + ",  discard: "
 				+ this.discard + ",  removed: " + this.removed + "]";
 	}
 }

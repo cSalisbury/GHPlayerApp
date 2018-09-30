@@ -8,6 +8,7 @@ import java.util.List;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import model.BattleCard;
 import model.Character;
 import model.CharacterCard;
 import model.Player;
@@ -20,10 +21,6 @@ public class LoadService {
 
 	public Player loadPlayer(final String filePath) throws IOException {
 		String playerString = null;
-
-		// playerString = new
-		// String(Files.readAllBytes(Paths.get("docs/players/" + fileName)));
-		System.out.println("About to use filePath: " + filePath);
 		playerString = new String(Files.readAllBytes(Paths.get(filePath)));
 
 		ObjectMapper om = new ObjectMapper();
@@ -54,5 +51,17 @@ public class LoadService {
 		});
 
 		return deck;
+	}
+
+	public List<BattleCard> loadBattleDeck(final String filePath) throws IOException {
+		String battleDeckString = null;
+		battleDeckString = new String(Files.readAllBytes(Paths.get(filePath)));
+
+		ObjectMapper om = new ObjectMapper();
+		List<BattleCard> battleDeck = null;
+		battleDeck = om.readValue(battleDeckString, new TypeReference<List<BattleCard>>() {
+		});
+
+		return battleDeck;
 	}
 }

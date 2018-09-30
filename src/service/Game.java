@@ -1,15 +1,43 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import model.BattleCard;
 import model.CharacterCard;
 import model.Player;
 
 public class Game {
 	public Game() {
 
+	}
+
+	public List<BattleCard> drawBattleCard(final Player p) {
+		List<BattleCard> drawn = new ArrayList<BattleCard>();
+		Iterator<BattleCard> i = p.getBattleDeck().iterator();
+		boolean repeat = true;
+		while (repeat) {
+			repeat = false;
+			BattleCard c = i.next();
+			if (c.isRepeat()) {
+				repeat = true;
+			}
+			p.getBattleDiscard().add(c);
+			if (!c.isRemove()) {
+				drawn.add(c);
+			}
+			i.remove();
+		}
+		return drawn;
+	}
+
+	public void shuffleBattleDeck(final Player p) {
+		System.out.println("Shuffling deck");
+		p.getBattleDeck().addAll(p.getBattleDiscard());
+		p.getBattleDiscard().clear();
+		Collections.shuffle(p.getBattleDeck());
 	}
 
 	public void unPersistCards(final Player p, final List<Integer> cardIds) {
