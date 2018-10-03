@@ -89,8 +89,8 @@ public class Game {
 	}
 
 	// playValue = [initiative, experience]
-	public int[] playCards(final Player p, final List<Integer> cardIds) {
-		int[] playValues = { -1, 0 };
+	public int playCards(final Player p, final List<Integer> cardIds) {
+		int experience = 0;
 		Iterator<CharacterCard> i = p.getHand().iterator();
 		while (i.hasNext()) {
 			CharacterCard c = i.next();
@@ -102,8 +102,7 @@ public class Game {
 				} else {
 					p.getDiscard().add(c);
 				}
-				playValues[0] = c.getInitiative();
-				playValues[1] += c.getTop().getExperience();
+				experience += c.getTop().getExperience();
 				i.remove();
 			}
 			if (c.getId() == cardIds.get(1)) {
@@ -114,12 +113,12 @@ public class Game {
 				} else {
 					p.getDiscard().add(c);
 				}
-				playValues[1] += c.getBottom().getExperience();
+				experience += c.getBottom().getExperience();
 				i.remove();
 			}
 		}
 		p.sort();
-		return playValues;
+		return experience;
 	}
 
 	public void chooseHand(final Player p, final List<Integer> cardIds) {

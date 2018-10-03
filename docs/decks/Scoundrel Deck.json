@@ -9,13 +9,12 @@
 			"power":3
 		},
 		"experience":-1,
-		"text":"Add 2 power and gain 1 xp when the target is adjacent to any of your allies",
-		"remove":true
+		"text":"Add 2 power and gain 1 xp when the target is adjacent to any of your allies"
 	},
 	"bottom":{
 		"persist":{
 			"remainTime":4,
-			"persistExperience":[1,3]
+			"persistExperience":[0,1,2,3]
 		},
 		"text":"On your next four attacks targeting enemies adjacent to none of their allies, add 2 power",
 		"remain":true,
@@ -32,8 +31,7 @@
 			"power":3
 		},
 		"experience":-1,
-		"text":"Add two power and gain one xp when the target is adjacent to any of your allies",
-		"remove":true
+		"text":"Add two power and gain one xp when the target is adjacent to any of your allies"
 	},
 	"bottom":{
 		"movement":{
@@ -209,7 +207,7 @@
 		"remove":true
 	},
 	"bottom":{
-		"text":"The next time you suffer this round, suffer no damage instead"
+		"text":"The next time you suffer damage this round, suffer no damage instead"
 	}
 },
 {
@@ -225,7 +223,7 @@
 	},
 	"bottom":{
 		"movement":{
-			"range":2
+			"range":4
 		},
 		"text":"Loot every hex you enter with this action"
 	}
@@ -358,7 +356,7 @@
 	"bottom":{
 		"persist":{
 			"remainTime":6,
-			"persistExperience":[1,3,5]
+			"persistExperience":[0,2,3,5]
 		},
 		"text":"Add 2 power to your next six attacks targeting enemies with Disarm, Immobilize, or Stun.",
 		"remove":true

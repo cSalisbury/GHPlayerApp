@@ -22,7 +22,7 @@ public class Character {
 	}
 
 	public void refreshCharacter() {
-		maxHealth = healthPerLevel[level];
+		maxHealth = healthPerLevel[level - 1];
 		health = maxHealth;
 		totalExperience += experience;
 		experience = 0;

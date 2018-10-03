@@ -438,14 +438,26 @@ public class Mat {
 
 		// TODO Add message about cards being played
 		// TODO Rework as no longer getting initiative from this method
-		int[] playValues = game.playCards(player, cardIds);
+		int experience = game.playCards(player, cardIds);
 
 		initiativeLbl.setText(Integer.toString(initiative));
-		if (playValues[1] != 0) {
-			player.getCharacter().setExperience(player.getCharacter().getExperience() + playValues[1]);
+		if (experience != 0) {
+			if (experience == -1) {
+				String tempExperience = null;
+				while (tempExperience == null) {
+					tempExperience = JOptionPane.showInputDialog(playingFrame,
+							"How much experience did you earn this round?", "0");
+					try {
+						experience = Integer.parseInt(tempExperience);
+					} catch (Exception e) {
+						tempExperience = null;
+					}
+				}
+			}
+			player.getCharacter().setExperience(player.getCharacter().getExperience() + experience);
 			// TODO Add message saying gained experience
 			// TODO Another message about any lost cards (would have to increase
-			// what playCards() returns
+			// what playCards() returns)
 		}
 
 		refresh();
