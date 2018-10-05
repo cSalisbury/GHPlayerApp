@@ -1,11 +1,14 @@
 package service;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
+import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.BattleCard;
@@ -13,10 +16,18 @@ import model.Character;
 import model.CharacterCard;
 import model.Player;
 
-public class LoadService {
+public class LoadSaveService {
 
-	public LoadService() {
+	public LoadSaveService() {
 
+	}
+
+	public void savePlayer(final String filePath, final Player player)
+			throws JsonGenerationException, JsonMappingException, IOException {
+		ObjectMapper om = new ObjectMapper();
+
+		System.out.println("Saving Player: " + player + " at: " + filePath);
+		om.writeValue(new File(filePath), player);
 	}
 
 	public Player loadPlayer(final String filePath) throws IOException {

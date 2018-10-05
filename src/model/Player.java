@@ -23,6 +23,18 @@ public class Player {
 
 	}
 
+	public Player(final Player p) {
+		setName(p.getName());
+		setCharacter(p.getCharacter());
+		setNumRetired(p.getNumRetired());
+		setDeck(p.getDeck());
+		setHand(p.getHand());
+		setPersist(p.getPersist());
+		setRemoved(p.getRemoved());
+		setBattleDeck(p.getBattleDeck());
+		setBattleDiscard(p.getBattleDiscard());
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -60,6 +72,10 @@ public class Player {
 			hand = new ArrayList<CharacterCard>();
 		}
 		return hand;
+	}
+
+	public void setHand(final List<CharacterCard> hand) {
+		this.hand = hand;
 	}
 
 	public List<CharacterCard> getPersist() {
@@ -114,6 +130,13 @@ public class Player {
 		this.battleDiscard = battleDiscard;
 	}
 
+	public void clearMat() {
+		getHand().clear();
+		getPersist().clear();
+		getDiscard().clear();
+		getRemoved().clear();
+	}
+
 	public void sort() {
 		sortHand();
 		sortPersist();
@@ -141,6 +164,12 @@ public class Player {
 
 	private void sortRemoved() {
 		Collections.sort(removed, (c1, c2) -> {
+			return c1.getId() - c2.getId();
+		});
+	}
+
+	public void sortBattleDeck() {
+		Collections.sort(battleDeck, (c1, c2) -> {
 			return c1.getId() - c2.getId();
 		});
 	}

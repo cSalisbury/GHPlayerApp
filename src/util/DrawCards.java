@@ -1,10 +1,16 @@
 package util;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -99,18 +105,46 @@ public class DrawCards {
 
 	public static JPanel createCardPanel(final CharacterCard c) {
 		JPanel cardPanel = new JPanel();
-		cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS));
-		cardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
-		JPanel top = createCardActionPanel(c.getTop());
-		JPanel bottom = createCardActionPanel(c.getBottom());
-		cardPanel.add(addToCenter(new JLabel(c.getName())));
-		cardPanel.add(addToCenter(new JLabel(Integer.toString(c.getLevel()))));
-		cardPanel.add(top);
-		cardPanel.add(addToCenter(new JLabel("-----" + c.getInitiative() + "-----")));
-		cardPanel.add(bottom);
-		cardPanel.add(addToCenter(new JLabel(Integer.toString(c.getId()))));
+
+		boolean hasImage = true;
+		;
+		try {
+			// setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/package1/package2/dump.jpg")));
+			BufferedImage cardBuffImage = ImageIO
+					.read(DrawCards.class.getResource("/docs/ghImages/" + c.getId() + ".png"));
+			ImageIcon cardImage = new ImageIcon(cardBuffImage);
+			Image resizedImage = getScaledImage(cardImage.getImage(), 210, 300);
+			JLabel cardLabel = new JLabel(new ImageIcon(resizedImage));
+			cardPanel.add(cardLabel);
+		} catch (Exception e) {
+			// Try manual method
+			hasImage = false;
+		}
+		if (!hasImage) {
+			cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.Y_AXIS));
+			cardPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+			JPanel top = createCardActionPanel(c.getTop());
+			JPanel bottom = createCardActionPanel(c.getBottom());
+			cardPanel.add(addToCenter(new JLabel(c.getName())));
+			cardPanel.add(addToCenter(new JLabel(Integer.toString(c.getLevel()))));
+			cardPanel.add(top);
+			cardPanel.add(addToCenter(new JLabel("-----" + c.getInitiative() + "-----")));
+			cardPanel.add(bottom);
+			cardPanel.add(addToCenter(new JLabel(Integer.toString(c.getId()))));
+		}
 
 		return cardPanel;
+	}
+
+	private static Image getScaledImage(final Image srcImg, final int w, final int h) {
+		BufferedImage resizedImg = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+		Graphics2D g2 = resizedImg.createGraphics();
+
+		g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+		g2.drawImage(srcImg, 0, 0, w, h, null);
+		g2.dispose();
+
+		return resizedImg;
 	}
 
 	private static JPanel createCardActionPanel(final CardAction ca) {

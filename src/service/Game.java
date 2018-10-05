@@ -14,6 +14,14 @@ public class Game {
 
 	}
 
+	public Player getSavablePlayer(final Player p) {
+		Player savablePlayer = new Player(p);
+		savablePlayer.clearMat();
+		shuffleBattleDeck(savablePlayer);
+		savablePlayer.sortBattleDeck();
+		return savablePlayer;
+	}
+
 	public List<BattleCard> drawBattleCard(final Player p) {
 		List<BattleCard> drawn = new ArrayList<BattleCard>();
 		Iterator<BattleCard> i = p.getBattleDeck().iterator();
@@ -34,7 +42,6 @@ public class Game {
 	}
 
 	public void shuffleBattleDeck(final Player p) {
-		System.out.println("Shuffling deck");
 		p.getBattleDeck().addAll(p.getBattleDiscard());
 		p.getBattleDiscard().clear();
 		Collections.shuffle(p.getBattleDeck());

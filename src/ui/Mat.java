@@ -25,7 +25,7 @@ import model.BattleCard;
 import model.CharacterCard;
 import model.Player;
 import service.Game;
-import service.LoadService;
+import service.LoadSaveService;
 import util.DrawCards;
 
 public class Mat {
@@ -53,6 +53,7 @@ public class Mat {
 
 	final JFrame playingFrame = new JFrame();
 	final JButton viewDeckBut = new JButton("Choose Hand");
+	final JButton saveSessionBut = new JButton("Save Player");
 	final JPanel charPanel = new JPanel();
 
 	final JPanel playerInfoPanel = new JPanel();
@@ -105,7 +106,7 @@ public class Mat {
 	final JButton hToDBut = new JButton("H->D");
 	final JButton dToHBut = new JButton("D->H");
 
-	final LoadService loadService = new LoadService();
+	final LoadSaveService loadSaveService = new LoadSaveService();
 	final JFileChooser fc = new JFileChooser();
 	final Game game = new Game();
 	Player player = new Player();
@@ -113,7 +114,7 @@ public class Mat {
 	public Mat() {
 		deckFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		deckFrame.setTitle("Gloomhaven Player App");
-		deckFrame.setSize(1400, 800);
+		deckFrame.setSize(1450, 800);
 		deckFrame.setLocationRelativeTo(null);
 		deckFrame.setVisible(false);
 		deckFrame.add(deckScrollPane, BorderLayout.NORTH);
@@ -135,6 +136,7 @@ public class Mat {
 		topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.X_AXIS));
 		topPanel.add(charPanel);
 		topPanel.add(viewDeckBut);
+		topPanel.add(saveSessionBut);
 		topPanel.add(initiativePanel);
 
 		JPanel topCharPanel = new JPanel();
@@ -189,15 +191,15 @@ public class Mat {
 		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
 
 		p2.add(removedScrollPane);
-		removedScrollPane.setPreferredSize(new Dimension(200, 300));
+		removedScrollPane.setPreferredSize(new Dimension(230, 300));
 		removedScrollPane.setViewportView(removedPanel);
 
 		p2.add(handScrollPane);
-		handScrollPane.setPreferredSize(new Dimension(1000, 300));
+		handScrollPane.setPreferredSize(new Dimension(900, 300));
 		handScrollPane.setViewportView(handPanel);
 
 		p2.add(discardScrollPane);
-		discardScrollPane.setPreferredSize(new Dimension(200, 300));
+		discardScrollPane.setPreferredSize(new Dimension(230, 300));
 		discardScrollPane.setViewportView(discardPanel);
 
 		cardsPanel.add(p1);
@@ -247,6 +249,12 @@ public class Mat {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
 				viewDeckButtonAction();
+			}
+		});
+		saveSessionBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				saveSessionButtonAction();
 			}
 		});
 		handPickerBut.addActionListener(new ActionListener() {
@@ -358,6 +366,10 @@ public class Mat {
 		refresh();
 	}
 
+	private void saveSessionButtonAction() {
+		saveSession();
+	}
+
 	private void handPickerButtonAction() {
 		String handCards = handTextField.getText();
 
@@ -394,7 +406,7 @@ public class Mat {
 
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				String deckFilePath = fc.getSelectedFile().getAbsolutePath();
-				player.setDeck(loadService.loadDeck(deckFilePath));
+				player.setDeck(loadSaveService.loadDeck(deckFilePath));
 			} else {
 				// System.out.println("Open command cancelled by user.");
 			}
@@ -574,6 +586,17 @@ public class Mat {
 		return cardIds;
 	}
 
+	private void saveSession() {
+		try {
+			if (fc.showSaveDialog(playingFrame) == JFileChooser.APPROVE_OPTION) {
+				String savePath = fc.getSelectedFile().getAbsolutePath();
+				loadSaveService.savePlayer(savePath, game.getSavablePlayer(player));
+			}
+		} catch (Exception e) {
+			errorPopup(e);
+		}
+	}
+
 	private void loadSession() {
 		try {
 			String pFilePath = "";
@@ -590,7 +613,7 @@ public class Mat {
 					// System.out.println("Open command cancelled by user.");
 				}
 			}
-			player = loadService.loadPlayer(pFilePath);
+			player = loadSaveService.loadPlayer(pFilePath);
 
 			if (player.getCharacter() == null) {
 				String cFilePath = "";
@@ -608,14 +631,14 @@ public class Mat {
 						// user.");
 					}
 				}
-				player.setCharacter(loadService.loadCharacter(cFilePath));
+				player.setCharacter(loadSaveService.loadCharacter(cFilePath));
 			}
 			player.getCharacter().refreshCharacter();
 			playerNameLbl.setText(player.getName());
 			characterNameLbl.setText(player.getCharacter().getName());
 			if (mock) {
 				if (player.getDeck() == null || player.getDeck().isEmpty()) {
-					player.setDeck(loadService.loadDeck("docs/decks/" + deckFileName));
+					player.setDeck(loadSaveService.loadDeck("docs/decks/" + deckFileName));
 				}
 			}
 
@@ -635,7 +658,7 @@ public class Mat {
 						// user.");
 					}
 				}
-				player.setBattleDeck(loadService.loadBattleDeck(bdFilePath));
+				player.setBattleDeck(loadSaveService.loadBattleDeck(bdFilePath));
 			}
 			game.shuffleBattleDeck(player);
 		} catch (Exception e) {
@@ -663,7 +686,7 @@ public class Mat {
 			playingFrame.repaint();
 		} else {
 			deckPanel.removeAll();
-			deckPanel.setLayout(new GridLayout(0, 5));
+			deckPanel.setLayout(new GridLayout(0, 6));
 			for (CharacterCard c : player.getDeck()) {
 				deckPanel.add(DrawCards.createCardPanel(c));
 			}
