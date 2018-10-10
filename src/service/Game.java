@@ -10,6 +10,10 @@ import model.CharacterCard;
 import model.Player;
 
 public class Game {
+
+	final int blessingId = -1;
+	final int curseId = -2;
+
 	public Game() {
 
 	}
@@ -22,6 +26,74 @@ public class Game {
 		return savablePlayer;
 	}
 
+	public void addBattleCard(final Player p, final List<Integer> battleCardIds) {
+		Iterator<BattleCard> i = p.getBattleDeckUpgrades().iterator();
+		while (i.hasNext()) {
+			BattleCard bc = i.next();
+			if (bc.getId() == battleCardIds.get(0)) {
+				p.getBattleDeck().add(bc);
+				i.remove();
+			}
+		}
+	}
+
+	public void removeBattleCard(final Player p, final List<Integer> battleCardIds) {
+		Iterator<BattleCard> i = p.getBattleDeck().iterator();
+		while (i.hasNext()) {
+			BattleCard bc = i.next();
+			if (bc.getId() == battleCardIds.get(0)) {
+				p.getBattleDeckUpgrades().add(bc);
+				i.remove();
+			}
+		}
+	}
+
+	public void addBlessing(final Player p) {
+		p.getBattleDeck().add(createBlessing());
+	}
+
+	public void removeBlessing(final Player p) {
+		Iterator<BattleCard> i = p.getBattleDeck().iterator();
+		while (i.hasNext()) {
+			BattleCard bc = i.next();
+			if (bc.getId() == blessingId) {
+				i.remove();
+				break;
+			}
+		}
+	}
+
+	private BattleCard createBlessing() {
+		BattleCard blessing = new BattleCard();
+		blessing.setId(blessingId);
+		blessing.setMultiplier(2);
+		blessing.setRemove(true);
+		return blessing;
+	}
+
+	public void addCurse(final Player p) {
+		p.getBattleDeck().add(createCurse());
+	}
+
+	public void removeCurse(final Player p) {
+		Iterator<BattleCard> i = p.getBattleDeck().iterator();
+		while (i.hasNext()) {
+			BattleCard bc = i.next();
+			if (bc.getId() == curseId) {
+				i.remove();
+				break;
+			}
+		}
+	}
+
+	private BattleCard createCurse() {
+		BattleCard curse = new BattleCard();
+		curse.setId(curseId);
+		curse.setMultiplier(0);
+		curse.setRemove(true);
+		return curse;
+	}
+
 	public List<BattleCard> drawBattleCard(final Player p) {
 		List<BattleCard> drawn = new ArrayList<BattleCard>();
 		Iterator<BattleCard> i = p.getBattleDeck().iterator();
@@ -32,9 +104,9 @@ public class Game {
 			if (c.isRepeat()) {
 				repeat = true;
 			}
-			p.getBattleDiscard().add(c);
+			drawn.add(c);
 			if (!c.isRemove()) {
-				drawn.add(c);
+				p.getBattleDiscard().add(c);
 			}
 			i.remove();
 		}
@@ -200,6 +272,23 @@ public class Game {
 			boolean in = false;
 			for (CharacterCard c : cards) {
 				if (c.getId() == cId) {
+					in = true;
+				}
+			}
+			if (!in) {
+				inAll = false;
+				break;
+			}
+		}
+		return inAll;
+	}
+
+	public boolean checkBattleCardsIn(final List<BattleCard> cards, final List<Integer> cardIds) {
+		boolean inAll = true;
+		for (Integer bcId : cardIds) {
+			boolean in = false;
+			for (BattleCard bc : cards) {
+				if (bc.getId() == bcId) {
 					in = true;
 				}
 			}

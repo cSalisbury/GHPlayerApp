@@ -1,0 +1,83 @@
+[
+{
+	"id":57,
+	"modifier":0
+},
+{
+	"id":58,
+	"modifier":1
+},
+{
+	"id":59,
+	"modifier":2
+},
+{
+	"id":60,
+	"modifier":2
+},
+{
+	"id":61,
+	"modifier":1,
+	"repeat":true
+},
+{
+	"id":62,
+	"modifier":1,
+	"repeat":true
+},
+{
+	"id":63,
+	"modifier":1,
+	"repeat":true
+},
+{
+	"id":64,
+	"modifier":1,
+	"repeat":true
+},
+{
+	"id":65,
+	"pierce":3,
+	"repeat":true
+},
+{
+	"id":66,
+	"pierce":3,
+	"repeat":true
+},
+{
+	"id":67,
+	"condition":["poison"],
+	"repeat":true
+},
+{
+	"id":68,
+	"condition":["poison"],
+	"repeat":true
+},
+{
+	"id":69,
+	"condition":["poison"],
+	"repeat":true
+},
+{
+	"id":70,
+	"condition":["poison"],
+	"repeat":true
+},
+{
+	"id":71,
+	"condition":["muddle"],
+	"repeat":true
+},
+{
+	"id":72,
+	"condition":["muddle"],
+	"repeat":true
+},
+{
+	"id":73,
+	"condition":["invisible"],
+	"repeat":true
+}
+]

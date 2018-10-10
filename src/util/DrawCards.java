@@ -5,6 +5,8 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -24,6 +26,7 @@ import model.Movement;
 import model.Persist;
 import model.Summon;
 import model.Trap;
+import ui.CardPanel;
 
 public class DrawCards {
 
@@ -103,20 +106,24 @@ public class DrawCards {
 		return bCardPanel;
 	}
 
-	public static JPanel createCardPanel(final CharacterCard c) {
-		JPanel cardPanel = new JPanel();
+	public static CardPanel createCardPanel(final CharacterCard c) {
+		CardPanel cardPanel = new CardPanel();
 
 		boolean hasImage = true;
-		;
+		cardPanel.setCardId(c.getId());
 		try {
-			// setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/package1/package2/dump.jpg")));
-			BufferedImage cardBuffImage = ImageIO
-					.read(DrawCards.class.getResource("/docs/ghImages/" + c.getId() + ".png"));
+			BufferedImage cardBuffImage = ImageIO.read(DrawCards.class.getResource("/ghImages/" + c.getId() + ".PNG"));
 			ImageIcon cardImage = new ImageIcon(cardBuffImage);
 			Image resizedImage = getScaledImage(cardImage.getImage(), 210, 300);
 			JLabel cardLabel = new JLabel(new ImageIcon(resizedImage));
 			cardPanel.add(cardLabel);
 		} catch (Exception e) {
+			System.out.println("Error while getting image: " + e);
+			StringWriter outError = new StringWriter();
+			e.printStackTrace(new PrintWriter(outError));
+			String errorString = outError.toString();
+			System.out.println("Stack trace: " + errorString);
+
 			// Try manual method
 			hasImage = false;
 		}

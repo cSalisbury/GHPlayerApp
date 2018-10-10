@@ -15,6 +15,7 @@ public class Player {
 	private List<CharacterCard> removed;
 	private List<BattleCard> battleDeck;
 	private List<BattleCard> battleDiscard;
+	private List<BattleCard> battleDeckUpgrades;
 	// TODO: Should these be under Character? Maybe just conditions?
 	// private List<Item> items;
 	// private List<Condition> conditions;
@@ -117,6 +118,17 @@ public class Player {
 
 	public void setBattleDeck(final List<BattleCard> battleDeck) {
 		this.battleDeck = battleDeck;
+	}
+
+	public List<BattleCard> getBattleDeckUpgrades() {
+		if (battleDeckUpgrades == null) {
+			battleDeckUpgrades = new ArrayList<BattleCard>();
+		}
+		return battleDeckUpgrades;
+	}
+
+	public void setBattleDeckUpgrades(final List<BattleCard> battleDeckUpgrades) {
+		this.battleDeckUpgrades = battleDeckUpgrades;
 	}
 
 	public List<BattleCard> getBattleDiscard() {
