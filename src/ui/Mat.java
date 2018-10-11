@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -479,6 +480,8 @@ public class Mat {
 
 		deckFrame.setVisible(true);
 		playingFrame.setVisible(false);
+		top = 0;
+		bottom = 0;
 		refresh();
 	}
 
@@ -545,6 +548,7 @@ public class Mat {
 		} catch (Exception e) {
 			errorPopup(e);
 		}
+		setHandTextField();
 		refresh();
 	}
 
@@ -936,6 +940,24 @@ public class Mat {
 		}
 	}
 
+	private void refreshHighlights() {
+		for (Component cPanel : handPanel.getComponents()) {
+			if (cPanel.getClass().equals(CardPanel.class)) {
+				if (((CardPanel) cPanel).getCardId() == top) {
+					((CardPanel) cPanel).setBorder(BorderFactory.createLineBorder(Color.red));
+				} else if (((CardPanel) cPanel).getCardId() == bottom) {
+					((CardPanel) cPanel).setBorder(BorderFactory.createLineBorder(Color.blue));
+				} else {
+					if (((CardPanel) cPanel).isImg()) {
+						((CardPanel) cPanel).setBorder(null);
+					} else {
+						((CardPanel) cPanel).setBorder(BorderFactory.createLineBorder(Color.black));
+					}
+				}
+			}
+		}
+	}
+
 	private void populatePanel(final JPanel panel, final List<CharacterCard> cards) {
 		panel.removeAll();
 		if (cards != null && cards.size() != 0) {
@@ -968,14 +990,9 @@ public class Mat {
 						}
 						playTopField.setText(Integer.toString(top));
 						playBotField.setText(Integer.toString(bottom));
-						refresh();
+						refreshHighlights();
 					}
 				});
-				if (cPanel.getCardId() == top) {
-					cPanel.setBorder(BorderFactory.createLineBorder(Color.red));
-				} else if (cPanel.getCardId() == bottom) {
-					cPanel.setBorder(BorderFactory.createLineBorder(Color.blue));
-				}
 				panel.add(cPanel);
 			}
 		} else {

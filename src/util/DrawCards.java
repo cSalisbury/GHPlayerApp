@@ -117,6 +117,7 @@ public class DrawCards {
 			Image resizedImage = getScaledImage(cardImage.getImage(), 210, 300);
 			JLabel cardLabel = new JLabel(new ImageIcon(resizedImage));
 			cardPanel.add(cardLabel);
+			cardPanel.setImg(true);
 		} catch (Exception e) {
 			System.out.println("Error while getting image: " + e);
 			StringWriter outError = new StringWriter();
