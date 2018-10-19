@@ -112,6 +112,7 @@ public class DrawCards {
 		boolean hasImage = true;
 		cardPanel.setCardId(c.getId());
 		try {
+			// if running when not build ghImages needs to be copied into /bin
 			BufferedImage cardBuffImage = ImageIO.read(DrawCards.class.getResource("/ghImages/" + c.getId() + ".PNG"));
 			ImageIcon cardImage = new ImageIcon(cardBuffImage);
 			Image resizedImage = getScaledImage(cardImage.getImage(), 210, 300);

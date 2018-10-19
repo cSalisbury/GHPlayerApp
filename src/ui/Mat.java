@@ -8,9 +8,11 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -45,6 +47,14 @@ public class Mat {
 	public static void main(final String[] args) {
 		new Mat();
 	}
+
+	final LoadSaveService loadSaveService = new LoadSaveService();
+	final JFileChooser fc = new JFileChooser();
+	final Game game = new Game();
+	Player player = new Player();
+	int top = 0;
+	int bottom = 0;
+	List<Integer> handCards = new ArrayList<Integer>();
 
 	final JFrame bcFrame = new JFrame();
 	final JLabel upgradeLabel = new JLabel("Upgrade Deck");
@@ -130,13 +140,6 @@ public class Mat {
 	final JButton hToDBut = new JButton("H->D");
 	final JButton dToHBut = new JButton("D->H");
 
-	final LoadSaveService loadSaveService = new LoadSaveService();
-	final JFileChooser fc = new JFileChooser();
-	final Game game = new Game();
-	Player player = new Player();
-	int top = 0;
-	int bottom = 0;
-
 	public Mat() {
 		bcFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		bcFrame.setTitle("Gloomhaven Player App");
@@ -178,8 +181,8 @@ public class Mat {
 		deckFrame.setLocationRelativeTo(null);
 		deckFrame.setVisible(false);
 		deckFrame.add(deckScrollPane, BorderLayout.NORTH);
-		Dimension d2 = new Dimension(1300, 730);
-		deckScrollPane.setPreferredSize(d2);
+		deckScrollPane.setPreferredSize(new Dimension(1300, 730));
+		deckScrollPane.setViewportView(deckPanel);
 		deckFrame.add(handPickerPanel, BorderLayout.SOUTH);
 
 		handPickerPanel.add(loadDeckBut);
@@ -482,6 +485,7 @@ public class Mat {
 		playingFrame.setVisible(false);
 		top = 0;
 		bottom = 0;
+		populateHandCards();
 		refresh();
 	}
 
@@ -505,34 +509,36 @@ public class Mat {
 	}
 
 	private void handPickerButtonAction() {
-		String handCards = handTextField.getText();
-
-		String[] cards = handCards.split(",");
-		List<Integer> cardIds = new ArrayList<Integer>();
-		try {
-			for (String card : cards) {
-				cardIds.add(Integer.parseInt(card.trim()));
-			}
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(playingFrame, "One of the chosen cards: " + cards + " is not a number");
-		}
-
-		if (!game.checkCardsIn(player.getDeck(), cardIds)) {
+		populateHandCards();
+		if (!game.checkCardsIn(player.getDeck(), handCards)) {
 			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the deck");
 			return;
 		}
-		if (player.getCharacter() != null && player.getCharacter().getHandSize() != cardIds.size()) {
+		if (player.getCharacter() != null && player.getCharacter().getHandSize() != handCards.size()) {
 			JOptionPane.showMessageDialog(playingFrame, "Please select " + player.getCharacter().getHandSize()
 					+ " to play as a " + player.getCharacter().getClassName());
 			return;
 		}
 
-		game.chooseHand(player, cardIds);
+		game.chooseHand(player, handCards);
 		// TODO Add message about cards picked for hand
 		deckFrame.setVisible(false);
 		playingFrame.setVisible(true);
 
 		refresh();
+	}
+
+	private void populateHandCards() {
+
+		String[] cards = handTextField.getText().split(",");
+		try {
+			handCards.clear();
+			for (String card : cards) {
+				handCards.add(Integer.parseInt(card.trim()));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(playingFrame, "One of the chosen cards: " + cards + " is not a number");
+		}
 	}
 
 	private void loadDeckButtonAction() {
@@ -815,7 +821,7 @@ public class Mat {
 				pFilePath = "docs/players/" + playerFileName;
 			} else {
 				JOptionPane.showMessageDialog(playingFrame, "Please choose a Player file to load");
-				// fc.setCurrentDirectory(new File("."));
+				fc.setCurrentDirectory(new File("."));
 				int returnVal = fc.showOpenDialog(playingFrame);
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -912,12 +918,8 @@ public class Mat {
 			populateBattlePanel(battleDiscardPanel, player.getBattleDiscard());
 			playingFrame.repaint();
 		} else if (deckFrame.isVisible()) {
-			deckPanel.removeAll();
-			deckPanel.setLayout(new GridLayout(0, 6));
-			for (CharacterCard c : player.getDeck()) {
-				deckPanel.add(DrawCards.createCardPanel(c));
-			}
-			deckScrollPane.setViewportView(deckPanel);
+			populateDeckPanel(deckPanel, player.getDeck());
+
 			if (player.getCharacter() != null) {
 				handSizeTitleLbl.setText("Chosen Class " + player.getCharacter().getClassName() + " has a hand size of "
 						+ player.getCharacter().getHandSize() + " cards");
@@ -940,7 +942,7 @@ public class Mat {
 		}
 	}
 
-	private void refreshHighlights() {
+	private void refreshHandHighlights() {
 		for (Component cPanel : handPanel.getComponents()) {
 			if (cPanel.getClass().equals(CardPanel.class)) {
 				if (((CardPanel) cPanel).getCardId() == top) {
@@ -952,6 +954,28 @@ public class Mat {
 						((CardPanel) cPanel).setBorder(null);
 					} else {
 						((CardPanel) cPanel).setBorder(BorderFactory.createLineBorder(Color.black));
+					}
+				}
+			}
+		}
+	}
+
+	private void refreshDeckHighlights() {
+		for (Component dPanel : deckPanel.getComponents()) {
+			if (dPanel.getClass().equals(CardPanel.class)) {
+				boolean highlighted = false;
+				for (Integer handCard : handCards) {
+					if (((CardPanel) dPanel).getCardId() == handCard) {
+						((CardPanel) dPanel).setBorder(BorderFactory.createLineBorder(Color.green));
+						highlighted = true;
+						break;
+					}
+				}
+				if (!highlighted) {
+					if (((CardPanel) dPanel).isImg()) {
+						((CardPanel) dPanel).setBorder(null);
+					} else {
+						((CardPanel) dPanel).setBorder(BorderFactory.createLineBorder(Color.black));
 					}
 				}
 			}
@@ -990,14 +1014,57 @@ public class Mat {
 						}
 						playTopField.setText(Integer.toString(top));
 						playBotField.setText(Integer.toString(bottom));
-						refreshHighlights();
+						refreshHandHighlights();
 					}
 				});
 				panel.add(cPanel);
 			}
+			refreshHandHighlights();
 		} else {
 			panel.add(new JLabel("Empty"));
 		}
+	}
+
+	private void populateDeckPanel(final JPanel panel, final List<CharacterCard> cards) {
+		panel.removeAll();
+		panel.setLayout(new GridLayout(0, 6));
+		if (cards != null && cards.size() != 0) {
+			for (CharacterCard c : cards) {
+				CardPanel cPanel = DrawCards.createCardPanel(c);
+				cPanel.addMouseListener(new CardMouseAdapter(cPanel.getCardId()) {
+					@Override
+					public void mouseClicked(final MouseEvent e) {
+						// Check if in handCards
+						// if so, remove it
+						// if not, add it
+						if (handCards.contains(this.getCardId())) {
+							handCards.remove((Integer) this.getCardId());
+						} else {
+							handCards.add(this.getCardId());
+						}
+						handTextField.setText(getSortedStringList(handCards));
+						refreshDeckHighlights();
+					}
+				});
+				panel.add(cPanel);
+			}
+			refreshDeckHighlights();
+		} else {
+			panel.add(new JLabel("Empty"));
+		}
+	}
+
+	private String getSortedStringList(final List<Integer> list) {
+		Collections.sort(list);
+		String stringList = "";
+		for (Integer i : list) {
+			if (!stringList.isEmpty()) {
+				stringList += "," + i;
+			} else {
+				stringList += Integer.toString(i);
+			}
+		}
+		return stringList;
 	}
 
 	private void populateBattlePanel(final JPanel panel, final List<BattleCard> cards) {
