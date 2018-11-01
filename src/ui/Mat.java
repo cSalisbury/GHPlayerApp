@@ -35,6 +35,10 @@ import service.Game;
 import service.LoadSaveService;
 import util.DrawCards;
 
+// TODO:
+// Break out Battlecard and Deck Frames into their own classes (and just load them at the start of the game)
+// Add items and functionality
+// Fix scoundrel images and add other decks
 public class Mat {
 
 	// Manually set for now, create UI for them later
@@ -90,11 +94,12 @@ public class Mat {
 	final JButton modifyBDBut = new JButton("Modify Battle Deck");
 	final JPanel charPanel = new JPanel();
 
-	final JPanel playerInfoPanel = new JPanel();
 	final JLabel playerNameTitleLbl = new JLabel("Player:");
 	final JLabel playerNameLbl = new JLabel("[name]");
 	final JLabel characterNameTitleLbl = new JLabel("Character:");
 	final JLabel characterNameLbl = new JLabel("[name]");
+	final JButton completeMissionBut = new JButton("Complete Mission");
+	final JButton townBut = new JButton("Town");
 
 	final JPanel healthPanel = new JPanel();
 	final JLabel healthTitleLbl = new JLabel("Health:");
@@ -106,6 +111,11 @@ public class Mat {
 	final JLabel experienceLbl = new JLabel("X");
 	final JButton upExperienceBut = new JButton("^");
 	final JButton downExperienceBut = new JButton("v");
+	final JPanel lootPanel = new JPanel();
+	final JLabel lootTitleLbl = new JLabel("Loot:");
+	final JLabel lootLbl = new JLabel("X/X");
+	final JButton upLootBut = new JButton("^");
+	final JButton downLootBut = new JButton("v");
 	final JPanel initiativePanel = new JPanel();
 	final JLabel initiativeTitleLbl = new JLabel("Current Round's Initiative:");
 	final JLabel initiativeLbl = new JLabel("-");
@@ -210,16 +220,21 @@ public class Mat {
 		charPanel.add(botCharPanel);
 
 		topCharPanel.setLayout(new BoxLayout(topCharPanel, BoxLayout.X_AXIS));
-		topCharPanel.add(playerInfoPanel);
+		topCharPanel.add(Box.createHorizontalGlue());
 		topCharPanel.add(playerNameTitleLbl);
 		topCharPanel.add(playerNameLbl);
 		topCharPanel.add(Box.createHorizontalGlue());
 		topCharPanel.add(characterNameTitleLbl);
 		topCharPanel.add(characterNameLbl);
+		topCharPanel.add(Box.createHorizontalGlue());
+		topCharPanel.add(completeMissionBut);
+		topCharPanel.add(Box.createHorizontalGlue());
+		topCharPanel.add(townBut);
 
 		botCharPanel.setLayout(new BoxLayout(botCharPanel, BoxLayout.X_AXIS));
 		botCharPanel.add(healthPanel);
 		botCharPanel.add(experiencePanel);
+		botCharPanel.add(lootPanel);
 		botCharPanel.add(initiativePanel);
 		healthPanel.add(healthTitleLbl);
 		healthPanel.add(healthLbl);
@@ -229,6 +244,10 @@ public class Mat {
 		experiencePanel.add(experienceLbl);
 		experiencePanel.add(upExperienceBut);
 		experiencePanel.add(downExperienceBut);
+		lootPanel.add(lootTitleLbl);
+		lootPanel.add(lootLbl);
+		lootPanel.add(upLootBut);
+		lootPanel.add(downLootBut);
 
 		initiativePanel.add(initiativeTitleLbl);
 		initiativePanel.add(initiativeLbl);
@@ -287,6 +306,18 @@ public class Mat {
 		controlsPanel.add(hToDBut);
 		controlsPanel.add(dToHBut);
 
+		townBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				townButtonAction();
+			}
+		});
+		completeMissionBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				completeMissionButtonAction();
+			}
+		});
 		upHealthBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
@@ -309,6 +340,18 @@ public class Mat {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
 				downExperienceButtonAction();
+			}
+		});
+		upLootBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				upLootButtonAction();
+			}
+		});
+		downLootBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				downLootButtonAction();
 			}
 		});
 		chooseHandBut.addActionListener(new ActionListener() {
@@ -452,6 +495,22 @@ public class Mat {
 
 	}
 
+	private void townButtonAction() {
+		final TownFrame townFrame = new TownFrame(player);
+	}
+
+	private void completeMissionButtonAction() {
+		boolean win = JOptionPane.showConfirmDialog(playingFrame, "Did your party complete the mission successfully?",
+				"Did you win?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+		Object[] levelArray = { 0, 1, 2, 3, 4, 5, 6, 7 };
+		int defaultLevel = player.getCharacter() == null ? 1 : player.getCharacter().getLevel();
+		int level = (int) JOptionPane.showInputDialog(playingFrame, "What level did you play the mission at?",
+				"Mission Level", JOptionPane.PLAIN_MESSAGE, null, levelArray, defaultLevel);
+
+		player.getCharacter().completeMission(win, level);
+		refresh();
+	}
+
 	private void upHealthButtonAction() {
 		player.getCharacter().increaseHealth();
 		refresh();
@@ -472,11 +531,21 @@ public class Mat {
 		refresh();
 	}
 
+	private void upLootButtonAction() {
+		player.getCharacter().increaseLoot();
+		refresh();
+	}
+
+	private void downLootButtonAction() {
+		player.getCharacter().decreaseLoot();
+		refresh();
+	}
+
 	private void chooseHandButtonAction() {
 		if (!player.getDiscard().isEmpty() || !player.getPersist().isEmpty() || !player.getRemoved().isEmpty()) {
 			if (JOptionPane.showConfirmDialog(playingFrame,
 					"You will lose your current game state if you choose a new hand. Are you sure?", "Are you sure?",
-					JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 		}
@@ -497,7 +566,7 @@ public class Mat {
 		if (!player.getBattleDiscard().isEmpty()) {
 			if (JOptionPane.showConfirmDialog(playingFrame,
 					"You will lose your current battle deck state if you modify your battle deck. Are you sure?",
-					"Are you sure?", JOptionPane.YES_NO_OPTION) == JOptionPane.NO_OPTION) {
+					"Are you sure?", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 		}
@@ -548,6 +617,7 @@ public class Mat {
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				String deckFilePath = fc.getSelectedFile().getAbsolutePath();
 				player.setDeck(loadSaveService.loadDeck(deckFilePath));
+				// setHandTextField();
 			} else {
 				// System.out.println("Open command cancelled by user.");
 			}
@@ -889,11 +959,15 @@ public class Mat {
 	private void setHandTextField() {
 		String defaultHand = "";
 
-		for (int i = 0; i < player.getCharacter().getHandSize(); i++) {
-			if (!defaultHand.isEmpty()) {
-				defaultHand += ",";
+		if (player.getCharacter() != null && player.getDeck() != null && player.getDeck().size() != 0) {
+			for (int i = 0; i < player.getCharacter().getHandSize(); i++) {
+				if (!defaultHand.isEmpty()) {
+					defaultHand += ",";
+				}
+				defaultHand += (player.getDeck().get(0).getId() + i);
 			}
-			defaultHand += (player.getDeck().get(0).getId() + i);
+		} else {
+			defaultHand = "1,2,3";
 		}
 
 		handTextField.setText(defaultHand);
@@ -910,6 +984,9 @@ public class Mat {
 		if (playingFrame.isVisible()) {
 			healthLbl.setText(player.getCharacter().getHealth() + "/" + player.getCharacter().getMaxHealth());
 			experienceLbl.setText(String.valueOf((player.getCharacter().getExperience())));
+			lootLbl.setText(String.valueOf((player.getCharacter().getLoot())));
+			playerNameLbl.setText(String.valueOf((player.getName())));
+			characterNameLbl.setText(String.valueOf((player.getCharacter().getName())));
 
 			populateHandPanel(handPanel, player.getHand());
 			populatePanel(discardPanel, player.getDiscard());

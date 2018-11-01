@@ -10,7 +10,7 @@ public class Character {
 	private int[] healthPerLevel;
 	private int experience;
 	private int totalExperience;
-	private int gold;
+	private int loot;
 	private int totalGold;
 	private int notes;
 	// private List<Perk> perks
@@ -24,10 +24,23 @@ public class Character {
 	public void refreshCharacter() {
 		maxHealth = healthPerLevel[level - 1];
 		health = maxHealth;
-		totalExperience += experience;
+	}
+
+	public void completeMission(final boolean win, final int level) {
+		health = maxHealth;
+		totalExperience += experience + 4 + (2 * level);
 		experience = 0;
-		totalGold += gold;
-		gold = 0;
+		totalGold += loot * getLootValue(level);
+		loot = 0;
+		refreshLevel();
+	}
+
+	private int getLootValue(final int level) {
+		int lootValue = 6;
+		if (level < 7) {
+			lootValue = 2 + (int) Math.floor(level / 2);
+		}
+		return lootValue;
 	}
 
 	public String getName() {
@@ -60,6 +73,57 @@ public class Character {
 
 	public void setLevel(final int level) {
 		this.level = level;
+	}
+
+	private void refreshLevel() {
+		// Somehow math this using level = (5/2)(xp-1)(16+xp)
+		if (totalExperience >= 500) {
+			level = 9;
+		} else if (totalExperience >= 420) {
+			level = 8;
+		} else if (totalExperience >= 345) {
+			level = 7;
+		} else if (totalExperience >= 275) {
+			level = 6;
+		} else if (totalExperience >= 210) {
+			level = 5;
+		} else if (totalExperience >= 150) {
+			level = 4;
+		} else if (totalExperience >= 95) {
+			level = 3;
+		} else if (totalExperience >= 45) {
+			level = 2;
+		} else {
+			level = 1;
+		}
+		refreshCharacter();
+	}
+
+	public String experienceToNextLevel() {
+		int xpToGo = 0;
+
+		// Somehow math this using level = (5/2)(xp-1)(16+xp)
+		if (totalExperience >= 500) {
+			return "N/A";
+		} else if (totalExperience >= 420) {
+			xpToGo = 500 - totalExperience;
+		} else if (totalExperience >= 345) {
+			xpToGo = 420 - totalExperience;
+		} else if (totalExperience >= 275) {
+			xpToGo = 345 - totalExperience;
+		} else if (totalExperience >= 210) {
+			xpToGo = 275 - totalExperience;
+		} else if (totalExperience >= 150) {
+			xpToGo = 210 - totalExperience;
+		} else if (totalExperience >= 95) {
+			xpToGo = 150 - totalExperience;
+		} else if (totalExperience >= 45) {
+			xpToGo = 95 - totalExperience;
+		} else {
+			xpToGo = 45 - totalExperience;
+		}
+
+		return Integer.toString(xpToGo);
 	}
 
 	public int getHealth() {
@@ -122,14 +186,25 @@ public class Character {
 
 	public void setTotalExperience(final int totalExperience) {
 		this.totalExperience = totalExperience;
+		refreshLevel();
 	}
 
-	public int getGold() {
-		return gold;
+	public int getLoot() {
+		return loot;
 	}
 
-	public void setGold(final int gold) {
-		this.gold = gold;
+	public void setLoot(final int loot) {
+		this.loot = loot;
+	}
+
+	public void increaseLoot() {
+		this.loot++;
+	}
+
+	public void decreaseLoot() {
+		if (this.loot > 0) {
+			this.loot--;
+		}
 	}
 
 	public int getTotalGold() {
@@ -168,7 +243,7 @@ public class Character {
 	public String toString() {
 		return "Character [name: " + this.name + ",  className: " + this.className + ",  level: " + this.level
 				+ ",  health: " + this.health + ",  maxHealth: " + this.maxHealth + ",  experience: " + this.experience
-				+ ", gold: " + this.gold + ", notes: " + this.notes + ", is blessed: " + this.blessed + ", is cursed: "
+				+ ", loot: " + this.loot + ", notes: " + this.notes + ", is blessed: " + this.blessed + ", is cursed: "
 				+ this.cursed + "]";
 	}
 }
