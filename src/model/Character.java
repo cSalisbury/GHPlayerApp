@@ -12,10 +12,9 @@ public class Character {
 	private int totalExperience;
 	private int loot;
 	private int totalGold;
-	private int notes;
+	private BattleTactic tactic;
+	private int checks;
 	// private List<Perk> perks
-	private boolean blessed;
-	private boolean cursed;
 
 	public Character() {
 
@@ -26,12 +25,18 @@ public class Character {
 		health = maxHealth;
 	}
 
-	public void completeMission(final boolean win, final int level) {
+	public void completeMission(final boolean win, final int level, final int tacticChecks) {
 		health = maxHealth;
-		totalExperience += experience + 4 + (2 * level);
+		totalExperience += experience;
+		if (win) {
+			totalExperience += 4 + (2 * level);
+		}
 		experience = 0;
 		totalGold += loot * getLootValue(level);
 		loot = 0;
+		if (win) {
+			checks += tacticChecks;
+		}
 		refreshLevel();
 	}
 
@@ -215,35 +220,26 @@ public class Character {
 		this.totalGold = totalGold;
 	}
 
-	public int getNotes() {
-		return notes;
+	public BattleTactic getTactic() {
+		return tactic;
 	}
 
-	public void setNotes(final int notes) {
-		this.notes = notes;
+	public void setTactic(final BattleTactic tactic) {
+		this.tactic = tactic;
 	}
 
-	public boolean isBlessed() {
-		return blessed;
+	public int getChecks() {
+		return checks;
 	}
 
-	public void setBlessed(final boolean blessed) {
-		this.blessed = blessed;
-	}
-
-	public boolean isCursed() {
-		return cursed;
-	}
-
-	public void setCursed(final boolean cursed) {
-		this.cursed = cursed;
+	public void setChecks(final int checks) {
+		this.checks = checks;
 	}
 
 	@Override
 	public String toString() {
 		return "Character [name: " + this.name + ",  className: " + this.className + ",  level: " + this.level
 				+ ",  health: " + this.health + ",  maxHealth: " + this.maxHealth + ",  experience: " + this.experience
-				+ ", loot: " + this.loot + ", notes: " + this.notes + ", is blessed: " + this.blessed + ", is cursed: "
-				+ this.cursed + "]";
+				+ ", loot: " + this.loot + ", tactic: " + this.tactic + ", checks: " + this.checks + "]";
 	}
 }

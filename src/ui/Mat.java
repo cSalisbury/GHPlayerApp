@@ -29,6 +29,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextPane;
 
 import model.BattleCard;
+import model.BattleTactic;
 import model.CharacterCard;
 import model.Player;
 import service.Game;
@@ -36,6 +37,8 @@ import service.LoadSaveService;
 import util.DrawCards;
 
 // TODO:
+// Remove from json: blessed, cursed; change notes to checks
+// Test out and build/commit
 // Break out Battlecard and Deck Frames into their own classes (and just load them at the start of the game)
 // Add items and functionality
 // Fix scoundrel images and add other decks
@@ -59,6 +62,7 @@ public class Mat {
 	int top = 0;
 	int bottom = 0;
 	List<Integer> handCards = new ArrayList<Integer>();
+	List<BattleTactic> battleTactics = null;
 
 	final JFrame bcFrame = new JFrame();
 	final JLabel upgradeLabel = new JLabel("Upgrade Deck");
@@ -98,6 +102,8 @@ public class Mat {
 	final JLabel playerNameLbl = new JLabel("[name]");
 	final JLabel characterNameTitleLbl = new JLabel("Character:");
 	final JLabel characterNameLbl = new JLabel("[name]");
+	final JButton battleTacticsChooseBut = new JButton("Choose Battle Tactics");
+	final JButton battleTacticsViewBut = new JButton("View Battle Tactics");
 	final JButton completeMissionBut = new JButton("Complete Mission");
 	final JButton townBut = new JButton("Town");
 
@@ -144,10 +150,18 @@ public class Mat {
 	final JButton attackBut = new JButton("Attack");
 
 	final JLabel manualTitleLbl = new JLabel("Manual Movement: ");
-	final JTextArea manualCardsField = new JTextArea("1,2");
+	final JTextPane manualCardsField = new JTextPane();
+	final JButton pToRBut = new JButton("P->R");
+	final JButton pToHBut = new JButton("P->H");
 	final JButton pToDBut = new JButton("P->D");
+	final JButton rToPBut = new JButton("R->P");
 	final JButton rToHBut = new JButton("R->H");
+	final JButton rToDBut = new JButton("R->D");
+	final JButton hToPBut = new JButton("H->P");
+	final JButton hToRBut = new JButton("H->R");
 	final JButton hToDBut = new JButton("H->D");
+	final JButton dToPBut = new JButton("D->P");
+	final JButton dToRBut = new JButton("D->R");
 	final JButton dToHBut = new JButton("D->H");
 
 	public Mat() {
@@ -227,6 +241,10 @@ public class Mat {
 		topCharPanel.add(characterNameTitleLbl);
 		topCharPanel.add(characterNameLbl);
 		topCharPanel.add(Box.createHorizontalGlue());
+		topCharPanel.add(battleTacticsChooseBut);
+		topCharPanel.add(Box.createHorizontalGlue());
+		topCharPanel.add(battleTacticsViewBut);
+		topCharPanel.add(Box.createHorizontalGlue());
 		topCharPanel.add(completeMissionBut);
 		topCharPanel.add(Box.createHorizontalGlue());
 		topCharPanel.add(townBut);
@@ -301,15 +319,35 @@ public class Mat {
 		controlsPanel.add(attackBut);
 		controlsPanel.add(manualTitleLbl);
 		controlsPanel.add(manualCardsField);
+		controlsPanel.add(pToRBut);
+		controlsPanel.add(pToHBut);
 		controlsPanel.add(pToDBut);
+		controlsPanel.add(rToPBut);
 		controlsPanel.add(rToHBut);
+		controlsPanel.add(rToDBut);
+		controlsPanel.add(hToPBut);
+		controlsPanel.add(hToRBut);
 		controlsPanel.add(hToDBut);
+		controlsPanel.add(dToPBut);
+		controlsPanel.add(dToRBut);
 		controlsPanel.add(dToHBut);
 
 		townBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
 				townButtonAction();
+			}
+		});
+		battleTacticsChooseBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				battleTacticsChooseButtonAction();
+			}
+		});
+		battleTacticsViewBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				battleTacticsViewButtonAction();
 			}
 		});
 		completeMissionBut.addActionListener(new ActionListener() {
@@ -408,11 +446,28 @@ public class Mat {
 				attackButtonAction();
 			}
 		});
-
+		pToRBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				pToRButtonAction();
+			}
+		});
+		pToHBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				pToHButtonAction();
+			}
+		});
 		pToDBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
 				pToDButtonAction();
+			}
+		});
+		rToPBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				rToPButtonAction();
 			}
 		});
 		rToHBut.addActionListener(new ActionListener() {
@@ -421,10 +476,40 @@ public class Mat {
 				rToHButtonAction();
 			}
 		});
+		rToDBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				rToDButtonAction();
+			}
+		});
+		hToPBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				hToPButtonAction();
+			}
+		});
+		hToRBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				hToRButtonAction();
+			}
+		});
 		hToDBut.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(final ActionEvent event) {
 				hToDButtonAction();
+			}
+		});
+		dToPBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				dToPButtonAction();
+			}
+		});
+		dToRBut.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(final ActionEvent event) {
+				dToRButtonAction();
 			}
 		});
 		dToHBut.addActionListener(new ActionListener() {
@@ -491,12 +576,33 @@ public class Mat {
 
 		loadSession();
 		refresh();
-		// fakeHand();
-
 	}
 
 	private void townButtonAction() {
 		final TownFrame townFrame = new TownFrame(player);
+	}
+
+	private void battleTacticsChooseButtonAction() {
+		if (battleTactics == null) {
+			try {
+				battleTactics = loadSaveService.loadBattleTactics();
+			} catch (Exception e) {
+				errorPopup(e);
+			}
+		}
+
+		Collections.shuffle(battleTactics);
+		BattleTactic bt1 = battleTactics.get(0);
+		BattleTactic bt2 = battleTactics.get(1);
+		final BattleTacticsFrame battleTacticsFrame = new BattleTacticsFrame(player, bt1, bt2);
+	}
+
+	private void battleTacticsViewButtonAction() {
+		if (player.getCharacter().getTactic() == null) {
+			JOptionPane.showMessageDialog(playingFrame, "You first must choose a Battle Tactic");
+		} else {
+			final BattleTacticsFrame battleTacticsFrame = new BattleTacticsFrame(player.getCharacter().getTactic());
+		}
 	}
 
 	private void completeMissionButtonAction() {
@@ -507,7 +613,18 @@ public class Mat {
 		int level = (int) JOptionPane.showInputDialog(playingFrame, "What level did you play the mission at?",
 				"Mission Level", JOptionPane.PLAIN_MESSAGE, null, levelArray, defaultLevel);
 
-		player.getCharacter().completeMission(win, level);
+		int tacticChecks = 0;
+		if (win) {
+			boolean completeTactic = JOptionPane.showConfirmDialog(playingFrame,
+					"Did you complete your battle tactic successfully?\n\n\""
+							+ player.getCharacter().getTactic().getText() + "\"",
+					"Did you complete your battle tactic?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
+			if (completeTactic) {
+				tacticChecks = player.getCharacter().getTactic().getChecks();
+			}
+		}
+
+		player.getCharacter().completeMission(win, level, tacticChecks);
 		refresh();
 	}
 
@@ -552,8 +669,7 @@ public class Mat {
 
 		deckFrame.setVisible(true);
 		playingFrame.setVisible(false);
-		top = 0;
-		bottom = 0;
+		clearSelection();
 		populateHandCards();
 		refresh();
 	}
@@ -684,8 +800,7 @@ public class Mat {
 			// what playCards() returns)
 		}
 
-		top = 0;
-		bottom = 0;
+		clearSelection();
 		refresh();
 	}
 
@@ -732,6 +847,33 @@ public class Mat {
 		refresh();
 	}
 
+	private void pToRButtonAction() {
+		List<Integer> cardIds = getCardIdsFromField(manualCardsField);
+
+		if (!game.checkCardsIn(player.getPersist(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the persist field");
+			return;
+		}
+
+		game.pToRCards(player, cardIds);
+		// TODO Add message about cards moved
+		refresh();
+	}
+
+	private void pToHButtonAction() {
+		List<Integer> cardIds = getCardIdsFromField(manualCardsField);
+
+		if (!game.checkCardsIn(player.getPersist(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the persist field");
+			return;
+		}
+
+		game.pToHCards(player, cardIds);
+		// TODO Add message about cards moved
+		clearSelection();
+		refresh();
+	}
+
 	private void pToDButtonAction() {
 		List<Integer> cardIds = getCardIdsFromField(manualCardsField);
 
@@ -740,8 +882,23 @@ public class Mat {
 			return;
 		}
 
-		game.unPersistCards(player, cardIds);
+		game.pToDCards(player, cardIds);
 		// TODO Add message about cards moved
+		clearSelection();
+		refresh();
+	}
+
+	private void rToPButtonAction() {
+		List<Integer> cardIds = getCardIdsFromField(manualCardsField);
+
+		if (!game.checkCardsIn(player.getRemoved(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the removed pile");
+			return;
+		}
+
+		game.rToPCards(player, cardIds);
+		// TODO Add message about cards moved
+		clearSelection();
 		refresh();
 	}
 
@@ -753,8 +910,51 @@ public class Mat {
 			return;
 		}
 
-		game.recoverCards(player, cardIds);
+		game.rToHCards(player, cardIds);
 		// TODO Add message about cards moved
+		clearSelection();
+		refresh();
+	}
+
+	private void rToDButtonAction() {
+		List<Integer> cardIds = getCardIdsFromField(manualCardsField);
+
+		if (!game.checkCardsIn(player.getRemoved(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the removed pile");
+			return;
+		}
+
+		game.rToDCards(player, cardIds);
+		// TODO Add message about cards moved
+		clearSelection();
+		refresh();
+	}
+
+	private void hToPButtonAction() {
+		List<Integer> cardIds = getCardIdsFromField(manualCardsField);
+
+		if (!game.checkCardsIn(player.getHand(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the hand");
+			return;
+		}
+
+		game.hToPCards(player, cardIds);
+		// TODO Add message about cards moved
+		clearSelection();
+		refresh();
+	}
+
+	private void hToRButtonAction() {
+		List<Integer> cardIds = getCardIdsFromField(manualCardsField);
+
+		if (!game.checkCardsIn(player.getHand(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the hand");
+			return;
+		}
+
+		game.hToRCards(player, cardIds);
+		// TODO Add message about cards moved
+		clearSelection();
 		refresh();
 	}
 
@@ -766,8 +966,37 @@ public class Mat {
 			return;
 		}
 
-		game.discardCards(player, cardIds);
+		game.hToDCards(player, cardIds);
 		// TODO Add message about cards moved
+		clearSelection();
+		refresh();
+	}
+
+	private void dToPButtonAction() {
+		List<Integer> cardIds = getCardIdsFromField(manualCardsField);
+
+		if (!game.checkCardsIn(player.getDiscard(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the discard");
+			return;
+		}
+
+		game.dToPCards(player, cardIds);
+		// TODO Add message about cards moved
+		clearSelection();
+		refresh();
+	}
+
+	private void dToRButtonAction() {
+		List<Integer> cardIds = getCardIdsFromField(manualCardsField);
+
+		if (!game.checkCardsIn(player.getDiscard(), cardIds)) {
+			JOptionPane.showMessageDialog(playingFrame, "Those cards are not in the discard");
+			return;
+		}
+
+		game.dToRCards(player, cardIds);
+		// TODO Add message about cards moved
+		clearSelection();
 		refresh();
 	}
 
@@ -779,8 +1008,9 @@ public class Mat {
 			return;
 		}
 
-		game.manualRecoverCards(player, cardIds);
+		game.dToHCards(player, cardIds);
 		// TODO Add message about cards moved
+		clearSelection();
 		refresh();
 	}
 
@@ -855,6 +1085,22 @@ public class Mat {
 		playingFrame.setVisible(true);
 		game.shuffleBattleDeck(player);
 		refresh();
+	}
+
+	private List<Integer> getCardIdsFromField(final JTextPane textField) {
+		String manualCards = textField.getText();
+
+		String[] cards = manualCards.split(",");
+		List<Integer> cardIds = new ArrayList<Integer>();
+
+		try {
+			for (String card : cards) {
+				cardIds.add(Integer.parseInt(card.trim()));
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(playingFrame, "One of the chosen cards: " + cards + " is not a number");
+		}
+		return cardIds;
 	}
 
 	private List<Integer> getCardIdsFromField(final JTextArea textField) {
@@ -1153,5 +1399,10 @@ public class Mat {
 		} else {
 			panel.add(new JLabel("Empty"));
 		}
+	}
+
+	private void clearSelection() {
+		top = 0;
+		bottom = 0;
 	}
 }

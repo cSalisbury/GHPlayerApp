@@ -119,7 +119,31 @@ public class Game {
 		Collections.shuffle(p.getBattleDeck());
 	}
 
-	public void unPersistCards(final Player p, final List<Integer> cardIds) {
+	public void pToRCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getPersist().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getRemoved().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	public void pToHCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getPersist().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getHand().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	public void pToDCards(final Player p, final List<Integer> cardIds) {
 		Iterator<CharacterCard> i = p.getPersist().iterator();
 		while (i.hasNext()) {
 			CharacterCard c = i.next();
@@ -131,7 +155,19 @@ public class Game {
 		p.sort();
 	}
 
-	public void recoverCards(final Player p, final List<Integer> cardIds) {
+	public void rToPCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getRemoved().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getPersist().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	public void rToHCards(final Player p, final List<Integer> cardIds) {
 		Iterator<CharacterCard> i = p.getRemoved().iterator();
 		while (i.hasNext()) {
 			CharacterCard c = i.next();
@@ -143,7 +179,43 @@ public class Game {
 		p.sort();
 	}
 
-	public void discardCards(final Player p, final List<Integer> cardIds) {
+	public void rToDCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getRemoved().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getDiscard().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	public void hToPCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getHand().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getPersist().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	public void hToRCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getHand().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getRemoved().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	public void hToDCards(final Player p, final List<Integer> cardIds) {
 		Iterator<CharacterCard> i = p.getHand().iterator();
 		while (i.hasNext()) {
 			CharacterCard c = i.next();
@@ -155,7 +227,31 @@ public class Game {
 		p.sort();
 	}
 
-	public void manualRecoverCards(final Player p, final List<Integer> cardIds) {
+	public void dToPCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getDiscard().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getPersist().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	public void dToRCards(final Player p, final List<Integer> cardIds) {
+		Iterator<CharacterCard> i = p.getDiscard().iterator();
+		while (i.hasNext()) {
+			CharacterCard c = i.next();
+			if (c.getId() == cardIds.get(0)) {
+				p.getRemoved().add(c);
+				i.remove();
+			}
+		}
+		p.sort();
+	}
+
+	public void dToHCards(final Player p, final List<Integer> cardIds) {
 		Iterator<CharacterCard> i = p.getDiscard().iterator();
 		while (i.hasNext()) {
 			CharacterCard c = i.next();

@@ -1,7 +1,10 @@
 package service;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
@@ -12,6 +15,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.BattleCard;
+import model.BattleTactic;
 import model.Character;
 import model.CharacterCard;
 import model.Player;
@@ -74,5 +78,41 @@ public class LoadSaveService {
 		});
 
 		return battleDeck;
+	}
+
+	public List<BattleTactic> loadBattleTactics(final String filePath) throws IOException {
+		String battleTacticsString = null;
+		battleTacticsString = new String(Files.readAllBytes(Paths.get(filePath)));
+
+		ObjectMapper om = new ObjectMapper();
+		List<BattleTactic> battleTactics = null;
+		battleTactics = om.readValue(battleTacticsString, new TypeReference<List<BattleTactic>>() {
+		});
+
+		return battleTactics;
+	}
+
+	public List<BattleTactic> loadBattleTactics() throws IOException {
+		String battleTacticsString = readResourceAsString("/battleTactics/tactics.json");
+
+		ObjectMapper om = new ObjectMapper();
+		List<BattleTactic> battleTactics = null;
+		battleTactics = om.readValue(battleTacticsString, new TypeReference<List<BattleTactic>>() {
+		});
+
+		return battleTactics;
+	}
+
+	private String readResourceAsString(final String resourcePath) throws IOException {
+		InputStream in = this.getClass().getResourceAsStream(resourcePath);
+		StringBuilder stringBuilder = new StringBuilder();
+		String line = null;
+
+		try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in))) {
+			while ((line = bufferedReader.readLine()) != null) {
+				stringBuilder.append(line);
+			}
+		}
+		return stringBuilder.toString();
 	}
 }

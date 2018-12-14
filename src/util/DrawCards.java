@@ -19,6 +19,7 @@ import javax.swing.JTextArea;
 
 import model.Attack;
 import model.BattleCard;
+import model.BattleTactic;
 import model.CardAction;
 import model.CharacterCard;
 import model.Loot;
@@ -32,6 +33,25 @@ public class DrawCards {
 
 	public DrawCards() {
 
+	}
+
+	public static CardPanel createBattleTacticPanel(final BattleTactic t) {
+		CardPanel bTacticPanel = new CardPanel();
+
+		bTacticPanel.setCardId(t.getId());
+		bTacticPanel.setImg(false);
+		bTacticPanel.setLayout(new BoxLayout(bTacticPanel, BoxLayout.Y_AXIS));
+
+		bTacticPanel.add(addToCenter(new JLabel(t.getName())));
+		JTextArea tacticText = new JTextArea(t.getText());
+		tacticText.setLineWrap(true);
+		tacticText.setSize(350, 200);
+		tacticText.setEditable(false);
+		bTacticPanel.add(addToCenter(tacticText));
+		bTacticPanel.add(addToCenter(new JLabel("Checks: " + t.getChecks())));
+		bTacticPanel.add(addToCenter(new JLabel(Integer.toString(t.getId()))));
+
+		return bTacticPanel;
 	}
 
 	public static JPanel createBattleCardPanel(final BattleCard c) {
@@ -352,6 +372,12 @@ public class DrawCards {
 	private static JPanel addToCenter(final JLabel jl) {
 		JPanel jp = new JPanel();
 		jp.add(jl);
+		return addToCenter(jp);
+	}
+
+	private static JPanel addToCenter(final JTextArea ja) {
+		JPanel jp = new JPanel();
+		jp.add(ja);
 		return addToCenter(jp);
 	}
 
